@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>后台管理系统</title>
+<link href="skin/admin/style/base.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="skin/admin/js/jquery.js"></script>
+<script type="text/javascript" src="skin/admin/js/jquery.timers.js"></script>
+<script type="text/javascript">
+$('body').everyTime('1das','C',function(){
+	$.post('<{spUrl c=sound a=ding}>', '', function(result){
+		  $("#ss").html(result);
+	});
+},0,true);
+function modalDialog(url, name, width, height)
+{
+  if (width == undefined)
+  {
+    width = 400;
+  }
+  if (height == undefined)
+  {
+    height = 300;
+  }
+
+  if (window.showModalDialog)
+  {
+    window.showModalDialog(url, name, 'dialogWidth=' + (width) + 'px; dialogHeight=' + (height+5) + 'px; status=off');
+  }
+  else
+  {
+    x = (window.screen.width - width) / 2;
+    y = (window.screen.height - height) / 2;
+
+    window.open(url, name, 'height='+height+', width='+width+', left='+x+', top='+y+', toolbar=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, modal=yes');
+  }
+}
+</script>
+</head>
+<body>
+<div class="frameHeader">
+  <div class="frameLogo fl"><img src="skin/admin/images/frameLogo.png" border="0" /></div>
+  <div class="frameTopMenu fr"><a href="index.php?c=admin&a=clearcache" target='main'><img src="skin/admin/images/icon_clear.gif" border="0" /></a><a onclick="parent.window.location.href='index.php?c=admin&a=center'"><img src="skin/admin/images/icon_center.gif" /></a><a href="<{spUrl c=admin a=logout}>"><img src="skin/admin/images/icon_out.gif" /></a></div>
+</div><div id="ss"></div>
+</body>
+</html>

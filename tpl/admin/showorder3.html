@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style type="text/css">
+<!--
+body,td,th {
+	font-size: 12px;
+}
+-->
+</style>
+</head>
+
+<body>
+<form method="post" action="<{spUrl c=admin a=orderlist zt1=$zt1 zt2=$zt2 payment=$payment page=$page}>">
+<table width="100%" border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse" bordercolor="#f2f2f2">
+  <tr>
+    <td height="25" colspan="4" align="center" bgcolor="#f2f2f2"><strong>订单详情</strong></td>
+  </tr>
+  <tr>
+    <td width="20%" height="25" align="right">订单编号：</td>
+    <td colspan="3" align="left">&nbsp;<{$order.ordernum}>
+    <input type="hidden" name="cid" id="cid" value="<{$order.id}>" /></td>
+  </tr>
+  <tr>
+    <td height="25" align="right">产品名称：</td>
+    <td colspan="3" align="left">&nbsp;<{$order.pname}></td>
+  </tr>
+  <tr>
+    <td height="25" align="right">产品单价：</td>
+    <td colspan="3" align="left">&nbsp;<{$order.price}></td>
+  </tr>
+  <tr>
+    <td height="25" align="right">订购数量：</td>
+    <td colspan="3" align="left">&nbsp;<{$order.nums}></td>
+  </tr>
+  <tr>
+    <td height="25" align="right">收货人姓名：</td>
+    <td colspan="3" align="left">&nbsp;<{$order.realname}></td>
+  </tr>
+  <tr>
+    <td height="25" align="right">手机号码：</td>
+    <td colspan="3" align="left">&nbsp;<{$order.mob}></td>
+  </tr>
+  <tr>
+    <td height="25" align="right">收货地址：</td>
+    <td colspan="3" align="left">&nbsp;<{$order.address}></td>
+  </tr>
+  <tr>
+    <td height="25" align="right">订单备注：</td>
+    <td colspan="3" align="left">&nbsp;<{$order.beizhu}></td>
+  </tr>
+  <tr>
+    <td height="25" align="right">下单页面：</td>
+    <td colspan="3" align="left"><{$order.url1}></td>
+  </tr>
+  <tr>
+    <td height="25" align="right">下单页面：</td>
+    <td colspan="3" align="left"><{$order.url2}>（iframe专用）</td>
+  </tr>
+  <tr>
+    <td height="25" align="right">来源：</td>
+    <td colspan="3" align="left"><{$order.fromdomain}></td>
+  </tr>
+<{if $uo|@count gt 0}>
+<{foreach from=$uo item=one}>
+  <tr>
+    <td height="25" align="right"><{$one.0}>：</td>
+    <td colspan="3" align="left"><{$one.1}></td>
+  </tr>
+<{/foreach}>
+<{else}>
+<{/if}>
+  <tr>
+    <td height="25" align="right">支付方式：</td>
+    <td width="32%" align="left">&nbsp;<{if $order.payment=="1"}>支付宝即时到帐<{elseif $order.payment=="2"}>支付宝担保交易<{elseif $order.payment=="3"}>银联在线<{elseif $order.payment=="4"}>财付通<{elseif $order.payment=="5"}>易宝<{elseif $order.payment=="6"}>银行汇款<{elseif $order.payment=="7"}>货到付款<{elseif $order.payment=="8"}>上门取货<{else}>Paypal<{/if}></td>
+    <td width="14%" height="25" align="right">物流公司：</td>
+    <td width="34%" align="left"><input name="wuliu" type="text" id="wuliu" value="<{$order.wuliu}>" /></td>
+  </tr>
+  <tr>
+    <td height="25" align="right">下单时间：</td>
+    <td align="left">&nbsp;<{$order.addtime}></td>
+    <td height="25" align="right">快递单号：</td>
+    <td align="left"><input name="wuliunum" type="text" id="wuliunum" value="<{$order.wuliunum}>" /></td>
+  </tr>
+  <tr>
+    <td height="25" align="right">订购IP：</td>
+    <td align="left">&nbsp;<{$order.ips}>&nbsp;<{$area}></td>
+    <td height="25" align="right">发货时间：</td>
+    <td align="left">&nbsp;<{$order.sendtime}></td>
+  </tr>
+  <tr>
+    <td height="25" align="right">发货状态：</td>
+    <td align="left">&nbsp;<span id="zz1"><{if $order.zt1=="1"}><font color="red">未处理</font><{elseif $order.zt1=="2"}><font color="blue">待发货</font><{elseif $order.zt1=="3"}><font color="blue">已发货</font><{elseif $order.zt1=="4"}><font color="blue">已签收</font><{else}><font color="red">已退回</font><{/if}></span></td>
+    <td height="25" align="right">客服备注：</td>
+    <td align="left"><input name="beizhu2" type="text" id="beizhu2" value="<{$order.beizhu2}>" /></td>
+  </tr>
+  <tr>
+    <td height="25" align="right">付款状态：</td>
+    <td align="left">&nbsp;<span id="zz2"><{if $order.zt2=="1"}><font color="red">未付款</font><{else}><font color="green">已付款</font><{/if}></span></td>
+    <td height="25" align="right">处理客服：</td>
+    <td align="left">&nbsp;<{if $order.kefu==""}>无<{else}><{$order.kefu}><{/if}></td>
+  </tr>
+</table>
+</form>
+</body>
+</html>

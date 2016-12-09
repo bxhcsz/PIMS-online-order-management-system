@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>快递单打印</title>
+<style type="text/css">
+<!--
+body,td,th {
+	font-size: 12px;
+}
+-->
+</style>
+<script language=javascript>     
+function printsetup(){
+document.getElementById("sdfd").style.display="none";
+    //  打印页面设置
+    wb.execwb(8,1);   
+}
+function printpreview(){
+document.getElementById("sdfd").style.display="none";
+    //  打印页面预览
+    wb.execwb(7,1);
+}
+function printit(){
+document.getElementById("sdfd").style.display="none";
+  if (confirm('确定打印吗？')){
+    wb.ExecWB(6,1)
+    //wb.execwb(1,1)//打开
+    //wb.ExecWB(2,1);//关闭现在所有的IE窗口，并打开一个新窗口
+    //wb.ExecWB(4,1)//;保存网页
+    //wb.ExecWB(6,1)//打印
+    //wb.ExecWB(7,1)//打印预览
+    //wb.ExecWB(8,1)//打印页面设置
+    //wb.ExecWB(10,1)//查看页面属性
+    //wb.ExecWB(15,1)//好像是撤销，有待确认
+    //wb.ExecWB(17,1)//全选
+    //wb.ExecWB(22,1)//刷新
+    //wb.ExecWB(45,1)//关闭窗体无提示
+  }
+}
+</script> 
+
+<style>
+@media print {
+.noprint {display:none}
+}
+</style>
+</head>
+
+<body topmargin="0" leftmargin="0" style="background:url(skin/admin/kuaidi/yuantong.jpg); background-repeat:no-repeat;">
+<div id="printbutton" class="noprint">
+        <input value="打印快递单" type="button" onclick="javascript:window.print()" />
+        <OBJECT classid="CLSID:8856F961-340A-11D0-A96B-00C04FD705A2" height="0" id="wb" name="wb" width="0">
+        </OBJECT>
+        <input type=button name=button_print style="display:none;" value="打印快递单" onclick="javascript:printit()">
+</div>
+<div style="width:70px; height:20px; background-color:#FF0000; margin-top:54px; margin-left:100px"><{$fajian.sendname}></div>
+</body>
+</html>

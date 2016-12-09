@@ -1,0 +1,108 @@
+<{include file="admin/session.html"}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="skin/admin/style/base.css" type="text/css" />
+<link rel="stylesheet" href="skin/admin/style/main.css" type="text/css" />
+<link rel="alternate stylesheet" type="text/css" href="skin/admin/Upimg/1024.css" />
+<style type="text/css" media="all">
+@import "skin/admin/Upimg/thickbox.css";
+</style>
+<script type="text/javascript" src="skin/admin/js/jquery.js"></script>
+<script type="text/javascript" src="skin/admin/js/Validform.js"></script>
+<script type="text/javascript">
+$(function(){
+	$(".registerform:last").Validform({
+		tiptype:2,
+		ajaxPost:true,
+		callback:function(data){
+			if(data.status=="y"){
+				setTimeout(function(){
+					$.Hidemsg(); //公用方法关闭信息提示框;
+				},2000);
+			}
+		}
+	});
+})
+</script>
+<script src="skin/admin/Upimg/thickbox-compressed.js" type="text/javascript"></script>
+<script src="skin/admin/Upimg/global.js" type="text/javascript"></script>
+<title>管理系统</title>
+</head>
+<body>
+<div class="rbox">
+  <div class="ur_here">
+    <div class="path fl" align="left">提醒设置<span>-</span>邮件提醒设置</div>
+</div>  
+  <div class="add_box">
+    <form action="<{spUrl c=admin a=savealert}>" method="post">
+      <table width="98%" border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse" bordercolor="#c6c6c6">
+        <tr>
+          <td height="25" colspan="2" align="center" bgcolor="#f2f2f2"><strong>邮件提醒开关</strong></td>
+        </tr>
+        <tr>
+          <td width="30%" height="25" align="right">当前邮件提醒状态：</td>
+          <td align="left">&nbsp;<{if $email.is_open=="1"}><font color="green"><strong>已开启</strong></font><{else}><font color="red"><strong>已关闭</strong></font><{/if}></td>
+        </tr>
+        <tr>
+          <td height="25" align="right">开启/关闭邮件提醒：</td>
+          <td align="left"><select name="select20" id="select20">
+            <option value="1">打开邮件提醒</option>
+            <option value="2">关闭邮件提醒</option>
+          </select>          </td>
+        </tr>
+
+        <tr>
+          <td height="25" align="right">&nbsp;</td>
+          <td align="left"><input type="submit" name="Submit2" value="开启/关闭邮件提醒" /></td>
+        </tr>
+      </table>
+    </form>
+    <br />
+    <form action="<{spUrl c=admin a=saveemail}>" method="post" class="registerform">
+    <table width="98%" border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse" bordercolor="#c6c6c6">
+      <tr>
+        <td height="25" colspan="3" align="center" bgcolor="#f2f2f2"><strong>邮件提醒设置</strong></td>
+      </tr>
+      <tr>
+        <td width="30%" height="25" align="right">发信邮箱地址：</td>
+        <td width="27%" align="left"><input name="sendaddr" type="text" id="sendaddr" size="45" class="inputxt" datatype="e" nullmsg="请输入发信邮箱地址！" errormsg="邮箱地址格式错误！" value="<{$email.sendaddr}>" /></td>
+        <td width="43%" align="left"><div class="Validform_checktip">(如：diantuo@163.com)</div></td>
+      </tr>
+      <tr>
+        <td height="25" align="right">SMTP服务器地址：</td>
+        <td align="left"><input name="smtpaddr" type="text" id="smtpaddr" size="45" class="inputxt" datatype="*" nullmsg="请输入SMTP地址！" value="<{$email.smtpaddr}>" /></td>
+        <td align="left"><div class="Validform_checktip">(如：smtp.163.com)</div></td>
+      </tr>
+      <tr>
+        <td height="25" align="right">邮箱用户名：</td>
+        <td align="left"><input name="username" type="text" id="username" size="45" class="inputxt" datatype="*" nullmsg="请输入邮箱用户名！" value="<{$email.username}>" /></td>
+        <td align="left"><div class="Validform_checktip">(请输入邮箱用户名，如：diantuo)</div></td>
+      </tr>
+      <tr>
+        <td height="25" align="right">邮箱密码：</td>
+        <td align="left"><input name="userpass" type="text" id="userpass" size="45" class="inputxt" datatype="*" nullmsg="请输入邮箱密码！" value="<{$email.userpass}>" /></td>
+        <td align="left"><div class="Validform_checktip">(请输入邮箱密码)</div></td>
+      </tr>
+      <tr>
+        <td height="25" align="right">收信邮箱地址：</td>
+        <td align="left"><input name="getaddr" type="text" id="getaddr" size="45" class="inputxt" datatype="e" nullmsg="请输入收信邮箱地址！" errormsg="邮箱地址格式错误！" value="<{$email.getaddr}>" /></td>
+        <td align="left"><div class="Validform_checktip">(请输入收信邮箱地址，推荐使用QQ邮箱，即时提醒)</div></td>
+      </tr>
+      <tr>
+        <td height="25" align="right">提醒邮件标题：</td>
+        <td align="left"><input name="title" type="text" id="title" size="45" class="inputxt" datatype="*" nullmsg="请输入提醒邮件标题！" value="<{$email.title}>" /></td>
+        <td align="left"><div class="Validform_checktip">(请输入提醒邮件标题)</div></td>
+      </tr>
+      <tr>
+        <td height="25" align="right">&nbsp;</td>
+        <td colspan="2" align="left"><input type="submit" name="Submit" value="保存邮件提醒设置" /></td>
+      </tr>
+    </table>
+  </form>
+  </div>
+  <!--  内容列表   -->
+</div>
+</body>
+</html>

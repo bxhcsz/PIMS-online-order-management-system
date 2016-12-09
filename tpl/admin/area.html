@@ -1,0 +1,48 @@
+<{include file="admin/session.html"}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="skin/admin/style/base.css" type="text/css" />
+<link rel="stylesheet" href="skin/admin/style/main.css" type="text/css" />
+<link rel="alternate stylesheet" type="text/css" href="skin/admin/Upimg/1024.css" />
+<style type="text/css" media="all">
+@import "skin/admin/Upimg/thickbox.css";
+</style>
+<script type="text/javascript" src="skin/admin/js/jquery.js"></script>
+<script type="text/javascript" src="skin/admin/js/Validform.js"></script>
+<script type="text/javascript">
+$(function(){
+	$(".registerform:last").Validform({
+		tiptype:2,
+		ajaxPost:true,
+		callback:function(data){
+			if(data.status=="y"){
+				setTimeout(function(){
+					$.Hidemsg(); //公用方法关闭信息提示框;
+				},2000);
+			}
+		}
+	});
+})
+</script>
+<script src="skin/admin/Upimg/thickbox-compressed.js" type="text/javascript"></script>
+<script src="skin/admin/Upimg/global.js" type="text/javascript"></script>
+<script type="text/javascript" src="include/swfobject.js"></script>
+<title>管理系统</title>
+</head>
+<body>
+<div class="rbox">
+  <div class="ur_here">
+    <div class="path fl" align="left">报表统计<span>-成交额区域统计饼图</span></div>
+</div>  
+  <div class="add_box"><br />
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="left" valign="middle"><{$showz}></td>
+      </tr>
+    </table>
+  </div>
+</div>
+</body>
+</html>

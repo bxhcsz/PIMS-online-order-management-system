@@ -1,0 +1,86 @@
+<{include file="admin/session.html"}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="skin/admin/style/base.css" type="text/css" />
+<link rel="stylesheet" href="skin/admin/style/main.css" type="text/css" />
+<script type="text/javascript" src="skin/admin/js/jquery.js"></script>
+<script src="skin/admin/Upimg/thickbox-compressed.js" type="text/javascript"></script>
+<script src="skin/admin/Upimg/global.js" type="text/javascript"></script>
+<script language="javascript">
+function getall(obj) {
+	if (confirm('确定备份全部表吗？')) 
+	{
+	//obj.style.display="none";
+	obj.disabled="disabled";
+	location.href='<{spUrl c=others a=allbak}>';
+	}
+}
+</script>
+<title>管理系统</title>
+</head>
+<body>
+<div class="rbox">
+  <div class="ur_here">
+    <div class="path fl" align="left">超级管理<span>-数据库备份</span></div>
+</div>  
+    <div class="add_box">
+	<input name="button45" type="button" value="全部备份" onclick="getall(this)" />&nbsp;&nbsp;<span id="showme" style="color:red; font-weight:bold">（注意：备份过程中请勿关闭浏览器或进行其他操作，第三方备份工具建议使用：phpmyadmin、adminer、帝国备份王）</span>
+	</div>
+
+  <!--  内容列表   -->
+  <div class="rbox_list">
+  <form id="form1" name="form1" method="post" action="">
+    <table width="100%" class="table2">
+    <tr>
+      <th width="25%" align="center" valign="middle">数据表</th>
+        <th width="10%" align="center" valign="middle">引擎</th>
+         <th width="10%" align="center" valign="middle">字符集</th>
+         
+        <th width="10%" align="center" valign="middle">占用空间</th>
+       
+        <th width="5%" align="center" valign="middle">记录数</th>
+        <th width="10%" align="center" valign="middle">表状态</th>
+        
+        <th width="20%" align="center" valign="middle">创建时间</th>
+         <th width="10%" align="center"  valign="middle">操作</th>
+      </tr>
+  <{foreach from=$table.rs item=d}>
+    <tr bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';" onMouseOut="javascript:this.bgColor='#FFFFFF';">
+      <td><{$d.TABLE_NAME}><{if $d.TABLE_COMMENT != ''}>(<{$d.TABLE_COMMENT}>)<{/if}></td>
+      <td valign="middle"><{$d.ENGINE}></td>
+        <td valign="middle"><{$d.TABLE_COLLATION}></td>
+        
+         <td valign="middle"><{formatBytes size=$d.DATA_LENGTH}></td>
+         <td valign="middle"><{$d.TABLE_ROWS}></td>
+        <td valign="middle"><{if $d.ROW_FORMAT == 'Dynamic'}>动态<{else}>静态<{/if}></td>
+        
+        <td valign="middle"><{$d.CREATE_TIME}></td>
+        <td align="right" valign="middle">
+      
+         <{if $d.DATA_FREE =0  || $d.CHECK_TABLE !='NCHECK' || $d.CHECK_TABLE !='OK'}> 
+          <input type="button" name="button" id="tab_o_<{$d.TABLE_NAME}>" value="单表备份" onclick="javascript:if (confirm('确定备份吗？')) {location.href='<{spUrl c=others a=youhuabak tablename=$d.TABLE_NAME}>';}"  />
+           <{/if}>        </td>
+      </tr>
+  
+   <{/foreach}>
+   <tr>
+      <td>表总数：<strong><{$table.all_table}></strong></td>
+      <td valign="middle"></td>
+        <td align="right" valign="middle">占用空间：</td>
+        
+         <td valign="middle"><{formatBytes size=$table.all_byte}></td>
+         <td valign="middle"> </td>
+        <td valign="middle"> </td>
+        
+        <td valign="middle"> </td>
+      <td valign="middle"></td>
+      </tr>
+    </table>
+    </form>
+  </div>
+
+  </div>
+</body>
+</html>

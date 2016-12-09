@@ -1,0 +1,64 @@
+<{include file="admin/session.html"}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="skin/admin/style/base.css" type="text/css" />
+<link rel="stylesheet" href="skin/admin/style/main.css" type="text/css" />
+<script type="text/javascript" src="skin/admin/js/jquery.js"></script>
+<script type="text/javascript" src="skin/admin/js/Validform.js"></script>
+<script type="text/javascript">
+$(function(){
+	$(".registerform:last").Validform({
+		tiptype:2,
+		ajaxPost:true,
+		callback:function(data){
+			if(data.status=="y"){
+				setTimeout(function(){
+					$.Hidemsg(); //公用方法关闭信息提示框;
+				},2000);
+			}
+		}
+	});
+})
+</script>
+<title>管理系统</title>
+</head>
+<body>
+<div class="rbox">
+  <div class="ur_here">
+    <div class="path fl">收款方式管理<span>-</span>易宝接口管理</div>
+</div>  
+  <form class="registerform" method="post" action="<{spUrl c=admin a=ypsave}>">
+  <div class="add_box">
+<table width="98%" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse" bordercolor="#c6c6c6">
+        <tr>
+          <td height="25" colspan="3" align="center" bgcolor="#f2f2f2"><strong>易宝接口设置</strong></td>
+        </tr>
+        <tr>
+          <td width="21%" height="25" align="right">商户号：</td>
+          <td width="28%" align="left"><input name="zhanghao" type="text" value="<{$cbinfo.zhanghao}>" size="45" class="inputxt" datatype="n" nullmsg="请输入商户号！" errormsg="商户号必须为纯数字！" /> <input type="hidden" name="id" value="<{$cbinfo.id}>" /></td>
+          <td width="51%" align="left"><div class="Validform_checktip">(易宝签约商户号，纯数字)</div></td>
+        </tr>
+        <tr>
+          <td height="25" align="right">密钥(KEY)：</td>
+          <td align="left"><input name="jianyanma" type="text" class="inputxt" id="jianyanma" value="<{$cbinfo.jianyanma}>" size="45" datatype="*" nullmsg="请输入KEY！" /></td>
+          <td align="left"><div class="Validform_checktip">(以数字和字母组成的字符串)</div></td>
+        </tr>
+        <tr>
+          <td height="25" align="right">PIMS所在网站目录：</td>
+          <td align="left"><input name="urladdress" type="text" id="urladdress" size="45" value="<{$cbinfo.urladdress}>" datatype="siteurl" nullmsg="请输入网站地址！" errormsg="格式错误，http://开头完整地址，最后不要加'/'！" /></td>
+          <td align="left"><div class="Validform_checktip">(http://开头完整地址，最后不要加&quot;/&quot;)</div></td>
+        </tr>
+        <tr>
+          <td height="25" align="right">&nbsp;</td>
+          <td align="left"><input type="submit" name="Submit2" value="保存/修改" /> 
+            <a href="https://www.yeepay.com/" target="_blank">申请易宝支付接口</a></td>
+          <td align="left">&nbsp;</td>
+        </tr>
+      </table>
+    </div>
+  </form>
+</div>
+</body>
+</html>

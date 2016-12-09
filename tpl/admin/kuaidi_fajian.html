@@ -1,0 +1,89 @@
+<{include file="admin/session.html"}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="skin/admin/style/base.css" type="text/css" />
+<link rel="stylesheet" href="skin/admin/style/main.css" type="text/css" />
+<link rel="alternate stylesheet" type="text/css" href="skin/admin/Upimg/1024.css" />
+<style type="text/css" media="all">
+@import "skin/admin/Upimg/thickbox.css";
+</style>
+<script type="text/javascript" src="skin/admin/js/jquery.js"></script>
+<script type="text/javascript" src="skin/admin/js/Validform.js"></script>
+<script type="text/javascript">
+$(function(){
+	$(".registerform:last").Validform({
+		tiptype:2,
+		ajaxPost:true,
+		callback:function(data){
+			if(data.status=="y"){
+				setTimeout(function(){
+					$.Hidemsg(); //公用方法关闭信息提示框;
+				},2000);
+			}
+		}
+	});
+})
+</script>
+<script src="skin/admin/Upimg/thickbox-compressed.js" type="text/javascript"></script>
+<script src="skin/admin/Upimg/global.js" type="text/javascript"></script>
+<title>管理系统</title>
+</head>
+<body>
+<div class="rbox">
+  <div class="ur_here">
+    <div class="path fl" align="left">超级管理<span>-快递发件人设置</span></div>
+</div>  
+  <div class="add_box">
+  <form action="<{spUrl c=kuaidi a=fajiansave}>" method="post" class="registerform">
+    <table width="98%" border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse" bordercolor="#c6c6c6">
+      <tr>
+        <td height="25" colspan="2" align="center" bgcolor="#f2f2f2"><strong>快递发件人设置</strong></td>
+      </tr>
+      <tr>
+        <td width="30%" height="35" align="right">发件人姓名：</td>
+        <td align="left"><input name="sendname" type="text" id="sendname" size="45" class="inputxt" datatype="*" value="<{$arr.sendname}>" /></td>
+        </tr>
+      <tr>
+        <td height="35" align="right">发件人公司：</td>
+        <td align="left"><input name="sendgongsi" type="text" id="sendgongsi" size="45" value="<{$arr.sendgongsi}>" /></td>
+        </tr>
+      <tr>
+        <td height="35" align="right">发件人地址：</td>
+        <td align="left"><input name="sendaddr" type="text" id="sendaddr" size="45" class="inputxt" datatype="*" value="<{$arr.sendaddr}>" /></td>
+        </tr>
+      <tr>
+        <td height="35" align="right">发件人电话：</td>
+        <td align="left"><input name="sendtel" type="text" id="sendtel" size="45" value="<{$arr.sendtel}>" /></td>
+      </tr>
+      <tr>
+        <td height="35" align="right">发件人手机：</td>
+        <td align="left"><input name="sendmob" type="text" id="sendmob" size="45" class="inputxt" datatype="*" value="<{$arr.sendmob}>" /></td>
+      </tr>
+      <tr>
+        <td height="35" align="right">发件人邮编：</td>
+        <td align="left"><input name="sendyoubian" type="text" id="sendyoubian" size="45" value="<{$arr.sendyoubian}>" /></td>
+      </tr>
+      <tr>
+        <td height="35" align="right">代收金额：</td>
+        <td align="left"><input name="daishou" type="text" id="daishou" size="45" value="<{$arr.daishou}>" /></td>
+      </tr>
+      <tr>
+        <td height="35" align="right">备注：</td>
+        <td align="left"><input name="beizhu" type="text" id="beizhu" size="45" value="<{$arr.beizhu}>" /></td>
+      </tr>
+      <tr>
+        <td height="35" align="right">货到付款物流编号：</td>
+        <td align="left"><input name="huodao" type="text" id="huodao" size="45" value="<{$arr.huodao}>" /></td>
+      </tr>
+      <tr>
+        <td height="35" align="right">&nbsp;</td>
+        <td align="left"><input type="submit" name="Submit" value="保存快递发件人设置" /></td>
+      </tr>
+    </table>
+  </form>
+  </div>
+  </div>
+</body>
+</html>

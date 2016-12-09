@@ -1,0 +1,88 @@
+<{include file="admin/session.html"}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="skin/admin/style/base.css" type="text/css" />
+<link rel="stylesheet" href="skin/admin/style/main.css" type="text/css" />
+<script language=javascript>     
+function printsetup(){
+    //  打印页面设置
+    wb.execwb(8,1);   
+}
+function printpreview(){
+    //  打印页面预览
+    wb.execwb(7,1);
+}
+function printit(){
+  if (confirm('确定打印吗？')){
+    wb.ExecWB(6,1)
+    //wb.execwb(1,1)//打开
+    //wb.ExecWB(2,1);//关闭现在所有的IE窗口，并打开一个新窗口
+    //wb.ExecWB(4,1)//;保存网页
+    //wb.ExecWB(6,1)//打印
+    //wb.ExecWB(7,1)//打印预览
+    //wb.ExecWB(8,1)//打印页面设置
+    //wb.ExecWB(10,1)//查看页面属性
+    //wb.ExecWB(15,1)//好像是撤销，有待确认
+    //wb.ExecWB(17,1)//全选
+    //wb.ExecWB(22,1)//刷新
+    //wb.ExecWB(45,1)//关闭窗体无提示
+  }
+}
+</script> 
+<title>管理系统</title></head>
+<body>
+<table width="700" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td>
+<div style="height:20px;font-size:12px;text-align:center;">
+        <input value="打印" type="button" onclick="javascript:window.print()" />
+        <OBJECT classid="CLSID:8856F961-340A-11D0-A96B-00C04FD705A2" height="0" id="wb" name="wb" width="0">
+        </OBJECT>
+        <input type=button name=button_print style="display:none;" value="打印本报表" onclick="javascript:printit()">
+        <input type=button name=button_setup value="打印页面设置" onclick="javascript:printsetup();">
+        <input type=button name=button_show value="打印预览" onclick="javascript:printpreview();">
+</div>
+	</td>
+  </tr>
+</table>
+<br />
+<table width="700" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="25" align="center" style="font-size:14px"><strong><{$title}></strong></td>
+  </tr>
+  <tr>
+    <td height="25" align="right">单位（元）</td>
+  </tr>
+</table>
+<table width="700" border="1" align="center" cellpadding="0" cellspacing="0" style="border-collapse:collapse" bordercolor="#c6c6c6">
+  <tr>
+    <td height="25" align="center" bgcolor="#f2f2f2"><strong>日/月/年</strong></td>
+    <td align="center" bgcolor="#f2f2f2"><strong>已成交</strong></td>
+    <td align="center" bgcolor="#f2f2f2"><strong>未支付</strong></td>
+    <td align="center" bgcolor="#f2f2f2"><strong>待发货</strong></td>
+    <td align="center" bgcolor="#f2f2f2"><strong>未处理</strong></td>
+    <td align="center" bgcolor="#f2f2f2"><strong>全部</strong></td>
+  </tr>
+<{foreach from=$myday item=one}>
+  <tr>
+    <td height="25" align="center" bgcolor="#f2f2f2"><{$one.days}></td>
+    <td align="center"><{$one.t1}></td>
+    <td align="center"><{$one.t2}></td>
+    <td align="center"><{$one.t3}></td>
+    <td align="center"><{$one.t4}></td>
+    <td align="center"><{$one.t5}></td>
+  </tr>
+<{/foreach}>
+  <tr>
+    <td height="25" align="center" bgcolor="#f2f2f2"><strong>合计</strong></td>
+    <td align="center"><{$totle1}></td>
+    <td align="center"><{$totle2}></td>
+    <td align="center"><{$totle3}></td>
+    <td align="center"><{$totle4}></td>
+    <td align="center"><{$totle5}></td>
+  </tr>
+</table>
+</body>
+</html>

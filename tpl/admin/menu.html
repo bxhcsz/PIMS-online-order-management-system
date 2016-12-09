@@ -1,0 +1,125 @@
+<{include file="admin/session.html"}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>menu</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<link rel="stylesheet" href="skin/admin/style/base.css" type="text/css" />
+<link rel="stylesheet" href="skin/admin/style/menu.css" type="text/css" />
+<script language='javascript'>var curopenItem = '1';</script>
+<script language="javascript" type="text/javascript" src="skin/admin/js/menu.js"></script>
+<base target="main" />
+</head>
+<!-- 左边菜单开始 -->
+<body target="main" style="text-align:left; background:#F6F6F6">
+<table width='99%' height="100%" border='0' cellspacing='0' cellpadding='0'>
+  <tr>
+    <td style='padding-left:3px;' valign="top">
+<{if $qx1=="1"}>
+      <dl class='bitem'>
+        <dt onClick='showHide("items1_1")'><b>订单管理</b></dt>
+        <dd style='' class='sitem' id='items1_1'>
+          <ul class='sitemu'>
+		    <li><a href='<{spUrl c=admin a=orderlist}>' target='main'>客户订单管理</a></li>
+		    <li><a href='<{spUrl c=order a=searchorder}>' target='main'>订单查询</a></li>
+		    <li><a href='<{spUrl c=order a=addorder}>' target='main'>手动添加订单</a></li>
+		    <li><a href='<{spUrl c=html a=yejihis}>' target='main'>业绩结算历史</a></li>
+          </ul>
+        </dd>
+      </dl>
+<{/if}>
+<{if $qx2=="1"}>
+      <dl class='bitem'>
+        <dt onClick='showHide("items2_1")'><b>报表统计</b></dt>
+        <dd style='' class='sitem' id='items2_1'>
+          <ul class='sitemu'>
+		    <li><a href='<{spUrl c=order a=table_day}>' target='main'>日统计报表</a></li>
+		    <li><a href='<{spUrl c=reports a=table_month}>' target='main'>月统计报表</a></li>
+		    <li><a href='<{spUrl c=reports a=table_year}>' target='main'>年统计报表</a></li>
+		    <li><a href='<{spUrl c=others a=area}>' target='main'>区域统计报表</a></li>
+          </ul>
+        </dd>
+      </dl>
+<{/if}>
+<{if $qx3=="1"}>
+      <dl class='bitem'>
+        <dt onClick='showHide("items3_1")'><b>收款方式管理</b></dt>
+        <dd style='' class='sitem' id='items3_1'>
+          <ul class='sitemu'>
+		    <li><a href='<{spUrl c=admin a=alipay}>' target='main'>支付宝接口管理</a></li>
+		    <li><a href='<{spUrl c=admin a=chinabank}>' target='main'>网银在线接口管理</a></li>
+		    <li><a href='<{spUrl c=admin a=tenpay}>' target='main'>财付通接口管理</a></li>
+		    <li><a href='<{spUrl c=admin a=yeepay}>' target='main'>易宝接口管理</a></li>
+		    <li><a href='<{spUrl c=admin a=paypal}>' target='main'>Paypal接口管理</a></li>
+		    <!--<li><a href='<{spUrl c=admin a=bankpay}>' target='main'>银行帐号管理</a></li>-->
+          </ul>
+        </dd>
+      </dl>
+<{/if}>
+<{if $qx4=="1"}>
+      <dl class='bitem'>
+        <dt onClick='showHide("items4_1")'><b>产品管理</b></dt>
+        <dd style='' class='sitem' id='items4_1'>
+          <ul class='sitemu'>
+		    <li><a href='<{spUrl c=admin a=group}>' target='main'>产品组管理</a></li>
+		    <li><a href='<{spUrl c=admin a=product}>' target='main'>产品管理</a></li>
+          </ul>
+        </dd>
+      </dl>
+<{/if}>
+<{if $qx5=="1"}>
+      <dl class='bitem'>
+        <dt onClick='showHide("items5_1")'><b>提醒设置</b></dt>
+        <dd style='' class='sitem' id='items5_1'>
+          <ul class='sitemu'>
+		    <li><a href='<{spUrl c=sms a=smsshow}>' target='main'>客户短信提醒设置</a></li>
+		    <li><a href='<{spUrl c=admin a=email}>' target='main'>后台邮件提醒设置</a></li>
+		    <li><a href='<{spUrl c=others a=mobile}>' target='main'>后台短信提醒设置</a></li>
+		    <li><a href='<{spUrl c=sound a=show}>' target='main'>新订单声音提醒设置</a></li>
+          </ul>
+        </dd>
+      </dl>
+<{/if}>
+<{if $qx6=="1"}>
+      <dl class='bitem'>
+        <dt onClick='showHide("items6_1")'><b>其他设置</b></dt>
+        <dd style='' class='sitem' id='items6_1'>
+          <ul class='sitemu'>
+		    <li><a href='<{spUrl c=books a=send}>' target='main'>发货设置</a></li>
+		    <li><a href='<{spUrl c=others a=guestbook}>' target='main'>留言管理</a></li>
+<!--		    <li><a href='<{spUrl c=others a=newsort}>' target='main'>新闻分类管理</a></li>
+		    <li><a href='<{spUrl c=others a=addnews}>' target='main'>发布新闻</a></li>
+		    <li><a href='<{spUrl c=others a=newslist}>' target='main'>新闻管理</a></li>
+		    <li><a href='<{spUrl c=news a=moban}>' target='main'>新闻模板管理</a></li>
+-->          </ul>
+        </dd>
+      </dl>
+<{/if}>
+<{if $qx7=="1"}>
+      <dl class='bitem'>
+        <dt onClick='showHide("items7_1")'><b>超级管理</b></dt>
+        <dd style='' class='sitem' id='items7_1'>
+          <ul class='sitemu'>
+		    <li><a href='<{spUrl c=html a=showyeji}>' target='main'>客服业绩与结算</a></li>
+		    <!--<li><a href='<{spUrl c=news a=showuseremail}>' target='main'>客户邮件群发</a></li>-->
+		    <li><a href='<{spUrl c=order a=isdel}>' target='main'>订单回收站</a></li>
+		    <li><a href='<{spUrl c=order a=output}>' target='main'>订单导出</a></li>
+		    <li><a href='<{spUrl c=others a=log}>' target='main'>操作日志</a></li>
+		    <li><a href='<{spUrl c=others a=loginlog}>' target='main'>登录日志</a></li>
+		    <li><a href='<{spUrl c=others a=addadmin}>' target='main'>添加客服</a></li>
+		    <li><a href='<{spUrl c=others a=adminlist}>' target='main'>客服列表</a></li>
+		    <li><a href='controller/scan.php' target='main'>木马自检</a></li>
+		    <li><a href='<{spUrl c=kuaidi a=keys}>' target='main'>快递追踪设置</a></li>
+		    <li><a href='<{spUrl c=others a=showbak}>' target='main'>数据库备份</a></li>
+		    <!--<li><a href='<{spUrl c=macaddr a=show}>' target='main'>客户端登陆绑定</a></li>-->
+          </ul>
+        </dd>
+      </dl>
+<{/if}>
+	  </td>
+  </tr>
+</table>
+<!-- 左边菜单结束 -->
+</body>
+</html>

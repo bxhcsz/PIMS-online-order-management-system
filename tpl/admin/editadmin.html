@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style type="text/css">
+<!--
+body,td,th {
+	font-size: 12px;
+}
+-->
+</style>
+<script language="javascript">
+function checkmyfrm() {
+	var f=document.form99;
+	if (f.pass.value=="") {
+	alert("密码不能为空");
+	return false;
+	}
+	if (f.repass.value=="") {
+	alert("重复密码不能为空");
+	return false;
+	}
+	if (f.pass.value!=f.repass.value) {
+	alert("两次输入的密码不相同");
+	return false;
+	}
+	f.submit();
+}
+</script>
+</head>
+
+<body>
+<form method="post" action="<{spUrl c=others a=saveeditadmin}>" class="registerform" name="form99" onsubmit="return false;">
+    <table width="98%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="30%" height="25" align="right">用户名：</td>
+        <td width="70%" align="left"><strong><{$showau.username}></strong><input name="cid" type="hidden" value="<{$showau.id}>" /></td>
+      </tr>
+      <tr>
+        <td height="25" align="right">密码：</td>
+        <td align="left"><input name="pass" type="password" id="pass" width="width:140px" class="inputxt" datatype="*" nullmsg="请设置密码！" /></td>
+      </tr>
+      <tr>
+        <td height="25" align="right">重复密码：</td>
+        <td align="left"><input name="repass" type="password" id="repass" width="width:140px" class="inputxt" datatype="*" recheck="pass" nullmsg="请再输入一次密码！" errormsg="您两次输入的账号密码不一致！" /></td>
+      </tr>
+      <tr>
+        <td height="25" align="right">权限设置：</td>
+        <td align="left"><input name="qx[]" type="checkbox" id="qx[]" value="1" <{if $qx1=="1"}>checked="checked"<{/if}> />
+          订单管理</td>
+      </tr>
+      <tr>
+        <td height="25" align="right">&nbsp;</td>
+        <td align="left"><input name="qx[]" type="checkbox" id="qx[]" value="2" <{if $qx2=="1"}>checked="checked"<{/if}> />
+          报表统计</td>
+      </tr>
+      <tr>
+        <td height="25" align="right">&nbsp;</td>
+        <td align="left"><input name="qx[]" type="checkbox" id="qx[]" value="3" <{if $qx3=="1"}>checked="checked"<{/if}> />
+          收款方式管理</td>
+      </tr>
+      <tr>
+        <td height="25" align="right">&nbsp;</td>
+        <td align="left"><input name="qx[]" type="checkbox" id="qx[]" value="4" <{if $qx4=="1"}>checked="checked"<{/if}> />
+          产品管理</td>
+      </tr>
+      <tr>
+        <td height="25" align="right">&nbsp;</td>
+        <td align="left"><input name="qx[]" type="checkbox" id="qx[]" value="5" <{if $qx5=="1"}>checked="checked"<{/if}> />
+          提醒设置</td>
+      </tr>
+      <tr>
+        <td height="25" align="right">&nbsp;</td>
+        <td align="left"><input name="qx[]" type="checkbox" id="qx[]" value="6" <{if $qx6=="1"}>checked="checked"<{/if}> />
+          其他设置</td>
+      </tr>
+      <tr <{if $showau.username=="admin"}>style="display:none"<{/if}>>
+        <td height="25" align="right">&nbsp;</td>
+        <td align="left"><input name="qx[]" type="checkbox" id="qx[]" value="7" <{if $qx7=="1"}>checked="checked"<{/if}> />
+          超级管理</td>
+      </tr>
+      <tr  <{if $showau.username=="admin"}>style="display:none"<{/if}>>
+        <td height="25" align="right">订单权限：</td>
+        <td align="left" bgcolor="#f2f2f2">
+      <{if $showqx|@count gt 0}>
+      <{foreach from=$showqx item=one}>
+	  <input name="ddqx[]" type="checkbox" id="ddqx[]" value="<{$one.id}>" <{if in_array($one.id,$ddqx)}>checked="checked"<{/if}> /> <{$one.gname}><br />
+      <{/foreach}>
+      <{else}>
+	  您还没有添加产品组...
+      <{/if}>
+		</td>
+      </tr>
+      <tr>
+        <td height="25" align="right">&nbsp;</td>
+        <td align="left"><input type="submit" name="Submit" value="修改管理员" onclick="checkmyfrm()" /></td>
+      </tr>
+    </table>
+</form>
+</body>
+</html>

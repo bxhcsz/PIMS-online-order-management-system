@@ -1,0 +1,84 @@
+<{include file="admin/session.html"}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="skin/admin/style/base.css" type="text/css" />
+<link rel="stylesheet" href="skin/admin/style/main.css" type="text/css" />
+<script type="text/javascript" src="skin/admin/js/jquery.js"></script>
+<script type="text/javascript" src="skin/admin/js/Validform.js"></script>
+<script type="text/javascript">
+$(function(){
+	$(".registerform:last").Validform({
+		tiptype:2,
+		ajaxPost:true,
+		callback:function(data){
+			if(data.status=="y"){
+				setTimeout(function(){
+					$.Hidemsg(); //公用方法关闭信息提示框;
+				},2000);
+			}
+		}
+	});
+})
+</script>
+<title>管理系统</title>
+</head>
+<body>
+<div class="rbox">
+  <div class="ur_here">
+    <div class="path fl">收款方式管理<span>-</span>支付宝接口管理</div>
+</div>  
+  <form class="registerform" method="post" action="<{spUrl c=admin a=alipaysave}>">
+  <div class="add_box">
+<table width="98%" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse" bordercolor="#c6c6c6">
+        <tr>
+          <td height="25" colspan="3" align="center" bgcolor="#f2f2f2"><strong>支付宝(即时到帐/担保交易)接口设置</strong></td>
+        </tr>
+        <tr>
+          <td height="25" align="right">接口类型：</td>
+          <td align="left">
+		  <select name="zftypes" id="zftypes">
+		    <option value="1">即时到帐交易/担保交易/双接口</option>
+          </select>
+		  <input name="id" type="hidden" value="<{$alipayinfo.id}>" /></td>
+          <td align="left">&nbsp;</td>
+        </tr>
+        <tr>
+          <td width="21%" height="25" align="right">签约支付宝账号：</td>
+          <td width="28%" align="left"><input name="zhanghao" type="text" value="<{$alipayinfo.zhanghao}>" size="45" class="inputxt" datatype="*" nullmsg="请输入签约帐号！" /></td>
+          <td width="51%" align="left"><div class="Validform_checktip">(支付宝的签约帐号)</div></td>
+        </tr>
+        <tr>
+          <td height="25" align="right">安全检验码(KEY)：</td>
+          <td align="left"><input name="jianyanma" type="text" class="inputxt" id="jianyanma" value="<{$alipayinfo.jianyanma}>" size="45" maxlength="32" datatype="*15" nullmsg="请输入安全检验码！" errormsg="格式错误，以数字和字母组成的32位字符串！" /></td>
+          <td align="left"><div class="Validform_checktip">(以数字和字母组成的32位字符)</div></td>
+        </tr>
+        <tr>
+          <td height="25" align="right">合作者身份ID(PID)：</td>
+          <td align="left"><input name="hezuoid" type="text" id="hezuoid" size="45" value="<{$alipayinfo.hezuoid}>" maxlength="16" datatype="num16" nullmsg="请输入合作者身份ID！" errormsg="格式错误，以2088开头的16位纯数字！"  /></td>
+          <td align="left"><div class="Validform_checktip">(以2088开头的16位纯数字)</div></td>
+        </tr>
+        
+        <tr>
+          <td height="25" align="right">PIMS所在网站目录：</td>
+          <td align="left"><input name="urladdress" type="text" id="urladdress" size="45" value="<{$alipayinfo.urladdress}>" datatype="siteurl" nullmsg="请输入网站地址！" errormsg="格式错误，http://开头完整地址，最后不要加'/'！" /></td>
+          <td align="left"><div class="Validform_checktip">(http://开头完整地址，最后不要加&quot;/&quot;)</div></td>
+        </tr>
+        <tr>
+          <td height="25" align="right">&nbsp;</td>
+          <td align="left"><input type="submit" name="Submit2" value="保存/修改" /> 
+            <a href="http://member1.taobao.com/member/new_register.jhtml?from=&amp;ex_info=&amp;ex_sign=" target="_blank">申请支付宝接口</a></td>
+          <td align="left">&nbsp;</td>
+        </tr>
+        <tr>
+          <td height="25" colspan="3" align="left">商品展示地址需根据需要手动修改：<br />
+            1、pims/pay/alipay/alipayto.php 第63行<br />
+            2、pims/pay/alipaydb/alipayto.php 第54行</td>
+        </tr>
+      </table>
+    </div>
+  </form>
+</div>
+</body>
+</html>

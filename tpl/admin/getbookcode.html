@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style type="text/css">
+<!--
+body,td,th {
+	font-size: 12px;
+}
+-->
+</style>
+<script language="javascript">
+function showcode() {
+nums=document.frmw.nums.value;
+mod=document.frmw.types.value;
+p=document.frmw.p.value;
+gps=document.frmw.gp.value;
+document.frmw.showit.value="<script>$(function(){$('#shopping_list li').quickpaginate({perpage:"+nums+",pager:$('#shopping_list_counter')});});<\/script><script type='text/javascript' src='<{$basedir}>/index.php?c=api&a=bookcode&mod="+mod+"&p="+p+"&gps="+gps+"'><\/script>";
+}
+</script>
+</head>
+
+<body>
+<div id="flash_copy"></div>
+<form method="post" name="frmw">
+<table width="98%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td height="25" align="right">产品组：</td>
+    <td align="left"><select name="gp" id="gp">
+        <{foreach from=$group item=two}>
+		<option value="<{$two.id}>"><{$two.gname}></option>
+		<{/foreach}>
+    </select></td>
+  </tr>
+  <tr>
+    <td width="33%" height="25" align="right">每页显示留言条数：</td>
+    <td width="67%" align="left"><input name="nums" type="text" id="nums" /></td>
+  </tr>
+  <tr>
+    <td height="25" align="right">显示留言类型：</td>
+    <td align="left"><select name="types" id="types">
+      <option value="1">全部留言</option>
+      <option value="2">已回复(审核)的留言</option>
+    </select>    </td>
+  </tr>
+  <tr>
+    <td height="25" align="right">是否显示分页：</td>
+    <td align="left"><select name="p" id="p">
+      <option value="1">显示</option>
+      <option value="2">不显示</option>
+    </select>    </td>
+  </tr>
+  <tr>
+    <td height="25" align="right">&nbsp;</td>
+    <td align="left"><input type="button" name="Submit" value="获取留言调用代码" onclick="showcode()" /></td>
+  </tr>
+  <tr>
+    <td height="25" colspan="2" align="center"><br />
+    <textarea name="showit" cols="50" rows="6" id="showit"></textarea></td>
+  </tr>
+</table>
+</form>
+</body>
+</html>

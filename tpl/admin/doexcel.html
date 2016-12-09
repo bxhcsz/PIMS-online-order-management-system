@@ -1,0 +1,60 @@
+<{include file="admin/session.html"}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>管理系统</title></head>
+<body>
+<br />
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><strong>订单编号</strong></td>
+    <td><strong>产品名称</strong></td>
+    <td><strong>单价</strong></td>
+    <td><strong>总计</strong></td>
+    <td><strong>数量</strong></td>
+    <td><strong>收货人</strong></td>
+    <td><strong>手机</strong></td>
+    <td><strong>地址</strong></td>
+    <td><strong>订单备注</strong></td>
+    <td><strong>自定义字段</strong></td>
+    <td><strong>支付方式</strong></td>
+    <td><strong>下单时间</strong></td>
+    <td><strong>IP</strong></td>
+    <td><strong>所在地</strong></td>
+    <td><strong>发货</strong></td>
+    <td><strong>付款</strong></td>
+    <td><strong>物流</strong></td>
+    <td><strong>单号</strong></td>
+    <td><strong>客服</strong></td>
+    <td><strong>客服备注</strong></td>
+    <td><strong>发货时间</strong></td>
+  </tr>
+<{foreach from=$mydata item=one}>
+  <tr>
+    <td><{$one.ordernum}></td>
+    <td><{$one.pname}></td>
+    <td><{$one.price}></td>
+    <td><{$one.totle}></td>
+    <td><{$one.nums}></td>
+    <td><{$one.realname}></td>
+    <td><{$one.mob}></td>
+    <td><{$one.address}></td>
+    <td><{$one.beizhu}></td>
+    <td><{$one.useroption}></td>
+    <td><{if $one.payment=="1"}>支付宝即时到帐<{elseif $one.payment=="2"}>支付宝担保交易<{elseif $one.payment=="3"}>银联在线<{elseif $one.payment=="4"}>财付通<{elseif $one.payment=="5"}>易宝<{elseif $one.payment=="6"}>银行汇款<{elseif $one.payment=="7"}>货到付款<{elseif $one.payment=="8"}>上门取货<{else}>Paypal<{/if}></td>
+    <td><{$one.addtime}></td>
+    <td><{$one.ips}></td>
+    <td><{$one.areas}></td>
+    <td><{if $one.zt1=="1"}><font color="red">未处理</font><{elseif $one.zt1=="2"}><font color="blue">待发货</font><{else}><font color="green">已发货</font><{/if}></td>
+    <td><{if $one.zt2=="1"}><font color="red">未付款</font><{else}><font color="green">已付款</font><{/if}></td>
+    <td><{$one.wuliu}></td>
+    <td><{$one.wuliunum}></td>
+    <td><{$one.kefu}></td>
+    <td><{$one.beizhu2}></td>
+    <td><{$one.sendtime}></td>
+  </tr>
+<{/foreach}>
+</table>
+</body>
+</html>

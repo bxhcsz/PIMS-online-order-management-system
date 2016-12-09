@@ -1,0 +1,107 @@
+<{include file="admin/session.html"}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<META HTTP-EQUIV="pragma" CONTENT="no-cache"> 
+<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
+<META HTTP-EQUIV="expires" CONTENT="0"> 
+<link rel="stylesheet" href="skin/admin/style/base.css" type="text/css" />
+<link rel="stylesheet" href="skin/admin/style/main.css" type="text/css" />
+<link rel="alternate stylesheet" type="text/css" href="skin/admin/Upimg/1024.css" />
+<style type="text/css" media="all">
+@import "skin/admin/Upimg/thickbox.css";
+</style>
+<script type="text/javascript" src="skin/admin/js/jquery.js"></script>
+<script type="text/javascript" src="skin/admin/js/Validform.js"></script>
+<script type="text/javascript">
+$(function(){
+	$(".registerform:last").Validform({
+		tiptype:2,
+		ajaxPost:true,
+		callback:function(data){
+			if(data.status=="y"){
+				setTimeout(function(){
+					$.Hidemsg(); //公用方法关闭信息提示框;
+				},2000);
+			}
+		}
+	});
+})
+</script>
+<script src="skin/admin/Upimg/thickbox-compressed.js" type="text/javascript"></script>
+<script src="skin/admin/Upimg/global.js" type="text/javascript"></script>
+<script type="text/javascript" src="include/swfobject.js"></script>
+<script language="JavaScript" type="text/javascript" src="include/WebCalendar.js"></script>
+<title>管理系统</title>
+</head>
+<body onload="">
+<div class="rbox">
+  <div class="ur_here">
+    <div class="path fl" align="left">PIMS在线订单管理系统<span>-订单导出</span></div>
+</div>  
+  <div class="add_box"><br />
+  <form method="post" action="<{spUrl c=order a=doexcel}>">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="13%" height="25" align="right">发货状态：</td>
+        <td width="87%" align="left"><select name="zt1" id="zt1">
+          <option value="-1">全部</option>
+          <option value="1">未处理</option>
+          <option value="2">待发货</option>
+          <option value="3">已发货</option>
+          <option value="4">已签收</option>
+          <option value="5">已退回</option>
+        </select>
+        </td>
+      </tr>
+      <tr>
+        <td height="25" align="right">付款状态：</td>
+        <td align="left"><select name="zt2" id="zt2">
+          <option value="-1">全部</option>
+          <option value="1">未付款</option>
+          <option value="2">已付款</option>
+        </select>
+        </td>
+      </tr>
+      <tr>
+        <td height="25" align="right">支付方式：</td>
+        <td align="left"><select name="zt3" id="zt3">
+          <option value="-1">全部支付方式</option>
+          <option value="1">支付宝即时到帐</option>
+          <option value="2">支付宝担保交易</option>
+          <option value="3">网银在线</option>
+          <option value="4">财付通即时到帐</option>
+          <option value="5">易宝</option>
+          <option value="6">银行汇款</option>
+          <option value="7">货到付款</option>
+          <option value="8">上门取货</option>
+        </select>
+        </td>
+      </tr>
+      <tr>
+        <td height="25" align="right">产品组：</td>
+        <td align="left"><select name="zt4" id="zt4">
+          <option value="-1">全部产品组</option>
+		  <{foreach from=$group item=two}>
+          <option value="<{$two.id}>"><{$two.gname}></option>
+        		<{/foreach}>
+        </select></td>
+      </tr>
+      <tr>
+        <td height="25" align="right">时间段：</td>
+        <td align="left"><input name="s" type="text" id="s" size="12" onclick="new Calendar().show(this);" readonly="readonly" />
+-
+  <input name="e" type="text" id="e" size="12" onclick="new Calendar().show(this);" readonly="readonly" />
+  （可留空）</td>
+      </tr>
+      <tr>
+        <td height="25" align="right">&nbsp;</td>
+        <td align="left"><input type="submit" name="Submit" value="导出为Excel文档" /></td>
+      </tr>
+    </table>
+    <br />
+  
+
+</body>
+</html>

@@ -1,0 +1,54 @@
+<{include file="admin/session.html"}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="skin/admin/style/base.css" type="text/css" />
+<link rel="stylesheet" href="skin/admin/style/main.css" type="text/css" />
+<link rel="alternate stylesheet" type="text/css" href="skin/admin/Upimg/1024.css" />
+<style type="text/css" media="all">
+@import "skin/admin/Upimg/global.css";
+@import "skin/admin/Upimg/thickbox.css";
+.STYLE1 {color: #FF0000}
+</style>
+<script type="text/javascript" src="skin/admin/js/jquery.js"></script>
+<script type="text/javascript" src="skin/admin/js/Validform.js"></script>
+<script type="text/javascript">
+$(function(){
+	$(".registerform:last").Validform({
+		tiptype:2,
+		ajaxPost:true,
+		callback:function(data){
+			if(data.status=="y"){
+				setTimeout(function(){
+					$.Hidemsg(); 
+				},2000);
+			}
+		}
+	});
+})
+</script>
+<script src="skin/admin/Upimg/thickbox-compressed.js" type="text/javascript"></script>
+<script src="skin/admin/Upimg/global.js" type="text/javascript"></script>
+<title>管理系统</title>
+</head>
+<body>
+<div class="rbox">
+  <div class="ur_here">
+    <div class="path fl" align="left">表单设置<span>-获取表单代码-<{$groupname}>产品组</span></div>
+</div>  
+  <div class="add_box">
+<span class="STYLE1">
+<form method="post" action="<{spUrl c=others a=makeorder}>">
+<input type="hidden" name="xyz" value="<{$xyz}>" />
+<input type="submit" name="Submit" value="点击生成订购页面" />&nbsp;&nbsp;<strong>注意：以下订单页面，是无css的效果，付费用户可以生成订单页面后联络售后协助您修改，系统生成的页面位于pims根目录，名称order.html。</strong></span></form>
+<br />
+<br />
+<{$editor}><br />
+调用代码（将调用代码复制到订购页面需要显示订单的位置，路径和宽、高清自行设置）：<br />
+<textarea cols="60" rows="5"><iframe src="路径/order.html" height="auto" width="510" scrolling="no" frameborder="0" allowtransparency="true" style="background-color=transparent"></iframe></textarea>
+
+</div>
+</div>
+</body>
+</html>

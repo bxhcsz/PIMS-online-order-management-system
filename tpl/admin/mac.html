@@ -1,0 +1,82 @@
+<{include file="admin/session.html"}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<META HTTP-EQUIV="pragma" CONTENT="no-cache"> 
+<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
+<META HTTP-EQUIV="expires" CONTENT="0"> 
+<link rel="stylesheet" href="skin/admin/style/base.css" type="text/css" />
+<link rel="stylesheet" href="skin/admin/style/main.css" type="text/css" />
+<link rel="alternate stylesheet" type="text/css" href="skin/admin/Upimg/1024.css" />
+<style type="text/css" media="all">
+.STYLE1 {color: #FF0000}
+.STYLE2 {color: #0000FF}
+</style>
+<OBJECT
+	  ID="HDInfo"
+	  classid="clsid:67DDA183-9ABD-43AF-A696-F74CB58CC28D"
+	  codebase="CpuIDMacInfo.cab#version=1,0,0,0"
+	  width=0
+	  height=0
+	  align=center
+	  hspace=0
+	  vspace=0
+>
+</OBJECT>
+<script language="javascript">
+function delmessage(urls) {
+if (confirm('确定解除绑定吗？')) {
+location.href=urls;
+}
+}
+</script>
+
+<title>管理系统</title>
+</head>
+<body onload="">
+<div class="rbox">
+  <div class="ur_here">
+    <div class="path fl" align="left">PIMS在线订单管理系统<span>-客户端登陆绑定</span></div>
+</div>  
+  <div class="add_box">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<form method="post" action="<{spUrl c=macaddr a=open}>">
+      <tr>
+        <td height="60" align="left">当前状态：<{$is_open}>
+        <input type="submit" name="Submit2" value="开启/关闭" /></td>
+      </tr>
+	</form>
+	<form method="post" action="<{spUrl c=macaddr a=add}>">
+      <tr>
+        <td height="60" align="left">请输入mac地址：
+          <input name="mymac" type="text" id="mymac" size="20" />
+        <input type="submit" name="Submit" value="添加绑定" />
+        <span class="STYLE1">(*输入框默认的为本机的mac地址，若不显示，请改用IE或IE内核浏览器；其他客服机器获取mac地址的方式请参看说明)		</span></td>
+      </tr>
+	</form>
+      <tr>
+        <td height="30" align="left">
+		已绑定的客户端：<br><br>
+      	<{foreach from=$temp item=one}>
+		<strong><{$one}></strong><{if $one}>&nbsp;&nbsp;<img src="skin/admin/images/pic22.gif" width="12" height="12" border="0" title="解除绑定" alt="解除绑定" style="cursor:pointer" onclick="delmessage('<{spUrl c=macaddr a=del mac=$one}>');" /><{/if}><br><br>
+		<{/foreach}>
+		</td>
+      </tr>
+      <tr>
+        <td height="30" align="left"><br /><br /><p>说明：<br />
+        1、mac绑定功能是指通过识别本机唯一标识，拒绝其他客户端电脑登陆pims后台，最大限度保证后台安全；多客服需要在开启本功能前<span class="STYLE1">逐一先做好绑定</span>操作再开启。<br />
+        2、系统采用ActiveX控件，所以开启mac登陆绑定后，请使用<span class="STYLE1">ie内核浏览器</span>（IE、360、傲游、搜狗、腾讯TT等）登陆pims后台。<br />
+        3、<span class="STYLE2">查看本机网卡物理地址的方法：开始-运行，输入“cmd”，光标处输入“ipconfig -all”</span><br />
+        </p>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</body>
+</html>
+<script language='javascript'>
+var ttt=HDInfo.getMacInfo();
+document.getElementById("mymac").value=ttt;
+</script>

@@ -1,0 +1,71 @@
+<{include file="admin/session.html"}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="skin/admin/style/base.css" type="text/css" />
+<link rel="stylesheet" href="skin/admin/style/main.css" type="text/css" />
+<title>管理系统</title>
+<style type="text/css">
+<!--
+.STYLE1 {color: #FF0000}
+-->
+</style>
+</head>
+<body>
+<div class="rbox">
+  <div class="ur_here">
+    <div class="path fl" align="left">提醒设置<span>-</span>客户手机短信提醒设置</div>
+</div>  
+  <div class="add_box">
+      <table width="98%" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse" bordercolor="#c6c6c6">
+        <tr>
+          <td height="25" colspan="2" align="center" bgcolor="#f2f2f2"><strong>客户手机短信提醒设置（本功能需客户自行提供短信网关，我们免费协助整合）</strong></td>
+        </tr>
+		<form method="post" action="<{spUrl c=sms a=updatesms}>">
+        <tr>
+          <td width="30%" height="45" align="right">当前提醒状态：</td>
+          <td align="left">
+		  <select name="types" id="types">
+		  	<option value="<{if $re.is_open==''}>1<{elseif $re.is_open=='2'}>2<{else}>1<{/if}>"><{if $re.is_open=="2"}>开启客户短信提醒<{else}>关闭客户短信提醒<{/if}></option>
+            <{if $re.is_open<>"1"}><option value="1">关闭客户短信提醒</option><{/if}>
+            <{if $re.is_open<>"2"}><option value="2">开启客户短信提醒</option><{/if}>
+          </select>          </td>
+        </tr>
+        <tr>
+          <td height="45" align="right">短信接口用户名：</td>
+          <td align="left"><input name="username" type="text" id="username" value="<{$re.uid}>" /></td>
+        </tr>
+        <tr>
+          <td height="45" align="right">短信接口密码：</td>
+          <td align="left"><input name="password" type="text" id="password" value="<{$re.passwd}>" /></td>
+        </tr>
+        <tr>
+          <th height="45" align="right">同IP同手机每天订购次数：</th>
+          <td align="left"><input name="nums" type="text" id="nums" value="<{$re.nums}>" size="14" />
+            次
+            (<span class="STYLE1">*0为不限制</span>)</td>
+        </tr>
+        <tr>
+          <td height="45" align="right">短信模板：</td>
+          <td align="left"><textarea name="message" cols="60" rows="6" id="message"><{$re.message}></textarea>
+          (不超过70个汉字)</td>
+        </tr>
+        <tr>
+          <td height="45" align="right">&nbsp;</td>
+          <td align="left"><input type="submit" name="Submit2" value="保存设置" />
+          </td>
+        </tr>
+        <tr>
+          <td height="45" colspan="2" align="left" style="padding:15px; line-height:28px"><strong>模板说明</strong>：{ordernum}订单编号 - {pname}产品名称 - {price}产品单价 - {nums}订购数量 - {totle}订单总金额 - {realname}收货人姓名 - {mob}手机号码 - {address}收货地址<br />
+            {remark}客户订单备注 - {pay}支付方式 - {addtime}下单时间<br />
+            <strong>模板示例</strong>：尊敬的{realname}，您好。您已成功订购{pname}，订单总金额{totle}元。客户服务热线：010-88888888</td>
+          </tr>
+		</form>
+      </table>
+    <br />
+  </div>
+  <!--  内容列表   -->
+</div>
+</body>
+</html>

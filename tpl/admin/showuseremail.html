@@ -1,0 +1,84 @@
+<{include file="admin/session.html"}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="skin/admin/style/base.css" type="text/css" />
+<link rel="stylesheet" href="skin/admin/style/main.css" type="text/css" />
+<link rel="alternate stylesheet" type="text/css" href="skin/admin/Upimg/1024.css" />
+<style type="text/css" media="all">
+@import "skin/admin/Upimg/global.css";
+@import "skin/admin/Upimg/thickbox.css";
+.STYLE1 {color: #FF0000}
+</style>
+<script type="text/javascript" src="skin/admin/js/jquery.js"></script>
+<script type="text/javascript" src="skin/admin/js/Validform.js"></script>
+<script type="text/javascript">
+$(function(){
+	$(".registerform:last").Validform({
+		tiptype:2,
+		ajaxPost:true,
+		callback:function(data){
+			if(data.status=="y"){
+				setTimeout(function(){
+					$.Hidemsg(); //公用方法关闭信息提示框;
+				},2000);
+			}
+		}
+	});
+})
+function hideme() {
+document.getElementById("tijiao").style.display="none";
+document.getElementById("sm").style.display="";
+}
+</script>
+<script src="skin/admin/Upimg/thickbox-compressed.js" type="text/javascript"></script>
+<script src="skin/admin/Upimg/global.js" type="text/javascript"></script>
+<title>管理系统</title>
+</head>
+<body>
+<div class="rbox">
+  <div class="ur_here">
+    <div class="path fl" align="left">超级管理<span>-</span>客户邮件群发</div>
+</div>  
+  <div class="add_box">
+  <form method="post" action="<{spUrl c=news a=sendusermail}>" class="registerform">
+    <table width="100%" border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse" bordercolor="#c6c6c6">
+      <tr>
+        <td height="25" align="right">上次群发时间：</td>
+        <td align="left">&nbsp;<{$sendtime}></td>
+        <td align="left">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="12%" height="25" align="right">邮件字段名：</td>
+        <td width="73%" align="left"><input name="email" type="text" id="email" class="inputxt" datatype="*" nullmsg="邮件字段名不能留空！" /></td>
+        <td width="15%" align="left"><div class="Validform_checktip">请输入邮件字段名，如“电子邮件”</div></td>
+      </tr>
+      <tr>
+        <td height="25" align="right">邮件标题：</td>
+        <td align="left"><input name="title" type="text" id="title" size="50" class="inputxt" datatype="*" nullmsg="邮件标题不能留空！" /></td>
+        <td align="left"><div class="Validform_checktip">请输入邮件标题</div></td>
+      </tr>
+      <tr>
+        <td height="25" align="right">邮件内容：</td>
+        <td align="left"><{$editor}></td>
+        <td align="left">&nbsp;</td>
+      </tr>
+      <tr>
+        <td height="25" align="right">&nbsp;</td>
+        <td colspan="2" align="left"><input type="submit" name="Submit" id="tijiao" value="开始群发" onclick="hideme()" /><span id="sm" style="display:none"><font color="red">*群发中，请稍候，在此期间请勿刷新或关闭页面！</font></span></td>
+        </tr>
+
+      <tr>
+        <td height="25" colspan="3" align="left" style="padding:5px;"><strong>说明：</strong><br />
+        1、系统默认表单项没有电子邮件，您可以通过产品组的表单项设置自定义添加。<br />
+        2、邮件群发将调用您在邮件提醒中设置的smtp服务器发信。<br />
+        3、<span class="STYLE1">您需要填写自定义邮件字段名称，如“电子邮件”。</span></td>
+      </tr>
+    </table>
+	</form>
+  </div>
+  <!--  内容列表   -->
+</div>
+</body>
+</html>

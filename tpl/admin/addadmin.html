@@ -1,0 +1,118 @@
+<{include file="admin/session.html"}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="skin/admin/style/base.css" type="text/css" />
+<link rel="stylesheet" href="skin/admin/style/main.css" type="text/css" />
+<script type="text/javascript" src="skin/admin/js/jquery.js"></script>
+<script type="text/javascript" src="skin/admin/js/Validform.js"></script>
+<script type="text/javascript">
+$(function(){
+	$(".registerform:last").Validform({
+		tiptype:2,
+		ajaxPost:true,
+		callback:function(data){
+			if(data.status=="y"){
+				setTimeout(function(){
+					$.Hidemsg(); //公用方法关闭信息提示框;
+				},2000);
+			}
+		}
+	});
+})
+</script>
+<title>管理系统</title>
+<style type="text/css">
+<!--
+.STYLE1 {color: #FF0000}
+-->
+</style>
+</head>
+<body>
+<div class="rbox">
+  <div class="ur_here"><div class="path fl">系统管理<span>-</span>添加管理员</div><span class="action fr"><a href="<{spUrl c=others a=adminlist}>">管理员列表</a></span></div>  
+  <form method="post" action="<{spUrl c=others a=saveadmin}>" class="registerform">
+  <div class="add_box">
+    <table width="98%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="17%" height="25" align="right">用户名：</td>
+        <td width="16%" align="left"><input name="user" type="text" class="inputxt" id="user" width="width:140px" datatype="*" ajaxurl="<{spUrl c=others a=admincheck}>" nullmsg="用户名不能留空！" /></td>
+        <td width="67%" align="left"><div class="Validform_checktip">请输入用户名</div></td>
+      </tr>
+      <tr>
+        <td height="25" align="right">密码：</td>
+        <td align="left"><input name="pass" type="password" id="pass" width="width:140px" class="inputxt" datatype="*" nullmsg="请设置密码！" /></td>
+        <td align="left"><div class="Validform_checktip">请输入密码</div></td>
+      </tr>
+      <tr>
+        <td height="25" align="right">重复密码：</td>
+        <td align="left"><input name="repass" type="password" id="repass" width="width:140px" class="inputxt" datatype="*" recheck="pass" nullmsg="请再输入一次密码！" errormsg="您两次输入的账号密码不一致！" /></td>
+        <td align="left"><div class="Validform_checktip">确认密码</div></td>
+      </tr>
+      <tr>
+        <td height="25" align="right">菜单权限：</td>
+        <td align="left"><input name="qx[]" type="checkbox" class="rt2" id="qx[]" value="1" datatype="checkbox" errormsg="请选择权限！" />
+          订单管理</td>
+        <td align="left"><span class="STYLE1">(*建议只保留一个超级管理admin，客服只赋予订单管理以及产品组权限。)</span></td>
+      </tr>
+      <tr>
+        <td height="25" align="right">&nbsp;</td>
+        <td align="left"><input name="qx[]" type="checkbox" class="rt2" id="qx[]" value="2" datatype="checkbox" />
+          报表统计</td>
+        <td align="left">&nbsp;</td>
+      </tr>
+      <tr>
+        <td height="25" align="right">&nbsp;</td>
+        <td align="left"><input name="qx[]" type="checkbox" class="rt2" id="qx[]" value="3" datatype="checkbox" />
+          收款方式管理</td>
+        <td align="left">&nbsp;</td>
+      </tr>
+      <tr>
+        <td height="25" align="right">&nbsp;</td>
+        <td align="left"><input name="qx[]" type="checkbox" class="rt2" id="qx[]" value="4" datatype="checkbox" />
+          产品管理</td>
+        <td align="left">&nbsp;</td>
+      </tr>
+      <tr>
+        <td height="25" align="right">&nbsp;</td>
+        <td align="left"><input name="qx[]" type="checkbox" class="rt2" id="qx[]" value="5" datatype="checkbox" />
+          提醒设置</td>
+        <td align="left">&nbsp;</td>
+      </tr>
+      <tr>
+        <td height="25" align="right">&nbsp;</td>
+        <td align="left"><input name="qx[]" type="checkbox" class="rt2" id="qx[]" value="6" datatype="checkbox" />
+          其他设置</td>
+        <td align="left">&nbsp;</td>
+      </tr>
+      <tr>
+        <td height="25" align="right">&nbsp;</td>
+        <td align="left"><input name="qx[]" type="checkbox" class="rt2" id="qx[]" value="7" datatype="checkbox" />
+          超级管理</td>
+        <td align="left"></td>
+      </tr>
+      <tr>
+        <td height="25" align="right">订单权限：</td>
+        <td align="left" bgcolor="#f2f2f2">
+      <{if $showqx|@count gt 0}>
+      <{foreach from=$showqx item=one}>
+	  <input name="ddqx[]" type="checkbox" class="rt2" id="ddqx[]" value="<{$one.id}>" datatype="checkbox" /> <{$one.gname}><br />
+      <{/foreach}>
+      <{else}>
+	  您还没有添加产品组...
+      <{/if}>
+		</td>
+        <td align="left"></td>
+      </tr>
+      <tr>
+        <td height="25" align="right">&nbsp;</td>
+        <td align="left"><input type="submit" name="Submit" value="添加管理员" /></td>
+        <td align="left">&nbsp;</td>
+      </tr>
+    </table>
+  </div>
+  </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<{include file="admin/session.html"}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="skin/admin/style/base.css" type="text/css" />
+<link rel="stylesheet" href="skin/admin/style/main.css" type="text/css" />
+<link rel="alternate stylesheet" type="text/css" href="skin/admin/Upimg/1024.css" />
+<style type="text/css" media="all">
+@import "skin/admin/Upimg/global.css";
+@import "skin/admin/Upimg/thickbox.css";
+</style>
+<script type="text/javascript" src="skin/admin/js/jquery.js"></script>
+<script type="text/javascript" src="skin/admin/js/Validform.js"></script>
+<script type="text/javascript">
+$(function(){
+	$(".registerform:last").Validform({
+		tiptype:2,
+		ajaxPost:true,
+		callback:function(data){
+			if(data.status=="y"){
+				setTimeout(function(){
+					$.Hidemsg(); //公用方法关闭信息提示框;
+				},2000);
+			}
+		}
+	});
+})
+</script>
+<script src="skin/admin/Upimg/thickbox-compressed.js" type="text/javascript"></script>
+<script src="skin/admin/Upimg/global.js" type="text/javascript"></script>
+<title>管理系统</title>
+</head>
+<body>
+<div class="rbox">
+  <div class="ur_here">
+    <div class="path fl" align="left">提醒设置<span>-</span>手机短信提醒设置</div>
+</div>  
+  <div class="add_box">
+    <form action="<{spUrl c=others a=savemobtixing}>" method="post">
+      <table width="98%" border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse" bordercolor="#c6c6c6">
+        <tr>
+          <td height="25" colspan="2" align="center" bgcolor="#f2f2f2"><strong>手机短信提醒开关</strong></td>
+        </tr>
+        <tr>
+          <td width="30%" height="25" align="right">当前手机短信提醒状态：</td>
+          <td align="left">&nbsp;<{if $mob.zt=="1"}><font color="green"><strong>已开启</strong></font><{else}><font color="red"><strong>已关闭</strong></font><{/if}></td>
+        </tr>
+        <tr>
+          <td height="25" align="right">开启/关闭手机短信提醒：</td>
+          <td align="left"><select name="select20" id="select20">
+            <option value="1">打开手机短信提醒</option>
+            <option value="2">关闭手机短信提醒</option>
+          </select>
+          (开启前请务必确保您已设置好SMTP信息)          </td>
+        </tr>
+
+        <tr>
+          <td height="25" align="right">&nbsp;</td>
+          <td align="left"><input type="submit" name="Submit2" value="开启/关闭手机短信提醒" /></td>
+        </tr>
+      </table>
+    </form>
+    <br />
+    <form action="<{spUrl c=others a=savemob}>" method="post" class="registerform">
+    <table width="98%" border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse" bordercolor="#c6c6c6">
+      <tr>
+        <td height="25" colspan="3" align="center" bgcolor="#f2f2f2"><strong>手机短信提醒设置</strong></td>
+      </tr>
+      <tr>
+        <td width="30%" height="25" align="right">中国移动139邮箱地址：</td>
+        <td width="27%" align="left"><input name="sendaddr" type="text" id="sendaddr" size="45" class="inputxt" datatype="e" nullmsg="请输入中国移动139邮箱地址！" errormsg="邮箱地址格式错误！" value="<{$mob.mail139}>" /></td>
+        <td width="43%" align="left"><div class="Validform_checktip">(如：15988888888@139.com)</div></td>
+      </tr>
+      <tr>
+        <td height="25" align="right">&nbsp;</td>
+        <td colspan="2" align="left"><input type="submit" name="Submit" value="保存邮箱地址" /></td>
+      </tr>
+    </table>
+  </form>
+    <table width="98%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="left"><strong>说明：</strong><br />
+        1、短信提醒<strong>非收费</strong>的短信网关。<br />
+        2、原理是利用中国移动139邮箱的<strong>免费短信提醒</strong>功能，所以需要<strong>先用常用手机号码注册一个139邮箱</strong>，并<strong>设置好接受短信时间段</strong>。<br />
+        3、客户下单后，最多几十秒内收到短信提醒，延时很短。<br />
+        4、短信提醒和邮件提醒是相互独立的，可以共存，也可以单独存在；但是<strong>邮件提醒中的收件邮箱不要使用139邮箱地址</strong>；139邮箱主做短信提醒用。
+        <br />
+        <strong>139邮箱申请步骤：</strong><br />
+        1、登录，  <a href="http://mail.10086.cn/" target="_blank">http://mail.10086.cn/</a> <br />
+        2、点击网页右下部分的“免费注册”<br />
+        3、输入手机号码以及图形验证码，然后点击“免费获取短信验证码”<br />
+        4、输入手机收到的随机码，填写后继续<br />
+        5、设置接收短信的时间段，如0点-24点，方式选择“大短信”<br />
+        6、在PIMS中开启手机短信提醒功能，并输入注册的139邮箱地址并保存即可。</td>
+      </tr>
+    </table>
+  </div>
+  <!--  内容列表   -->
+</div>
+</body>
+</html>

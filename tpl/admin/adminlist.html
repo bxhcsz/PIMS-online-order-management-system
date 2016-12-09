@@ -1,0 +1,107 @@
+<{include file="admin/session.html"}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<title>管理系统</title>
+<link rel="stylesheet" href="skin/admin/style/base.css" type="text/css" />
+<link rel="stylesheet" href="skin/admin/style/main.css" type="text/css" />
+<link rel="alternate stylesheet" type="text/css" href="skin/admin/Upimg/1024.css" />
+<style type="text/css" media="all">
+@import "skin/admin/Upimg/thickbox.css";
+</style>
+<script type="text/javascript" src="skin/admin/js/jquery.js"></script>
+<script language="javascript">
+function delit(obj) {
+$.get('<{spUrl c=others a=deladmin}>','mid='+obj,function (msg) { 
+if ('1'==msg) { 
+$('#t'+obj).remove(); 
+} else { 
+alert("删除失败"); 
+} 
+}); 
+}
+</script>
+<script src="skin/admin/Upimg/thickbox-compressed.js" type="text/javascript"></script>
+<script src="skin/admin/Upimg/global.js" type="text/javascript"></script>
+</head>
+<body>
+<div class="rbox">
+  <div class="ur_here"><div class="path fl">系统管理<span>-</span>管理员列表</div><span class="action fr"><a href="<{spUrl c=others a=addadmin}>">添加管理员</a></span></div>    
+  <!--  内容列表   -->
+  <div class="rbox_list">
+<form name="pageForm" id="pageForm" action="<{spUrl c=others a=adminlist}>" method="post">
+<input type="hidden" id="pageNo" name="pageNo" value=""/>  
+    <table width="100%" border="0" cellpadding="2" cellspacing="1" bgcolor="#D1DDAA" align="center">
+      <tr align="center" bgcolor="#FAFAF1" height="25">
+	    <th width="7%">编号</th>
+        <th width="16%">用户名</th>
+		<th width="19%">最后登录时间</th>
+		<th width="19%">最后登录IP</th>
+		<th width="21%">最后登录位置</th>
+		<th width="18%">操作</th>
+      </tr>
+      <{if $results|@count gt 0}>
+      <{foreach from=$results item=one}>
+      <tr align='center' bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';" onMouseOut="javascript:this.bgColor='#FFFFFF';"height="28" id="t<{$one.id}>">
+	  	<td><{$one.id}></td>
+        <td><b><{$one.username}></b></a></td>
+		<td><{$one.logtime}></td>
+		<td><{$one.logip}></td>
+		<td><{$one.logarea}></td>
+		<td><div class="act"><a href="<{spUrl c=others a=editadmin height=320 width=300 modal=true id=$one.id cuser=$one.username}>" class="thickbox">编辑</a><{if $one.username!="admin"}><a href="#" onclick="ifjump=confirm('是否确定删除此条记录至回收站?');if(!ifjump){return false;} else {delit(<{$one.id}>);}">删除</a><{/if}></div></td>
+      </tr>
+      <{/foreach}>
+      <{else}>
+      <tr align='center' bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';" onMouseOut="javascript:this.bgColor='#FFFFFF';"height="28" >
+      	<td colspan="8" align="center"><span style="color:#666">暂无数据...</span></td>
+      </tr>
+      <{/if}>
+      <tr bgcolor="#FAFAF1">
+        <td height="28" colspan="12" align="right">
+<!--传统分页开始-->
+<{if $pager}> 
+共有<{$pager.total_count}>条记录，当前<{$pager.current_page}>/<{$pager.total_page}>页：
+<{if $pager.current_page != $pager.first_page}> 
+<a href="<{spUrl c=others a=orderlist page=$pager.first_page}>">首页</a> | 
+<a href="<{spUrl c=others a=orderlist page=$pager.prev_page}>">上一页</a> | 
+<{/if}> 
+<{foreach from=$pager.all_pages item=thepage}> 
+<{if $thepage >= $pager.current_page-4 and $thepage <= $pager.current_page+4}> 
+<{if $thepage != $pager.current_page}> 
+<a href="<{spUrl c=others a=orderlist page=$thepage}>"><{$thepage}></a> 
+<{else}> 
+<span style="width:20px;padding:0 1px;"><{$thepage}></span> 
+<{/if}> 
+<{elseif $thepage <= 10 and $thepage >= $pager.current_page-4}>
+<{if $thepage != $pager.current_page}> 
+<a href="<{spUrl c=others a=orderlist page=$thepage}>"><{$thepage}></a> 
+<{else}> 
+<span style="width:20px;padding:0 1px;"><{$thepage}></span> 
+<{/if}> 
+<{elseif $thepage >= $pager.last_page-9 and $thepage <= $pager.current_page-4}>
+<{if $thepage != $pager.current_page}> 
+<a href="<{spUrl c=others a=orderlist page=$thepage}>"><{$thepage}></a> 
+<{else}> 
+<span style="width:20px;padding:0 1px;"><{$thepage}></span> 
+<{/if}> 
+<{else}>
+<{/if}>
+<{/foreach}> 
+<{if $pager.current_page != $pager.last_page}> 
+| 
+<a href="<{spUrl c=others a=orderlist page=$pager.next_page}>">下一页</a> | 
+<a href="<{spUrl c=others a=orderlist page=$pager.last_page}>">尾页</a> 
+<{/if}> 
+<{/if}>  
+<!--传统分页结束-->        </td>
+      </tr>
+    </table>
+</form>    
+  </div>
+</div>
+</body>
+</html>

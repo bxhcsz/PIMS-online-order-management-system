@@ -1,0 +1,61 @@
+<{include file="admin/session.html"}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="skin/admin/style/base.css" type="text/css" />
+<link rel="stylesheet" href="skin/admin/style/main.css" type="text/css" />
+<script type="text/javascript" src="skin/admin/js/jquery-1.4.min.js"></script>
+<script language="javascript">
+$(function(){
+  $("#addact").click(function(){
+    var username = $("#username").val();
+	var password = $("#password").val();
+	var repwd = $("#repwd").val();
+	if(password == ""){
+        alert("密码不能为空!");
+        $("#password").focus();
+        return false;
+    };	
+    if(repwd == ""){
+        alert("重复密码不能为空!");
+        $("#repwd").focus();
+        return false;
+    };
+    if(password != repwd){
+        alert("两次输入的密码不相同!");
+        $("#password").focus();
+        return false;
+    };
+  }); 
+});
+</script>
+<title>管理系统</title>
+</head>
+<body>
+<div class="rbox">
+  <div class="ur_here"><div class="path fl">系统管理<span>-</span>编辑管理员信息</div><span class="action fr"><a href="<{spUrl c=admin a=adminlist}>">管理员列表</a></span></div>
+  <form method="post" action="<{spUrl c=admin a=editadminaction}>">
+  <input type="hidden" id="id" name="id" value="<{$admininfo.id}>"/>
+  <div class="add_box">
+    <table width="100%" border="0" align="center"  cellpadding="4" cellspacing="1">
+      <tr>
+        <td width="10%" class="td01"><label>用户名</label></td>
+        <td width="90%">
+        <span class="ml8px"><{$admininfo.username}></span></td>
+      </tr>  
+      <tr>
+        <td class="td01"><label>密码</label></td>
+        <td><span class="ml8px"><input type="password" name="password" id="password" class="inp01 inptext" value=""/></span></td>
+      </tr>
+	  <tr>
+        <td class="td01"><label>重复密码</label></td>
+        <td><span class="ml8px"><input type="password" name="repwd" id="repwd" class="inp01 inptext" /></span></td>
+      </tr>      
+    </table>
+  </div>
+  <div class="btnbox"><input id="addact" type="submit" class="btn01" value="确 定" /></div>
+  </form>
+</div>
+</body>
+</html>

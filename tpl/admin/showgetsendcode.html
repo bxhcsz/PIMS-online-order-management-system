@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style type="text/css">
+<!--
+body,td,th {
+	font-size: 12px;
+}
+-->
+</style>
+<script language="javascript">
+function showcode() {
+for(var i=0;i<document.frm.zt.length;i++){
+   if(document.frm.zt[i].checked == true){
+    mod=document.frm.zt[i].value;
+   }
+  }
+nums=document.frm.nums.value;
+w=document.frm.w.value;
+h=document.frm.h.value;
+mygp=document.frm.mygp.value;
+wei="<\/script>";
+document.frm.showit.value="<script type=\"text/javascript\" src=\"<{$basedir}>/index.php?c=api&a=sendcode&nums="+nums+"&mod="+mod+"&w="+w+"&h="+h+"&mygp="+mygp+"\">"+wei;
+}
+</script>
+</head>
+
+<body>
+<form method="post" name="frm">
+<table width="98%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td height="25" align="right">产品组：</td>
+    <td align="left"><select name="mygp" id="mygp">
+      <{foreach from=$group item=two}>
+      <option value="<{$two.id}>"><{$two.gname}></option>
+      <{/foreach}>
+    </select></td>
+  </tr>
+  <tr>
+    <td width="19%" height="25" align="right">调用条数：</td>
+    <td width="81%" align="left"><input name="nums" type="text" id="nums" size="12" />
+    条(*系统默认调用最新的N条)</td>
+  </tr>
+  <tr>
+    <td height="25" align="right">显示模式：</td>
+    <td align="left"><input name="zt" type="radio" id="radio" value="1" checked="checked" />
+      不滚动
+      <input type="radio" name="zt" id="radio2" value="2" />
+      自下向上滚动
+      <input type="radio" name="zt" id="radio3" value="3" />
+      自上而下滚动</td>
+  </tr>
+  <tr>
+    <td height="25" align="right">显示区域宽度：</td>
+    <td align="left"><input name="w" type="text" id="w" size="12" />
+      像素</td>
+  </tr>
+  <tr>
+    <td height="25" align="right">显示区域高度：</td>
+    <td align="left"><input name="h" type="text" id="h" size="12" />
+      像素</td>
+  </tr>
+  <tr>
+    <td height="25" align="left">&nbsp;</td>
+    <td align="left"><input type="button" name="button" id="button" value="生成发货记录调用代码" onclick="showcode()" /></td>
+  </tr>
+  <tr>
+    <td height="25" colspan="2" align="center"><br />
+    <textarea name="showit" cols="50" rows="4" id="showit"></textarea></td>
+  </tr>
+  <tr>
+    <td height="25" colspan="2" align="center">*使用方法，复制以上js代码至需要显示发货记录的位置。</td>
+  </tr>
+</table>
+</form>
+</body>
+</html>

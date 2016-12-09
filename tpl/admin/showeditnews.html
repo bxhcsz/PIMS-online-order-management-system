@@ -1,0 +1,51 @@
+<{include file="admin/session.html"}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style type="text/css">
+<!--
+body,td,th {
+	font-size: 12px;
+}
+-->
+</style></head>
+
+<body>
+<form action="<{spUrl c=others a=saveeditnews}>" method="post" class="registerform">
+  <table width="98%" border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse" bordercolor="#c6c6c6">
+    <tr>
+      <td height="25" colspan="2" align="center" bgcolor="#f2f2f2"><strong>修改新闻</strong></td>
+    </tr>
+    <tr>
+      <td width="13%" height="25" align="right">新闻标题：</td>
+      <td width="87%" align="left"><input name="title" type="text" id="title" size="45" value="<{$news.title}>" /><input name="cid" type="hidden" value="<{$news.id}>" /></td>
+    </tr>
+    <tr>
+      <td height="25" align="right">发布人：</td>
+      <td align="left"><input name="writter" type="text" class="inputxt" id="writter" size="45" value="<{$news.writter}>" /></td>
+    </tr>
+    <tr>
+      <td height="25" align="right">所属分类：</td>
+      <td align="left">
+	  <select name="newsort">
+	  <option value="<{$news.pid}>"><{$mysort.sortname}></option>
+        <{foreach from=$sorts item=one}>
+        <option value="<{$one.id}>"><{$one.sortname}></option>
+        <{/foreach}>
+      </select>
+      </td>
+    </tr>
+    <tr>
+      <td height="25" align="right">新闻内容：</td>
+      <td align="left"><{$editor}></td>
+    </tr>
+    <tr>
+      <td height="25" align="right">&nbsp;</td>
+      <td align="left"><input type="submit" name="Submit" value="修改新闻" /></td>
+    </tr>
+  </table>
+</form>
+</body>
+</html>

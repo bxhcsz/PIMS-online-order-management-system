@@ -1,0 +1,76 @@
+<{include file="admin/session.html"}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="skin/admin/style/base.css" type="text/css" />
+<link rel="stylesheet" href="skin/admin/style/main.css" type="text/css" />
+<link rel="alternate stylesheet" type="text/css" href="skin/admin/Upimg/1024.css" />
+<style type="text/css" media="all">
+@import "skin/admin/Upimg/thickbox.css";
+</style>
+<script type="text/javascript" src="skin/admin/js/jquery.js"></script>
+<script type="text/javascript" src="skin/admin/js/Validform.js"></script>
+<script type="text/javascript">
+$(function(){
+	$(".registerform:last").Validform({
+		tiptype:2,
+		ajaxPost:true,
+		callback:function(data){
+			if(data.status=="y"){
+				setTimeout(function(){
+					$.Hidemsg(); //公用方法关闭信息提示框;
+				},2000);
+			}
+		}
+	});
+})
+</script>
+<script src="skin/admin/Upimg/thickbox-compressed.js" type="text/javascript"></script>
+<script src="skin/admin/Upimg/global.js" type="text/javascript"></script>
+<title>管理系统</title>
+</head>
+<body>
+<div class="rbox">
+  <div class="ur_here">
+    <div class="path fl" align="left">其他设置<span>-添加新闻</span></div>
+</div>  
+  <div class="add_box">
+  <form action="<{spUrl c=others a=savenews}>" method="post" class="registerform">
+    <table width="98%" border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse" bordercolor="#c6c6c6">
+      <tr>
+        <td height="25" colspan="2" align="center" bgcolor="#f2f2f2"><strong>添加新闻</strong></td>
+      </tr>
+      <tr>
+        <td width="13%" height="25" align="right">新闻标题：</td>
+        <td width="87%" align="left"><input name="title" type="text" id="title" size="45" /></td>
+        </tr>
+      <tr>
+        <td height="25" align="right">发布人：</td>
+        <td align="left"><input name="writter" type="text" class="inputxt" id="writter" value="PIMS" size="45" /></td>
+        </tr>
+      <tr>
+        <td height="25" align="right">所属分类：</td>
+        <td align="left">
+		<select name="newsort">
+      	<{foreach from=$sorts item=one}>
+		<option value="<{$one.id}>"><{$one.sortname}></option>
+		<{/foreach}>
+		</select>
+		</td>
+        </tr>
+      <tr>
+        <td height="25" align="right">新闻内容：</td>
+        <td align="left"><{$editor}></td>
+      </tr>
+      <tr>
+        <td height="25" align="right">&nbsp;</td>
+        <td align="left"><input type="submit" name="Submit" value="添加新闻" /></td>
+      </tr>
+    </table>
+  </form>
+  </div>
+  <!--  内容列表   -->
+</div>
+</body>
+</html>

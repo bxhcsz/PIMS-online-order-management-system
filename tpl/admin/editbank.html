@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style type="text/css">
+<!--
+body,td,th {
+	font-size: 12px;
+}
+-->
+</style>
+<script language="javascript">
+$(document).ready(function(){ 
+	$("#tijiao").click(function(){
+	$("#showhide").show();
+		var formdata = {
+			'b1': $('#b1').val(),
+			'b2': $('#b2').val(),
+			'b3': $('#b3').val(),
+			'id': $('#id').val()
+		};
+		$.post('<{spUrl c=ajax a=updatebank}>', formdata, function(result){
+			  $("#showhide").hide();
+			  $("#tip").show();
+			  $("#tip").html(result);
+			  setTimeout("tip.style.display='none'",1000); 
+		});
+	});
+});
+</script>
+</head>
+
+<body>
+<form method="post" action="" class="registerform">
+<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="40%" height="25" align="right">银行名称：</td>
+    <td width="15%" align="left"><input name="b1" type="text" id="b1" value="<{$mybank.bankname}>" />
+    <input name="id" type="hidden" id="id" value="<{$mybank.id}>" /></td>
+    <td width="45%" align="left">&nbsp;</td>
+  </tr>
+  <tr>
+    <td height="25" align="right">银行帐号：</td>
+    <td align="left"><input name="b2" type="text" id="b2" value="<{$mybank.banknum}>" /></td>
+    <td align="left">&nbsp;</td>
+  </tr>
+  <tr>
+    <td height="25" align="right">收款人：</td>
+    <td align="left"><input name="b3" type="text" id="b3" value="<{$mybank.realname}>" /></td>
+    <td align="left">&nbsp;</td>
+  </tr>
+  <tr>
+    <td height="25" align="right">&nbsp;</td>
+    <td colspan="2" align="left"><input name="tijiao" type="button" id="tijiao" value="修改" /> &nbsp;&nbsp;&nbsp;
+    <input type="submit" name="Submit2" value="关闭窗口" id=Login onclick=tb_remove() /></td>
+  </tr>
+  <tr>
+    <td height="25" colspan="3" align="center">
+<div style="text-align:center;"><div id="tip" style="display:none;color:#FFF;background-color:#69F;height:20px;width:70px;padding:5px 10px;margin:0px auto;"></div><div id="showhide" style="display:none"><img src="skin/admin/images/onLoad.gif"></div></div>
+	</td>
+  </tr>
+</table>
+</form>
+</body>
+</html>

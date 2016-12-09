@@ -1,0 +1,92 @@
+<{include file="admin/session.html"}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="skin/admin/style/base.css" type="text/css" />
+<link rel="stylesheet" href="skin/admin/style/main.css" type="text/css" />
+<link rel="alternate stylesheet" type="text/css" href="skin/admin/Upimg/1024.css" />
+<style type="text/css" media="all">
+@import "skin/admin/Upimg/thickbox.css";
+</style>
+<script type="text/javascript" src="skin/admin/js/jquery.js"></script>
+<script type="text/javascript" src="skin/admin/js/Validform.js"></script>
+<script type="text/javascript">
+$(function(){
+	$(".registerform:last").Validform({
+		tiptype:2,
+		ajaxPost:true,
+		callback:function(data){
+			if(data.status=="y"){
+				setTimeout(function(){
+					$.Hidemsg(); //公用方法关闭信息提示框;
+				},2000);
+			}
+		}
+	});
+})
+function play(obj) {
+obj="include/midi/"+obj;
+document.getElementById("ss").innerHTML="<embed src=\""+obj+"\" loop=\"true\" volume=\"int\" hidden=\"true\">";
+}
+function stops() {
+document.getElementById("ss").innerHTML="";
+}
+</script>
+<script src="skin/admin/Upimg/thickbox-compressed.js" type="text/javascript"></script>
+<script src="skin/admin/Upimg/global.js" type="text/javascript"></script>
+<title>管理系统</title>
+</head>
+<body>
+<div class="rbox">
+  <div class="ur_here">
+    <div class="path fl" align="left">提醒设置<span>-</span>新订单提醒设置</div>
+</div>  
+  <div class="add_box">
+      <table width="98%" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse" bordercolor="#c6c6c6">
+        <tr>
+          <td height="25" colspan="2" align="center" bgcolor="#f2f2f2"><strong>新订单提醒设置(本功能IE浏览器下有效)</strong></td>
+        </tr>
+		<form method="post" action="<{spUrl c=sound a=csound}>">
+        <tr>
+          <td width="30%" height="45" align="right">当前提醒状态：</td>
+          <td align="left">
+		  <select name="types" id="types">
+		  	<option value="<{$re.types}>"><{if $re.types=="2"}>开启声音提醒<{else}>关闭声音提醒<{/if}></option>
+            <{if $re.types<>"2"}><option value="2">开启声音提醒</option><{/if}>
+            <{if $re.types<>"4"}><option value="4">关闭声音提醒</option><{/if}>
+          </select>          </td>
+        </tr>
+        <tr>
+          <td height="45" align="right">当前使用的提示音：</td>
+          <td align="left">
+		  <select name="sounds" id="sounds">
+		  <option value="<{$re.usedsound}>"><{$re.usedsound}></option>
+      	  <{foreach from=$results item=one}>
+		  <option value="<{$one}>"><{$one}></option>
+		  <{/foreach}>
+          </select>
+		  <input type="button" name="Submit" value="PLAY" onclick="javascript:play(document.getElementById('sounds').value);" />
+		  <input type="button" name="Submit3" value="STOP" onclick="stops();" /> <input type="button" name="Submit4" value="使用自定义声音" onclick="javascript:document.getElementById('userop').style.display='';" />		  </td>
+        </tr>
+        <tr>
+          <td height="45" align="right">&nbsp;</td>
+          <td align="left"><input type="submit" name="Submit2" value="保存设置" /></td>
+        </tr>
+		</form>
+        <tr id="userop" style="display:none">
+		<form method="post" action="<{spUrl c=sound a=upload}>" enctype="multipart/form-data">
+          <td height="45" align="right">自定义声音：</td>
+          <td align="left"><input type="file" name="file" />
+          <input type="submit" name="Submit5" value="上传" />
+          (* 支持.mid格式声音文件，文件大小请控制在10K以内)</td>
+        </form>
+		</tr>
+      </table>
+<div id="ss"></div>
+    <br />
+  </div>
+  <!--  内容列表   -->
+</div>
+</body>
+</html>

@@ -1,0 +1,262 @@
+<{include file="admin/session.html"}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="skin/admin/style/base.css" type="text/css" />
+<link rel="stylesheet" href="skin/admin/style/main.css" type="text/css" />
+<script type="text/javascript" src="skin/admin/js/jquery.js"></script>
+<SCRIPT language=JavaScript>  
+$("document").ready(function(){  
+    $("#tbody6 .del").click(function() {   
+        $(this).parents(".repeat").remove();   
+    });   
+    $("#add6").click(function(){   
+        $("#tbody6>.template")   
+            .clone(true)   
+            .removeClass("template")   
+           .find(".del")   
+                .text("删除")   
+                .end()        
+            .appendTo($("#tbody6"))   
+    });   
+}  
+)  
+function checkForm()
+  {
+       var t1 = document.getElementById("myfrm").getElementsByTagName("input");
+       for(i=0;i<t1.length;i++)
+       {
+           if(t1[i].type == "checkbox")
+           {
+               if(!(t1[i].checked))
+               {
+                   t1[i].checked = true;
+                   t1[i].value = "0";
+               }
+           }
+       }
+       return true;
+  }
+</script>  
+<script language="javascript">
+	function delit(obj) {
+	$.get('<{spUrl c=ajax a=delform}>','id='+obj,function (msg) { 
+	if ('1'==msg) { 
+	$('#t'+obj).remove(); 
+	} else { 
+	alert("删除失败"); 
+	} 
+	}); 
+	}
+</script>
+<title>管理系统</title>
+</head>
+<body>
+  <form class="registerform" method="post" action="<{spUrl c=admin a=updatemyform}>" name="myfrm" id="myfrm">
+  <div class="add_box">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse" bordercolor="#c6c6c6" id="table6" class="caseTable">
+      <tr>
+        <td height="25" colspan="7" align="left" bgcolor="#f2f2f2"><strong>&nbsp;修改订购表单项：</strong>
+          <input id="add6" class="btn3_mouseout" type="button" value="增加一个自定义项" style="height:18px;" />
+        <input type="hidden" name="id" value="<{$editoption.id}>" /></td>
+      </tr>
+      <tr style="border-bottom:1px dotted #ccc">
+        <td height="25" colspan="2" align="center"><strong>表单项</strong></td>
+        <td height="25" colspan="2" align="center"><strong>是否必填</strong></td>
+        <td height="25" colspan="3" align="center"><strong>其他选项&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;排序</strong></td>
+      </tr>
+      <tr style="border-bottom:1px dotted #ccc">
+        <td width="6%" height="25" align="right"><input name="checkbox13" type="checkbox" value="checkbox" checked="checked" disabled="disabled" /></td>
+        <td width="27%" align="left">&nbsp;产品列表</td>
+        <td width="12%" height="25" align="right"><input name="checkbox" type="checkbox" value="checkbox" checked="checked" disabled="disabled" /></td>
+        <td width="11%" align="left">必填</td>
+        <td width="8%" height="25" align="right">显示：</td>
+        <td width="28%" align="left"><select name="elseoption1" id="elseoption1">
+		<{if $old1.elseoption1=="0"}>
+            <option value="0">下拉列表</option>
+		<{else}>
+            <option value="1">单选列表</option>
+		<{/if}>
+            <option value="0">下拉列表</option>
+            <option value="1">单选列表</option>
+          </select>        </td>
+        <td width="8%" align="left"><input name="o1" type="text" id="o1" style="width:16px;" value="<{$old1.paixu}>" /></td>
+      </tr>
+      <tr style="border-bottom:1px dotted #ccc">
+        <td height="25" align="right"><input name="nums" type="checkbox" id="nums" value="1" checked="checked" disabled="disabled" /></td>
+        <td align="left">&nbsp;订购数量</td>
+        <td height="25" align="right"><input name="checkbox2" type="checkbox" value="checkbox" checked="checked" disabled="disabled" /></td>
+        <td align="left">必填</td>
+        <td height="25" align="right">显示：</td>
+        <td align="left"><select name="elseoption2" id="elseoption2">
+		<{if $old2.elseoption2=="0"}>
+            <option value="0">手动输入数量</option>
+		<{else}>
+            <option value="1">下拉列表选择</option>
+		<{/if}>
+            <option value="0">手动输入数量</option>
+            <option value="1">下拉列表选择</option>
+          </select>        </td>
+        <td align="left"><input name="o2" type="text" id="o2" style="width:16px;" value="<{$old2.paixu}>" /></td>
+      </tr>
+      <tr style="border-bottom:1px dotted #ccc">
+        <td height="25" align="right"><input name="username" type="checkbox" id="username" value="1" checked="checked" disabled="disabled" /></td>
+        <td align="left">&nbsp;收货人姓名</td>
+        <td height="25" align="right"><input name="checkbox3" type="checkbox" value="checkbox" checked="checked" disabled="disabled" /></td>
+        <td align="left">必填</td>
+        <td height="25" align="right">验证：</td>
+        <td align="left">非空</td>
+        <td align="left"><input name="o3" type="text" id="o3" style="width:16px;" value="<{$old3.paixu}>" /></td>
+      </tr>
+      <tr style="border-bottom:1px dotted #ccc">
+        <td height="25" align="right"><input name="address" type="checkbox" id="address" value="1" checked="checked" disabled="disabled" /></td>
+        <td align="left">&nbsp;收货地址</td>
+        <td height="25" align="right"><input name="checkbox7" type="checkbox" value="checkbox" checked="checked" disabled="disabled" /></td>
+        <td align="left">必填</td>
+        <td height="25" align="right">验证：</td>
+        <td align="left">非空</td>
+        <td align="left"><input name="o4" type="text" id="o4" style="width:16px;" value="<{$old4.paixu}>" /></td>
+      </tr>
+      <tr style="border-bottom:1px dotted #ccc">
+        <td height="25" align="right"><input name="mob" type="checkbox" disabled="disabled" id="mob" value="1" checked="checked" /></td>
+        <td align="left">&nbsp;手机</td>
+        <td height="25" align="right"><input name="checkbox4" type="checkbox" disabled="disabled" value="checkbox" checked="checked" /></td>
+        <td align="left">必填</td>
+        <td height="25" align="right">验证：</td>
+        <td align="left">手机格式</td>
+        <td align="left"><input name="o5" type="text" id="o5" style="width:16px;" value="<{$old5.paixu}>" /></td>
+      </tr>
+      <tr style="border-bottom:1px dotted #ccc">
+        <td height="25" align="right"><input name="mob" type="checkbox" disabled="disabled" id="mob" value="1" checked="checked" /></td>
+        <td align="left">&nbsp;订单备注</td>
+        <td height="25" align="right"><input name="checkbox4" type="checkbox" value="1" <{if $old6.musts=="1"}>checked="checked"<{/if}> /></td>
+        <td align="left">必填</td>
+        <td height="25" align="right">验证：</td>
+        <td align="left">非空</td>
+        <td align="left"><input name="o6" type="text" id="o6" style="width:16px;" value="<{$old6.paixu}>" /></td>
+      </tr>
+	  <!--读取自定义表单项开始-->
+	  <{foreach from=$old7 item=one}>
+      <tr style="border-bottom:1px dotted #ccc" id="t<{$one.id}>">
+        <td height="25" colspan="2" align="center">自定义
+		<input name="useroptionold[]" type="text" id="useroptionold[]" size="10" value="<{$one.fname}>" /><input name="cid[]" type="hidden" value="<{$one.id}>" /></td>
+        <td height="25" align="right"><input name="usercheckold[]" type="checkbox" id="usercheckold[]" value="1" <{if $one.musts=="1"}>checked="checked"<{/if}> /></td>
+        <td align="left">必填</td>
+        <td height="25" align="right">验证：</td>
+        <td align="left">
+		  <select name="userselectold[]" id="userselectold[]">
+		  <option value="<{$one.types}>">
+		  <{if $one.types=="99"}>
+		  不验证
+		  <{elseif $one.types=="0"}>
+		  非空
+		  <{elseif $one.types=="1"}>
+		  纯数字
+		  <{elseif $one.types=="2"}>
+		  手机号码
+		  <{elseif $one.types=="3"}>
+		  电子邮件
+		  <{elseif $one.types=="4"}>
+		  邮政编码
+		  <{else}>
+		  身份证号码
+		  <{/if}>		  </option>
+          <option value="99">不验证</option>
+            <option value="0">非空</option>
+            <option value="1">纯数字</option>
+            <option value="2">手机号码</option>
+            <option value="3">电子邮件</option>
+            <option value="4">邮政编码</option>
+            <option value="5">身份证号码</option>
+          </select><a href="#" onclick="delit(<{$one.id}>);">删除</a>		</td>
+        <td align="left"><input name="usernumold[]" type="text" id="usernumold[]" style="width:16px;" value="<{$one.paixu}>" /></td>
+      </tr>
+	  <{/foreach}>
+	  <!--读取自定义表单项结束-->
+	  <tbody id="tbody6">
+      <tr style="border-bottom:1px dotted #ccc" class="template repeat">
+        <td height="25" colspan="2" align="center">自定义
+          <input name="useroption[]" type="text" id="useroption[]" size="10" /></td>
+        <td height="25" align="right"><input name="usercheck[]" type="checkbox" id="usercheck[]" value="1" /></td>
+        <td align="left">必填</td>
+        <td height="25" align="right">验证：</td>
+        <td align="left"><select name="userselect[]" id="userselect[]">
+          <option value="99">不验证</option>
+            <option value="0">非空</option>
+            <option value="1">纯数字</option>
+            <option value="2">手机号码</option>
+            <option value="3">电子邮件</option>
+            <option value="4">邮政编码</option>
+            <option value="6">身份证号码</option>
+          </select>
+          <a class="del" href="#"></a> </td>
+        <td align="left"><input name="usernum[]" type="text" id="usernum[]" style="width:16px;" /></td>
+      </tr>
+	  </tbody>
+      <tr>
+        <td height="25" colspan="7" align="left" bgcolor="#f2f2f2"><strong>修改付款方式：（支付方式显示模式选择：
+          <select name="paytype" id="paytype">
+		    <option value="<{$old6.paytype}>"><{if $old6.paytype=="0"}>下拉菜单显示<{else}>单选按钮列表显示<{/if}></option>
+            <option value="0">下拉菜单显示</option>
+            <option value="1">单选按钮列表显示</option>
+          </select>
+        ）</strong></td>
+      </tr>
+      <tr>
+        <td height="25" align="right"><input name="payment[]" type="checkbox" id="payment[]" value="1" <{if $z1=="1"}>checked="checked"<{/if}> /></td>
+        <td height="25" colspan="6" align="left">&nbsp;支付宝即时到帐(款到发货)</td>
+      </tr>
+      <tr>
+        <td height="25" align="right"><input name="payment[]" type="checkbox" id="payment[]" value="2" <{if $z2=="1"}>checked="checked"<{/if}> /></td>
+        <td height="25" colspan="6" align="left">&nbsp;支付宝担保交易</td>
+      </tr>
+      <tr>
+        <td height="25" align="right"><input name="payment[]" type="checkbox" id="payment[]" value="10" <{if $z10=="1"}>checked="checked"<{/if}> /></td>
+        <td height="25" colspan="6" align="left">&nbsp;支付宝双接口</td>
+      </tr>
+      <tr>
+        <td height="25" align="right"><input name="payment[]" type="checkbox" id="payment[]" value="3" <{if $z3=="1"}>checked="checked"<{/if}> /></td>
+        <td height="25" colspan="6" align="left">&nbsp;银联在线(款到发货)</td>
+      </tr>
+      <tr>
+        <td height="25" align="right"><input name="payment[]" type="checkbox" id="payment[]" value="4" <{if $z4=="1"}>checked="checked"<{/if}> /></td>
+        <td colspan="6" align="left">&nbsp;财付通即时到帐(款到发货)</td>
+      </tr>
+      <tr>
+        <td height="25" align="right"><input name="payment[]" type="checkbox" id="payment[]" value="5" <{if $z5=="1"}>checked="checked"<{/if}> /></td>
+        <td colspan="6" align="left">&nbsp;易宝支付(款到发货)</td>
+      </tr>
+      <tr>
+        <td height="25" align="right"><input name="payment[]" type="checkbox" id="payment[]" value="9" <{if $z9=="1"}>checked="checked"<{/if}> /></td>
+        <td colspan="6" align="left">&nbsp;Paypal支付</td>
+      </tr>
+      <tr>
+        <td height="25" align="right"><input name="payment[]" type="checkbox" id="payment[]" value="6" <{if $z6=="1"}>checked="checked"<{/if}> /></td>
+        <td colspan="6" align="left">&nbsp;银行汇款(款到发货)</td>
+      </tr>
+      <tr>
+        <td height="25" align="right"><input name="payment[]" type="checkbox" id="payment[]" value="7" <{if $z7=="1"}>checked="checked"<{/if}> /></td>
+        <td colspan="6" align="left">&nbsp;货到付款</td>
+      </tr>
+      <tr>
+        <td height="25" align="right"><input name="payment[]" type="checkbox" id="payment[]" value="8" <{if $z8=="1"}>checked="checked"<{/if}> /></td>
+        <td colspan="6" align="left">&nbsp;上门取货</td>
+      </tr>
+      <tr>
+        <td height="25" colspan="7" align="left" bgcolor="#f2f2f2"><strong>前台下单页面：</strong>
+          <input name="yzm" type="radio" value="1" <{if $old6.yzm=="1"}>checked="checked"<{/if}> />
+不使用验证码
+<input type="radio" name="yzm" value="2" <{if $old6.yzm=="2"}>checked="checked"<{/if}> />
+使用验证码</td>
+      </tr>
+
+      <tr>
+        <td height="25" align="right">&nbsp;</td>
+        <td colspan="6" align="left"><input type="submit" name="button" id="button" value="保存表单项" onclick="checkForm()" /></td>
+        </tr>
+    </table>
+  </div>
+  </form>
+</body>
+</html>

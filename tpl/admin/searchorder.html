@@ -1,0 +1,230 @@
+<{include file="admin/session.html"}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="skin/admin/style/base.css" type="text/css" />
+<link rel="stylesheet" href="skin/admin/style/main.css" type="text/css" />
+<link rel="alternate stylesheet" type="text/css" href="skin/admin/Upimg/1024.css" />
+<style type="text/css" media="all">
+@import "skin/admin/Upimg/thickbox.css";
+</style>
+<script type="text/javascript" src="skin/admin/js/jquery.js"></script>
+<script type="text/javascript">
+function CheckAll(form)
+{
+for (var i=0;i<form.elements.length;i++)
+{
+var e = form.elements[i];
+ if (e.type == 'checkbox')
+ e.checked = form.chkall.checked;
+}
+}
+function delit(obj) {
+$.get('<{spUrl c=order a=delorder}>','mid='+obj,function (msg) { 
+if ('1'==msg) { 
+$('#t'+obj).remove(); 
+} else { 
+alert("删除失败"); 
+} 
+}); 
+}
+function delmessage(urls) {
+if (confirm('数据删除后将进入订单回收站，确定删除吗？')) {
+document.pageForm.submit();
+}
+}
+function check1() {
+	var f=document.frm1;
+	if (f.types.value=="99") {
+	alert("请选择常用查询项目");
+	return false;
+	}
+	if (f.keys.value=="") {
+	alert("请输入常用项目关键词，支持模糊查询");
+	return false;
+	}
+	f.submit();
+}
+function check2() {
+	var f=document.frm2;
+	if (f.gp.value=="99") {
+	alert("请选择一个产品组");
+	return false;
+	}
+	f.submit();
+}
+function check3() {
+	var f=document.frm3;
+	if (f.bigname.value=="99") {
+	alert("请选择一个产品组");
+	return false;
+	}
+	f.submit();
+}
+function check4() {
+	var f=document.frm4;
+	if (f.s1.value=="") {
+	alert("请输入起始查询时间");
+	return false;
+	}
+	if (f.s2.value=="") {
+	alert("请输入结束查询时间");
+	return false;
+	}
+	f.submit();
+}
+function check5() {
+	var f=document.frm5;
+	if (f.s3.value=="") {
+	alert("请输入起始查询时间");
+	return false;
+	}
+	if (f.s4.value=="") {
+	alert("请输入结束查询时间");
+	return false;
+	}
+	f.submit();
+}
+</script>
+<script src="skin/admin/Upimg/thickbox-compressed.js" type="text/javascript"></script>
+<script src="skin/admin/Upimg/global.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript" src="include/WebCalendar.js"></script>
+<title>管理系统</title>
+</head>
+<body>
+<div class="rbox">
+  <div class="ur_here">
+    <div class="path fl" align="left">订单管理<span>-订单查询</span></div>
+</div>  
+  <!--  内容列表   -->
+  <div class="rbox_list">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<form method="post" action="<{spUrl c=order a=searchorder sid=1}>" name="frm1" onsubmit="return false;">
+      <tr>
+        <td width="10%" height="30" align="right"><strong>常用查询：</strong></td>
+        <td width="22%" align="left"><select name="types" id="types">
+          <option value="99">-请选择-</option>
+          <option value="1">订单编号</option>
+          <option value="2">收货人姓名</option>
+          <option value="3">收货地址</option>
+          <option value="4">手机</option>
+          <option value="5">用户备注</option>
+          <option value="6">客服备注</option>
+          <option value="7">物流公司</option>
+          <option value="8">物流单号</option>
+          <option value="9">产品名称</option>
+        </select>
+        <input name="keys" type="text" id="keys" size="16" /></td>
+        <td width="68%" align="left"><input type="submit" name="Submit" value="查询" onclick="check1()" /></td>
+      </tr>
+	 </form>
+	<form method="post" action="<{spUrl c=order a=searchorder sid=2}>" name="frm2" onsubmit="return false;">
+      <tr>
+        <td height="30" align="right"><strong>按产品组查询：</strong></td>
+        <td align="left">
+		<select name="gp" id="gp">
+		<option value="99">-请选择-</option>
+        <{foreach from=$group item=two}>
+		<option value="<{$two.id}>"><{$two.gname}></option>
+		<{/foreach}>
+        </select>        </td>
+        <td align="left"><input type="submit" name="Submit4" value="查询" onclick="check2()" /></td>
+      </tr>
+	 </form>
+	<form method="post" action="<{spUrl c=order a=searchorder sid=3}>" name="frm3" onsubmit="return false;">
+	  </form>
+	<form method="post" action="<{spUrl c=order a=searchorder sid=4}>" name="frm4" onsubmit="return false;">
+      <tr>
+        <td height="30" align="right"><strong>下单时间：</strong></td>
+        <td align="left"><input name="s1" type="text" id="s1" size="12" onclick="new Calendar().show(this);" readonly="readonly" /> 
+          - 
+          <input name="s2" type="text" id="s2" size="12" onclick="new Calendar().show(this);" readonly="readonly" /></td>
+        <td align="left"><input type="submit" name="Submit2" value="查询" onclick="check4()" /></td>
+      </tr>
+	  </form>
+	<form method="post" action="<{spUrl c=order a=searchorder sid=5}>" name="frm5" onsubmit="return false;">
+      <tr>
+        <td height="30" align="right"><strong>发货时间：</strong></td>
+        <td align="left"><input name="s3" type="text" id="s3" size="12" onclick="new Calendar().show(this);" readonly="readonly" /> 
+          - 
+          <input name="s4" type="text" id="s4" size="12" onclick="new Calendar().show(this);" readonly="readonly" /></td>
+        <td align="left"><input type="submit" name="Submit3" value="查询" onclick="check5()" /></td>
+      </tr>
+	  </form>
+    </table>
+    <form name="pageForm" id="pageForm" action="<{spUrl c=order a=delallorder page=$pager.current_page}>" method="post" onsubmit="return false;">
+<input type="hidden" id="pageNo" name="pageNo" value=""/>  
+    <table width="100%" border="0" cellpadding="2" cellspacing="1" bgcolor="#D1DDAA" align="center">
+      <tr align="center" bgcolor="#FAFAF1" height="25">
+        <th width="18%">订单编号</th>
+        <th width="15%">产品名称</th>
+		<th width="9%">产品单价</th>
+		<th width="8%">订购数量</th>
+		<th width="14%">下单时间</th>
+		<th width="10%">发货状态</th>
+		<th width="10%">付款状态</th>
+		<th width="14%">操作</th>
+      </tr>
+      <{if $results|@count gt 0}>
+      <{foreach from=$results item=one}>
+      <tr align='center' bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';" onMouseOut="javascript:this.bgColor='#FFFFFF';" height="28" id="t<{$one.id}>">
+        <td><{$one.ordernum}></td>
+        <td><{$one.pname}></td>
+		<td><{$one.price}></td>
+		<td><{$one.nums}></td>
+		<td><{$one.addtime}></td>
+		<td><{if $one.zt1=="1"}><font color="red">未处理</font><{elseif $one.zt1=="2"}><font color="blue">待发货</font><{else}><font color="green">已发货</font><{/if}></td>
+		<td><{if $one.zt2=="1"}><font color="red">未付款</font><{else}><font color="green">已付款</font><{/if}></td>
+		<td><div class="act"><a href="<{spUrl c=order a=showorder height=450 width=580 modal=true id=$one.id sid=$sid types=$types keys=$keys gp=$gp bigname=$bigname smallname=$smallname s1=$s1 s2=$s2 s3=$s3 s4=$s4}>" class="thickbox">订单详情</a><a href="#" onclick="ifjump=confirm('是否确定删除此条记录?');if(!ifjump){return false;} else {delit(<{$one.id}>);}">垃圾订单</a></div></td>
+      </tr>
+      <{/foreach}>      <{else}>
+      <tr align='center' bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';" onMouseOut="javascript:this.bgColor='#FFFFFF';"height="28" >
+      	<td colspan="10" align="center"><span style="color:#666">暂无数据...</span></td>
+      </tr>
+      <{/if}>
+      <tr bgcolor="#FAFAF1">
+        <td height="28" colspan="14" align="middle">
+<!--传统分页开始-->
+<{if $pager}> 
+共有<{$pager.total_count}>条记录，当前<{$pager.current_page}>/<{$pager.total_page}>页：
+<{if $pager.current_page != $pager.first_page}> 
+<a href="<{spUrl c=order a=searchorder page=$pager.first_page types=$types keys=$keys gp=$gp s1=$s1 s2=$s2 s3=$s3 s4=$s4 sid=$sid}>">首页</a> | 
+<a href="<{spUrl c=order a=searchorder page=$pager.prev_page types=$types keys=$keys gp=$gp s1=$s1 s2=$s2 s3=$s3 s4=$s4 sid=$sid}>">上一页</a> | 
+<{/if}> 
+<{foreach from=$pager.all_pages item=thepage}> 
+<{if $thepage >= $pager.current_page-4 and $thepage <= $pager.current_page+4}> 
+<{if $thepage != $pager.current_page}> 
+<a href="<{spUrl c=order a=searchorder page=$thepage types=$types keys=$keys gp=$gp s1=$s1 s2=$s2 s3=$s3 s4=$s4 sid=$sid}>"><{$thepage}></a> 
+<{else}> 
+<span style="width:20px;padding:0 1px;"><{$thepage}></span> 
+<{/if}> 
+<{elseif $thepage <= 10 and $thepage >= $pager.current_page-4}>
+<{if $thepage != $pager.current_page}> 
+<a href="<{spUrl c=order a=searchorder page=$thepage types=$types keys=$keys gp=$gp s1=$s1 s2=$s2 s3=$s3 s4=$s4 sid=$sid}>"><{$thepage}></a> 
+<{else}> 
+<span style="width:20px;padding:0 1px;"><{$thepage}></span> 
+<{/if}> 
+<{elseif $thepage >= $pager.last_page-9 and $thepage <= $pager.current_page-4}>
+<{if $thepage != $pager.current_page}> 
+<a href="<{spUrl c=order a=searchorder page=$thepage types=$types keys=$keys gp=$gp s1=$s1 s2=$s2 s3=$s3 s4=$s4 sid=$sid}>"><{$thepage}></a> 
+<{else}> 
+<span style="width:20px;padding:0 1px;"><{$thepage}></span> 
+<{/if}> 
+<{else}>
+<{/if}>
+<{/foreach}> 
+<{if $pager.current_page != $pager.last_page}> 
+| 
+<a href="<{spUrl c=order a=searchorder page=$pager.next_page types=$types keys=$keys gp=$gp s1=$s1 s2=$s2 s3=$s3 s4=$s4 sid=$sid}>">下一页</a> | 
+<a href="<{spUrl c=order a=searchorder page=$pager.last_page types=$types keys=$keys gp=$gp s1=$s1 s2=$s2 s3=$s3 s4=$s4 sid=$sid}>">尾页</a> 
+<{/if}> 
+<{/if}>  
+<!--传统分页结束-->        </td>
+      </tr>
+    </table>
+</form>    
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<{include file="admin/session.html"}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="skin/admin/style/base.css" type="text/css" />
+<link rel="stylesheet" href="skin/admin/style/main.css" type="text/css" />
+<link rel="alternate stylesheet" type="text/css" href="skin/admin/Upimg/1024.css" />
+<style type="text/css" media="all">
+@import "skin/admin/Upimg/global.css";
+@import "skin/admin/Upimg/thickbox.css";
+</style>
+<script type="text/javascript" src="skin/admin/js/jquery.js"></script>
+<script type="text/javascript" src="skin/admin/js/Validform.js"></script>
+<script type="text/javascript">
+$(function(){
+	$(".registerform:last").Validform({
+		tiptype:2,
+		ajaxPost:true,
+		callback:function(data){
+			if(data.status=="y"){
+				setTimeout(function(){
+					$.Hidemsg(); //公用方法关闭信息提示框;
+				},2000);
+			}
+		}
+	});
+})
+</script>
+<script src="skin/admin/Upimg/thickbox-compressed.js" type="text/javascript"></script>
+<script src="skin/admin/Upimg/global.js" type="text/javascript"></script>
+<title>管理系统</title>
+</head>
+<body>
+<div class="rbox">
+  <div class="ur_here">
+    <div class="path fl" align="left">收款方式管理<span>-</span>银行帐号管理</div>
+</div>  
+  <div class="add_box">
+  <form action="<{spUrl c=admin a=banksave}>" method="post" class="registerform">
+    <table width="98%" border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse" bordercolor="#c6c6c6">
+      <tr>
+        <td height="25" colspan="3" align="center" bgcolor="#f2f2f2"><strong>添加银行帐号</strong></td>
+      </tr>
+      <tr>
+        <td width="30%" height="25" align="right">银行名称：</td>
+        <td width="27%" align="left"><input name="bankname" type="text" id="bankname" size="45" class="inputxt" datatype="*" nullmsg="请输入银行名称！" /></td>
+        <td width="43%" align="left"><div class="Validform_checktip">(请输入银行名称)</div></td>
+      </tr>
+      <tr>
+        <td height="25" align="right">银行帐号：</td>
+        <td align="left"><input name="banknum" type="text" id="banknum" size="45" class="inputxt" datatype="*" nullmsg="请输入银行帐号！" /></td>
+        <td align="left"><div class="Validform_checktip">(请输入银行帐号)</div></td>
+      </tr>
+      <tr>
+        <td height="25" align="right">收款人姓名：</td>
+        <td align="left"><input name="realname" type="text" id="realname" size="45" class="inputxt" datatype="*" nullmsg="请输入收款人姓名！" /></td>
+        <td align="left"><div class="Validform_checktip">(请输入收款人姓名)</div></td>
+      </tr>
+      <tr>
+        <td height="25" align="right">&nbsp;</td>
+        <td colspan="2" align="left"><input type="submit" name="Submit" value="添加银行" /></td>
+      </tr>
+    </table>
+  </form>
+  </div>
+  <!--  内容列表   -->
+  <div class="rbox_list">
+<form name="pageForm" id="pageForm" action="<{spUrl c=sysuser a=sysUserForPage}>" method="post">
+<input type="hidden" id="pageNo" name="pageNo" value=""/>  
+    <table width="100%" border="0" cellpadding="2" cellspacing="1" bgcolor="#D1DDAA" align="center">
+      <tr align="center" bgcolor="#FAFAF1" height="25">
+	    <th width="6%">编号</th>
+        <th width="16%">银行名称</th>
+		<th width="45%">银行帐号</th>
+		<th width="20%">收款人</th>
+		<th width="13%">操作</th>
+      </tr>
+      <{if $results|@count gt 0}>
+      <{foreach from=$results item=one}>
+      <tr align='center' bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';" onMouseOut="javascript:this.bgColor='#FFFFFF';" height="28" >
+	  	<td><{$one.id}></td>
+        <td><b><{$one.bankname}></b></a></td>
+		<td><b><{$one.banknum}></b></a></td>
+		<td><b><{$one.realname}></b></a></td>
+		<td><div class="act"><a href="<{spUrl c=admin a=showeditbank height=140 width=320 modal=true id=$one.id}>" class="thickbox">编辑</a><a href="<{spUrl c=admin a=delbank id=$one.id page=$pager.current_page}>" onclick="ifjump=confirm('是否确定删除此条记录?');if(!ifjump){return false;}">删除</a></div></td>
+      </tr>
+      <{/foreach}>
+      <{else}>
+      <tr align='center' bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';" onMouseOut="javascript:this.bgColor='#FFFFFF';"height="28" >
+      	<td colspan="7" align="center"><span style="color:#666">暂无数据...</span></td>
+      </tr>
+      <{/if}>
+      <tr bgcolor="#FAFAF1">
+        <td height="28" colspan="11" align="middle">
+<!--传统分页开始-->
+<{if $pager}> 
+共有<{$pager.total_count}>条记录，当前<{$pager.current_page}>/<{$pager.total_page}>页：
+<{if $pager.current_page != $pager.first_page}> 
+<a href="<{spUrl c=admin a=bankpay page=$pager.first_page}>">首页</a> | 
+<a href="<{spUrl c=admin a=bankpay page=$pager.prev_page}>">上一页</a> | 
+<{/if}> 
+<{foreach from=$pager.all_pages item=thepage}> 
+<{if $thepage >= $pager.current_page-4 and $thepage <= $pager.current_page+4}> 
+<{if $thepage != $pager.current_page}> 
+<a href="<{spUrl c=admin a=bankpay page=$thepage}>"><{$thepage}></a> 
+<{else}> 
+<span style="width:20px;padding:0 1px;"><{$thepage}></span> 
+<{/if}> 
+<{elseif $thepage <= 10 and $thepage >= $pager.current_page-4}>
+<{if $thepage != $pager.current_page}> 
+<a href="<{spUrl c=admin a=bankpay page=$thepage}>"><{$thepage}></a> 
+<{else}> 
+<span style="width:20px;padding:0 1px;"><{$thepage}></span> 
+<{/if}> 
+<{elseif $thepage >= $pager.last_page-9 and $thepage <= $pager.current_page-4}>
+<{if $thepage != $pager.current_page}> 
+<a href="<{spUrl c=admin a=bankpay page=$thepage}>"><{$thepage}></a> 
+<{else}> 
+<span style="width:20px;padding:0 1px;"><{$thepage}></span> 
+<{/if}> 
+<{else}>
+<{/if}>
+<{/foreach}> 
+<{if $pager.current_page != $pager.last_page}> 
+| 
+<a href="<{spUrl c=admin a=bankpay page=$pager.next_page}>">下一页</a> | 
+<a href="<{spUrl c=admin a=bankpay page=$pager.last_page}>">尾页</a> 
+<{/if}> 
+<{/if}>  
+<!--传统分页结束-->        </td>
+      </tr>
+    </table>
+</form>    
+  </div>
+</div>
+</body>
+</html>

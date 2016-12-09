@@ -1,0 +1,145 @@
+<{include file="admin/session.html"}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="skin/admin/style/base.css" type="text/css" />
+<link rel="stylesheet" href="skin/admin/style/main.css" type="text/css" />
+<link rel="alternate stylesheet" type="text/css" href="skin/admin/Upimg/1024.css" />
+<style type="text/css" media="all">
+@import "skin/admin/Upimg/thickbox.css";
+.STYLE1 {color: #FF0000}
+</style>
+<script type="text/javascript" src="skin/admin/js/jquery.js"></script>
+<script type="text/javascript" src="skin/admin/js/Validform.js"></script>
+<script type="text/javascript">
+$(function(){
+	$(".registerform:last").Validform({
+		tiptype:2,
+		ajaxPost:true,
+		callback:function(data){
+			if(data.status=="y"){
+				setTimeout(function(){
+					$.Hidemsg(); //公用方法关闭信息提示框;
+				},2000);
+			}
+		}
+	});
+})
+</script>
+<script src="skin/admin/Upimg/thickbox-compressed.js" type="text/javascript"></script>
+<script src="skin/admin/Upimg/global.js" type="text/javascript"></script>
+<title>管理系统</title>
+</head>
+<body>
+<div class="rbox">
+  <div class="ur_here">
+    <div class="path fl" align="left">超级管理<span>-客服业绩查询与结算</span></div>
+</div>  
+  <div class="add_box">
+  <form method="post" action="<{spUrl c=html a=searchyeji}>">
+  选择客服：
+    <select name="kefu" id="kefu">
+	<{foreach from=$kf item=ten}>
+	<option value="<{$ten.username}>"><{$ten.username}></option>
+	<{/foreach}>
+    </select>
+    选择月份：
+  <select name="year" id="year">
+  <option value="<{$nowyear}>"><{$nowyear}>年</option>
+	<{foreach from=$yeara item=nine}>
+  	<option value="<{$nine}>"><{$nine}>年</option>
+	<{/foreach}>
+  </select>
+  <select name="month" id="month">
+  	<option value="<{$nowmonth}>"><{$nowmonth}>月</option>
+    <option value="01">1月</option>
+    <option value="02">2月</option>
+    <option value="03">3月</option>
+    <option value="04">4月</option>
+    <option value="05">5月</option>
+    <option value="06">6月</option>
+    <option value="07">7月</option>
+    <option value="08">8月</option>
+    <option value="09">9月</option>
+    <option value="10">10月</option>
+    <option value="11">11月</option>
+    <option value="12">12月</option>
+  </select>
+  <input type="submit" name="Submit" value="查询" />
+  (<span class="STYLE1">*请勿当前月结束前进行结算</span>，仅统计订单状态为“已签收”和“已付款”的订单。)
+  </form></div>
+  <!--  内容列表   -->
+  <div class="rbox_list">
+      <table width="100%" border="0" cellpadding="2" cellspacing="1" bgcolor="#D1DDAA" align="center">
+        <tr align="center" bgcolor="#FAFAF1" height="25">
+          <th width="11%">客服</th>
+          <th width="16%">订单编号</th>
+          <th width="13%">产品名称</th>
+          <th width="8%">单价</th>
+          <th width="8%">数量</th>
+          <th width="13%">下单时间</th>
+          <th width="7%">总计</th>
+          <th width="7%">提成比例</th>
+          <th width="17%">提成金额</th>
+        </tr>
+        <{if $results|@count gt 0}>
+        <{foreach from=$results item=one}>
+          <tr align='center' bgcolor="#FFFFFF" onmousemove="javascript:this.bgColor='#FCFDEE';" onmouseout="javascript:this.bgColor='#FFFFFF';" height="28" id="">
+            <td><{$one.kefu}></td>
+            <td><{$one.ordernum}></td>
+            <td><{$one.pname}></td>
+            <td><{$one.price}></td>
+            <td><{$one.nums}></td>
+            <td><{$one.addtime}></td>
+            <td><{$one.totle}></td>
+            <td><{$one.0}>%</td>
+            <td><{$one.1}></td>
+          </tr>
+        <{/foreach}>      <{else}>
+        <tr align='center' bgcolor="#FFFFFF" onmousemove="javascript:this.bgColor='#FCFDEE';" onmouseout="javascript:this.bgColor='#FFFFFF';"height="28" >
+          <td colspan="11" align="center"><span style="color:#666">暂无数据...</span></td>
+        </tr>
+        <{/if}>
+        <tr bgcolor="#FAFAF1">
+          <td height="28" colspan="15" align="middle"><!--传统分页开始-->
+            <{if $pager}> 
+            共有<{$pager.total_count}>条记录，当前<{$pager.current_page}>/<{$pager.total_page}>页：
+            <{if $pager.current_page != $pager.first_page}> <a href="<{spUrl c=html a=searchyeji page=$pager.first_page kefu=$kefu year=$year month=$month}>">首页</a> | <a href="<{spUrl c=html a=searchyeji page=$pager.prev_page kefu=$kefu year=$year month=$month}>">上一页</a> | 
+            <{/if}> 
+            <{foreach from=$pager.all_pages item=thepage}> 
+            <{if $thepage >= $pager.current_page-4 and $thepage <= $pager.current_page+4}> 
+            <{if $thepage != $pager.current_page}> <a href="<{spUrl c=html a=searchyeji page=$thepage kefu=$kefu year=$year month=$month}>"><{$thepage}></a> <{else}> <span style="width:20px;padding:0 1px;"><{$thepage}></span> <{/if}> 
+            <{elseif $thepage <= 10 and $thepage >= $pager.current_page-4}>
+            <{if $thepage != $pager.current_page}> <a href="<{spUrl c=html a=searchyeji page=$thepage kefu=$kefu year=$year month=$month}>"><{$thepage}></a> <{else}> <span style="width:20px;padding:0 1px;"><{$thepage}></span> <{/if}> 
+            <{elseif $thepage >= $pager.last_page-9 and $thepage <= $pager.current_page-4}>
+            <{if $thepage != $pager.current_page}> <a href="<{spUrl c=html a=searchyeji page=$thepage kefu=$kefu year=$year month=$month}>"><{$thepage}></a> <{else}> <span style="width:20px;padding:0 1px;"><{$thepage}></span> <{/if}> 
+            <{else}>
+            <{/if}>
+            <{/foreach}> 
+            <{if $pager.current_page != $pager.last_page}> 
+            | <a href="<{spUrl c=html a=searchyeji page=$pager.next_page kefu=$kefu year=$year month=$month}>">下一页</a> | <a href="<{spUrl c=html a=searchyeji page=$pager.last_page kefu=$kefu year=$year month=$month}>">尾页</a> <{/if}> 
+            <{/if}>
+            <!--传统分页结束-->          </td>
+        </tr>
+      </table>
+	  <{if $results gt 0}>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="center" height="30">
+		<form method="post" action="<{spUrl c=html a=yejijiesuan}>">
+		<strong>客服<{$kefu}><{$year}>年<{$month}>月份累计销售额：<font color="#FF0000"><{$zj1}></font>元 累计提成总额：<font color="#FF0000"><{$zj2}></font>元</strong>
+		<input name="kefu" type="hidden" value="<{$kefu}>" />
+		<input name="dotime" type="hidden" value="<{$year}>-<{$month}>" />
+		<input name="totle" type="hidden" value="<{$zj1}>" />
+		<input name="ticheng" type="hidden" value="<{$zj2}>" />
+       <{if $zj1<>0}> <{if $mynums>0}><font color="#FF0000">(已结算)</font><{else}><input type="submit" name="Submit2" value="完成本月结算" /><{/if}><{/if}>
+		</form>
+		</td>
+      </tr>
+    </table>
+	<{/if}>
+  </div>
+</div>
+</body>
+</html>

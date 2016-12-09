@@ -1,0 +1,55 @@
+<{include file="admin/session.html"}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="skin/admin/style/base.css" type="text/css" />
+<link rel="stylesheet" href="skin/admin/style/main.css" type="text/css" />
+<script type="text/javascript" src="skin/admin/js/jquery.js"></script>
+<script type="text/javascript" src="skin/admin/js/Validform.js"></script>
+<script type="text/javascript">
+$(function(){
+	$(".registerform:last").Validform({
+		tiptype:2,
+		ajaxPost:true,
+		callback:function(data){
+			if(data.status=="y"){
+				setTimeout(function(){
+					$.Hidemsg(); //公用方法关闭信息提示框;
+				},2000);
+			}
+		}
+	});
+})
+</script>
+<title>管理系统</title>
+</head>
+<body>
+<div class="rbox">
+  <div class="ur_here">
+    <div class="path fl">收款方式管理<span>-</span>Paypal接口管理</div>
+</div>  
+  <form class="registerform" method="post" action="<{spUrl c=admin a=paypalsave}>">
+  <div class="add_box">
+<table width="98%" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse" bordercolor="#c6c6c6">
+        <tr>
+          <td height="25" colspan="3" align="center" bgcolor="#f2f2f2"><strong>Paypal接口设置(外币支付)</strong></td>
+        </tr>
+        
+        <tr>
+          <td width="21%" height="25" align="right">Paypal账号：</td>
+          <td width="28%" align="left"><input name="zhanghao" type="text" value="<{$cbinfo.zhanghao}>" size="45" class="inputxt" datatype="*" nullmsg="请输入Paypal帐号！" /><input name="id" type="hidden" value="<{$cbinfo.id}>" /></td>
+          <td width="51%" align="left"><div class="Validform_checktip">(Paypal帐号)</div></td>
+        </tr>
+        <tr>
+          <td height="25" align="right">&nbsp;</td>
+          <td align="left"><input type="submit" name="Submit2" value="保存/修改" /> 
+            <a href="http://www.paypal.com" target="_blank">注册Paypal</a></td>
+          <td align="left">&nbsp;</td>
+        </tr>
+      </table>
+    </div>
+  </form>
+</div>
+</body>
+</html>

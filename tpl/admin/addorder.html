@@ -1,0 +1,217 @@
+<{include file="admin/session.html"}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="skin/admin/style/base.css" type="text/css" />
+<link rel="stylesheet" href="skin/admin/style/main.css" type="text/css" />
+<script type="text/javascript" src="skin/admin/js/jquery.js"></script>
+<script type="text/javascript" src="skin/admin/js/Validform.js"></script>
+<script type="text/javascript">
+$(function(){
+	$(".registerform:last").Validform({
+		tiptype:2,
+		ajaxPost:true,
+		callback:function(data){
+			if(data.status=="y"){
+				setTimeout(function(){
+					$.Hidemsg(); //公用方法关闭信息提示框;
+				},2000);
+			}
+		}
+	});
+})
+</script>
+<script language="JavaScript" type="text/javascript" src="include/WebCalendar.js"></script>
+<title>管理系统</title>
+</head>
+<body>
+<div class="rbox">
+  <div class="ur_here">
+    <div class="path fl" align="left">订单管理<span>-手动添加订单</span></div>
+</div>  
+  <!--  内容列表   -->
+  <div class="rbox_list">
+  <form method="post" action="<{spUrl c=order a=savemyorder}>" class="registerform">
+    <table width="100%" border="1" cellspacing="0" cellpadding="0" style="background-color:#FFFFFF;border-collapse:collapse" bordercolor="#f2f2f2">
+      <tr>
+        <td width="11%" height="30" align="right"><strong>请选择产品：</strong></td>
+        <td width="25%" align="left"><select name="bigname" id="bigname" datatype="select" errormsg="请选择产品！">
+		<option value="">-请选择-</option>
+        <{foreach from=$group item=two}>
+		<option value="<{$two.id}>"><{$two.gname}></option>
+		<{/foreach}>
+        </select>
+          <span id="quote">
+          <select name="smallname" id="smallname">
+            <option value="99">-请选择-</option>
+          </select>
+          </span>
+		</td>
+        <td width="64%" align="left"><div class="Validform_checktip">请选择产品</div></td>
+      </tr>
+      <tr>
+        <td height="30" align="right"><strong>产品单价：</strong></td>
+        <td align="left"><input name="price" type="text" id="price" /></td>
+        <td align="left"><div class="Validform_checktip">请先选择商品以提取单价</div></td>
+      </tr>
+      <tr>
+        <td height="30" align="right"><strong>订购数量：</strong></td>
+        <td align="left"><input name="nums" type="text" id="nums" class="inputxt" datatype="n" nullmsg="请输入订购数量！" errormsg="订购数量必须为纯数字！" /></td>
+        <td align="left"><div class="Validform_checktip">请输入订购数量</div></td>
+      </tr>
+      <tr>
+        <td height="30" align="right"><strong>收货人姓名：</strong></td>
+        <td align="left"><input name="realname" type="text" id="realname" class="inputxt" datatype="*" nullmsg="请输入收货人姓名！" /></td>
+        <td align="left"><div class="Validform_checktip">请输入收货人姓名</div></td>
+      </tr>
+      <tr>
+        <td height="30" align="right"><strong>手机：</strong></td>
+        <td align="left"><input name="mob" type="text" id="mob" /></td>
+        <td align="left">&nbsp;</td>
+      </tr>
+      <tr>
+        <td height="30" align="right"><strong>收货地址：</strong></td>
+        <td align="left"><input name="address" type="text" id="address" /></td>
+        <td align="left">&nbsp;</td>
+      </tr>
+      <tr>
+        <td height="30" align="right"><strong>订单备注：</strong></td>
+        <td align="left"><textarea name="beizhu" rows="4" id="beizhu"></textarea></td>
+        <td align="left">&nbsp;</td>
+      </tr>
+	  <tr>
+	  <td height="30" align="right"><strong>自定义项目：</strong></td>
+	  </td>
+	  <td align="left">
+	  <p id="useroptions">
+	  待加载......
+	  </p>
+	  </td>
+	  </tr>
+      <tr>
+        <td height="30" align="right"><strong>支付方式：</strong></td>
+        <td align="left"><select name="select3">
+          <option value="1">支付宝即时到帐</option>
+          <option value="2">支付宝担保交易</option>
+          <option value="3">银联在线</option>
+          <option value="4">财付通</option>
+          <option value="5">易宝</option>
+          <option value="9">Paypal</option>
+          <option value="6">银行汇款</option>
+          <option value="7">货到付款</option>
+          <option value="8">上门取货</option>
+          <option value="10">支付宝双接口</option>
+        </select>
+        </td>
+        <td align="left">&nbsp;</td>
+      </tr>
+      <tr>
+        <td height="30" align="right"><strong>发货状态：</strong></td>
+        <td align="left"><select name="select2">
+          <option value="1">未处理</option>
+          <option value="2">待发货</option>
+          <option value="3">已发货</option>
+          <option value="4">已签收</option>
+          <option value="5">已退回</option>
+        </select>
+        </td>
+        <td align="left">&nbsp;</td>
+      </tr>
+      <tr>
+        <td height="30" align="right"><strong>付款状态：</strong></td>
+        <td align="left"><select name="select">
+          <option value="1">未付款</option>
+          <option value="2">已付款</option>
+        </select></td>
+        <td align="left">&nbsp;</td>
+      </tr>
+      <tr>
+        <td height="30" align="right"><strong>物流公司：</strong></td>
+        <td align="left">
+<select name="wuliu" id="wuliu">
+        <option value="">请选择</option>
+        <option value="申通">申通</option>
+        <option value="EMS">EMS</option>
+        <option value="顺丰">顺丰</option>
+        <option value="圆通">圆通</option>
+        <option value="中通">中通</option>
+        <option value="如风达">如风达</option>
+        <option value="韵达">韵达</option>
+        <option value="天天">天天</option>
+        <option value="汇通">汇通</option>
+        <option value="全峰">全峰</option>
+        <option value="德邦">德邦</option>
+        <option value="宅急送">宅急送</option>
+        <option value="安信达">安信达</option>
+        <option value="包裹平邮">包裹平邮</option>
+        <option value="CCES">CCES</option>
+        <option value="传喜物流">传喜物流</option>
+        <option value="DHL">DHL</option>
+        <option value="大田物流">大田物流</option>
+        <option value="E邮宝">E邮宝</option>
+        <option value="飞康达">飞康达</option>
+        <option value="FedEx(国际)">FedEx(国际)</option>
+        <option value="港中能达">港中能达</option>
+        <option value="挂号信">挂号信</option>
+        <option value="共速达">共速达</option>
+        <option value="华宇物流">华宇物流</option>
+        <option value="佳吉快运">佳吉快运</option>
+        <option value="佳怡物流">佳怡物流</option>
+        <option value="急先达">急先达</option>
+        <option value="快捷速递">快捷速递</option>
+        <option value="龙邦快递">龙邦快递</option>
+        <option value="联邦快递">联邦快递</option>
+        <option value="联昊通">联昊通</option>
+        <option value="全一快递">全一快递</option>
+        <option value="全日通">全日通</option>
+        <option value="速尔快递">速尔快递</option>
+        <option value="TNT快递">TNT快递</option>
+        <option value="天地华宇">天地华宇</option>
+        <option value="UPS快递">UPS快递</option>
+        <option value="USPS">USPS</option>
+        <option value="新邦物流">新邦物流</option>
+        <option value="优速快递">优速快递</option>
+        <option value="中铁快运">中铁快运</option>
+        <option value="中邮物流">中邮物流</option>
+        </select>		</td>
+        <td align="left">&nbsp;</td>
+      </tr>
+      <tr>
+        <td height="30" align="right"><strong>物流单号：</strong></td>
+        <td align="left"><input name="wuliunum" type="text" id="wuliunum" /></td>
+        <td align="left">&nbsp;</td>
+      </tr>
+      <tr>
+        <td height="30" align="right"><strong>客服备注：</strong></td>
+        <td align="left"><textarea name="beizhu2" rows="4" id="beizhu2"></textarea></td>
+        <td align="left">&nbsp;</td>
+      </tr>
+      <tr>
+        <td height="30" align="right"><strong>发货时间：</strong></td>
+        <td align="left"><input name="sendtime" type="text" id="sendtime" onclick="new Calendar().show(this);" readonly="readonly" /></td>
+        <td align="left">&nbsp;</td>
+      </tr>
+      <tr>
+        <td height="30" align="right">&nbsp;</td>
+        <td colspan="2" align="left"><input type="submit" name="Submit" value="保存订单" /></td>
+      </tr>
+    </table>
+	</form>
+  </div>
+</div>
+<script language="javascript">
+$("#bigname").change(function(){ 
+ $("#price").val('');
+ k=$("#bigname").val();	
+ $("#quote").load("<{spUrl c=order a=loadsort}>",'k='+k);
+ $("#useroptions").load("<{spUrl c=order a=loadoption}>",'k='+k);
+});
+function getprice(obj) {
+$.get('<{spUrl c=order a=getprice}>','j='+encodeURI(obj),function (msg) { 
+$('#price').val(msg); 
+});	 
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<{include file="admin/session.html"}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="skin/admin/style/base.css" type="text/css" />
+<link rel="stylesheet" href="skin/admin/style/main.css" type="text/css" />
+<link rel="alternate stylesheet" type="text/css" href="skin/admin/Upimg/1024.css" />
+<style type="text/css" media="all">
+@import "skin/admin/Upimg/thickbox.css";
+</style>
+<script type="text/javascript" src="skin/admin/js/jquery.js"></script>
+<script type="text/javascript" src="skin/admin/js/Validform.js"></script>
+<script type="text/javascript">
+$(function(){
+	$(".registerform:last").Validform({
+		tiptype:2,
+		ajaxPost:true,
+		callback:function(data){
+			if(data.status=="y"){
+				setTimeout(function(){
+					$.Hidemsg(); //公用方法关闭信息提示框;
+				},2000);
+			}
+		}
+	});
+})
+</script>
+<script src="skin/admin/Upimg/thickbox-compressed.js" type="text/javascript"></script>
+<script src="skin/admin/Upimg/global.js" type="text/javascript"></script>
+<title>管理系统</title>
+</head>
+<body>
+<div class="rbox">
+  <div class="ur_here">
+    <div class="path fl" align="left">产品管理<span>-产品组</span>管理</div>
+</div>  
+  <div class="add_box">
+  <form action="<{spUrl c=admin a=groupsave}>" method="post" class="registerform">
+    <table width="98%" border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse" bordercolor="#c6c6c6">
+      <tr>
+        <td height="25" colspan="3" align="center" bgcolor="#f2f2f2"><strong>添加产品组</strong></td>
+      </tr>
+      <tr>
+        <td width="30%" height="25" align="right">产品组名称：</td>
+        <td width="27%" align="left"><input name="gname" type="text" id="gname" size="45" class="inputxt" datatype="*" ajaxurl="<{spUrl c=ajax a=groupcheck}>" nullmsg="产品组名称不能留空！" /></td>
+        <td width="43%" align="left"><div class="Validform_checktip">(请输入产品组名称)</div></td>
+      </tr>
+      <tr>
+        <td height="25" align="right">产品组折扣：</td>
+        <td align="left"><input name="zhekou" type="text" id="zhekou" /></td>
+        <td align="left">&nbsp;</td>
+      </tr>
+      <tr>
+        <td height="25" align="right">提成比例：</td>
+        <td align="left"><input name="ticheng" type="text" id="ticheng" size="12" />
+          %</td>
+        <td align="left"><div class="Validform_checktip">(输入百分比数字，如：20%的提成，输入20；否则留空。)</div></td>
+      </tr>
+      <tr>
+        <td height="25" align="right">&nbsp;</td>
+        <td colspan="2" align="left"><input type="submit" name="Submit" value="添加产品组" />
+          (折扣不设置请<strong>留空</strong>；如9.5折，则输入<strong>9.5</strong>；该折扣对所有<strong>非货到付款方式</strong>生效。)</td>
+      </tr>
+    </table>
+  </form>
+  </div>
+  <!--  内容列表   -->
+  <div class="rbox_list">
+<form name="pageForm" id="pageForm" action="<{spUrl c=sysuser a=sysUserForPage}>" method="post">
+<input type="hidden" id="pageNo" name="pageNo" value=""/>  
+    <table width="100%" border="0" cellpadding="2" cellspacing="1" bgcolor="#D1DDAA" align="center">
+      <tr align="center" bgcolor="#FAFAF1" height="25">
+	    <th width="8%">编号</th>
+        <th width="23%">产品组名称</th>
+		<th width="12%">折扣</th>
+		<th width="9%">提成比例</th>
+		<th width="48%">操作</th>
+      </tr>
+      <{if $results|@count gt 0}>
+      <{foreach from=$results item=one}>
+      <tr align='center' bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';" onMouseOut="javascript:this.bgColor='#FFFFFF';" height="28" >
+	  	<td><{$one.id}></td>
+        <td><b><{$one.gname}></b></a></td>
+		<td>
+		<b>
+		<{if $one.zhekou=="" or $one.zhekou=="0"}>
+		未设置
+		<{else}>
+		<{$one.zhekou}>折
+		<{/if}>		</b>		</td>
+		<td><{$one.ticheng}>%</td>
+		<td><div class="act"><a href="<{spUrl c=admin a=showeditgroup height=120 width=320 modal=true id=$one.id}>" class="thickbox">编辑</a><a href="<{spUrl c=admin a=delgroup id=$one.id page=$pager.current_page}>" onclick="ifjump=confirm('删除产品组后，该产品组下的产品都将被删除，确定?');if(!ifjump){return false;}">删除</a><{if $one.is_form=="0"}><a href="<{spUrl c=admin a=setform height=480 width=650 modal=true id=$one.id}>" class="thickbox">设置表单项</a><{else}><a href="<{spUrl c=admin a=updateform height=480 width=650 modal=true id=$one.id}>" class="thickbox">管理表单项</a><{/if}><a href="<{spUrl c=admin a=getform id=$one.id names=$one.gname}>">生成订购页</a></div></td>
+      </tr>
+      <{/foreach}>
+      <{else}>
+      <tr align='center' bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';" onMouseOut="javascript:this.bgColor='#FFFFFF';"height="28" >
+      	<td colspan="7" align="center"><span style="color:#666">暂无数据...</span></td>
+      </tr>
+      <{/if}>
+      <tr bgcolor="#FAFAF1">
+        <td height="28" colspan="11" align="middle">
+<!--传统分页开始-->
+<{if $pager}> 
+共有<{$pager.total_count}>条记录，当前<{$pager.current_page}>/<{$pager.total_page}>页：
+<{if $pager.current_page != $pager.first_page}> 
+<a href="<{spUrl c=admin a=group page=$pager.first_page}>">首页</a> | 
+<a href="<{spUrl c=admin a=group page=$pager.prev_page}>">上一页</a> | 
+<{/if}> 
+<{foreach from=$pager.all_pages item=thepage}> 
+<{if $thepage >= $pager.current_page-4 and $thepage <= $pager.current_page+4}> 
+<{if $thepage != $pager.current_page}> 
+<a href="<{spUrl c=admin a=group page=$thepage}>"><{$thepage}></a> 
+<{else}> 
+<span style="width:20px;padding:0 1px;"><{$thepage}></span> 
+<{/if}> 
+<{elseif $thepage <= 10 and $thepage >= $pager.current_page-4}>
+<{if $thepage != $pager.current_page}> 
+<a href="<{spUrl c=admin a=group page=$thepage}>"><{$thepage}></a> 
+<{else}> 
+<span style="width:20px;padding:0 1px;"><{$thepage}></span> 
+<{/if}> 
+<{elseif $thepage >= $pager.last_page-9 and $thepage <= $pager.current_page-4}>
+<{if $thepage != $pager.current_page}> 
+<a href="<{spUrl c=admin a=group page=$thepage}>"><{$thepage}></a> 
+<{else}> 
+<span style="width:20px;padding:0 1px;"><{$thepage}></span> 
+<{/if}> 
+<{else}>
+<{/if}>
+<{/foreach}> 
+<{if $pager.current_page != $pager.last_page}> 
+| 
+<a href="<{spUrl c=admin a=group page=$pager.next_page}>">下一页</a> | 
+<a href="<{spUrl c=admin a=group page=$pager.last_page}>">尾页</a> 
+<{/if}> 
+<{/if}>  
+<!--传统分页结束-->        </td>
+      </tr>
+    </table>
+</form>    
+  </div>
+  <div style="text-align:center">
+订单页面调用方法：<br />
+<textarea name="textarea" cols="60" rows="5"><iframe src="路径/order.html" height="510" width="510" scrolling="No" frameborder="0" allowtransparency="true" style="background-color=transparent"></iframe>
+</textarea><br />
+注意：商业版用户如果需要修改系统生成的定购页面，可以直接联络售后技术协助您完成。
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<{include file="admin/session.html"}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="skin/admin/style/base.css" type="text/css" />
+<link rel="stylesheet" href="skin/admin/style/main.css" type="text/css" />
+<link rel="alternate stylesheet" type="text/css" href="skin/admin/Upimg/1024.css" />
+<style type="text/css" media="all">
+@import "skin/admin/Upimg/thickbox.css";
+</style>
+<script type="text/javascript" src="skin/admin/js/jquery.js"></script>
+<script type="text/javascript" src="skin/admin/js/Validform.js"></script>
+<script type="text/javascript">
+$(function(){
+	$(".registerform:last").Validform({
+		tiptype:2,
+		ajaxPost:true,
+		callback:function(data){
+			if(data.status=="y"){
+				setTimeout(function(){
+					$.Hidemsg(); //公用方法关闭信息提示框;
+				},2000);
+			}
+		}
+	});
+})
+function CheckAll(form)
+{
+for (var i=0;i<form.elements.length;i++)
+{
+var e = form.elements[i];
+ if (e.type == 'checkbox')
+ e.checked = form.chkall.checked;
+}
+}
+function delit(obj) {
+$.get('<{spUrl c=order a=delorderover}>','mid='+obj,function (msg) { 
+if ('1'==msg) { 
+$('#t'+obj).remove(); 
+} else { 
+alert("删除失败"); 
+} 
+}); 
+}
+function helpit(obj) {
+$.get('<{spUrl c=order a=helporder}>','mid='+obj,function (msg) { 
+if ('1'==msg) { 
+$('#t'+obj).remove(); 
+} else { 
+alert("恢复失败"); 
+} 
+}); 
+}
+function delmessage(urls) {
+if (confirm('数据删除后不能恢复，确定删除吗？')) {
+document.pageForm.submit();
+}
+}
+function Filter(a,b){
+    var $ = function(e){return document.getElementById(e);}
+    var ipts = $('filterForm').getElementsByTagName('input'),result=[];
+    for(var i=0,l=ipts.length;i<l;i++){
+        if(ipts[i].getAttribute('to')=='filter'){
+            result.push(ipts[i]);
+        }
+    }
+    if($(a)){
+        $(a).value = b;
+        for(var j=0,len=result.length;j<len;j++){
+            if(result[j].value==''){
+                result[j].parentNode.removeChild(result[j]);
+            }
+        }
+        document.forms['filterForm'].submit();
+    }
+    return false;
+}
+</script>
+<script src="skin/admin/Upimg/thickbox-compressed.js" type="text/javascript"></script>
+<script src="skin/admin/Upimg/global.js" type="text/javascript"></script>
+<title>管理系统</title>
+</head>
+<body>
+<div class="rbox">
+  <div class="ur_here">
+    <div class="path fl" align="left">超级管理<span>-订单回收站</span></div>
+</div>  
+  <!--  内容列表   -->
+<div class="rbox_list">
+<form id="filterForm" action="<{spUrl c=order a=isdel}>" method="POST">
+<input to="filter" type="hidden" id="zt1" name="zt1" value="<{$zt1}>" />
+<input to="filter" type="hidden" id="zt2" name="zt2" value="<{$zt2}>" />
+<input to="filter" type="hidden" id="payment" name="payment" value="<{$payment}>" />
+</form>
+  <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+      <td height="25"><strong>发货状态：</strong></td>
+      <td align="left"><a href="javascript:Filter('zt1','all');" <{if $zt1=="all" or $zt1==""}>style='color:red'<{/if}>>全部</a> - <a href="javascript:Filter('zt1','1');" <{if $zt1=="1"}>style='color:red'<{/if}>>未处理</a> - <a href="javascript:Filter('zt1','2');" <{if $zt1=="2"}>style='color:red'<{/if}>>待发货</a> - <a href="javascript:Filter('zt1','3');" <{if $zt1=="3"}>style='color:red'<{/if}>>已发货</a> - <a href="javascript:Filter('zt1','4');" <{if $zt1=="4"}>style='color:red'<{/if}>>已签收</a> - <a href="javascript:Filter('zt1','5');" <{if $zt1=="5"}>style='color:red'<{/if}>>已退回</a></td>
+    </tr>
+    <tr>
+      <td width="8%" height="25"><strong>付款状态：</strong></td>
+      <td width="92%" align="left"> <a href="javascript:Filter('zt2','all');" <{if $zt2=="all" or $zt2==""}>style='color:red'<{/if}>>全部</a> - <a href="javascript:Filter('zt2','1');" <{if $zt2=="1"}>style='color:red'<{/if}>>未付款</a> - <a href="javascript:Filter('zt2','2');" <{if $zt2=="2"}>style='color:red'<{/if}>>已付款 </td>
+    </tr>
+    <tr>
+      <td height="25"><strong>支付方式：</strong></td>
+      <td align="left"><a href="javascript:Filter('payment','all');" <{if $payment=="all" or $payment==""}>style='color:red'<{/if}>>全部</a> - <a href="javascript:Filter('payment','1');" <{if $payment=="1"}>style='color:red'<{/if}>>支付宝即时到帐</a> - <a href="javascript:Filter('payment','2');" <{if $payment=="2"}>style='color:red'<{/if}>>支付宝担保交易</a> - <a href="javascript:Filter('payment','3');" <{if $payment=="3"}>style='color:red'<{/if}>>银联在线</a> - <a href="javascript:Filter('payment','4');" <{if $payment=="4"}>style='color:red'<{/if}>>财付通</a> -<a href="javascript:Filter('payment','5');" <{if $payment=="5"}>style='color:red'<{/if}>>易宝</a> - <a href="javascript:Filter('payment','9');" <{if $payment=="9"}>style='color:red'<{/if}>>Paypal</a> - <a href="javascript:Filter('payment','6');" <{if $payment=="6"}>style='color:red'<{/if}>>银行汇款</a> - <a href="javascript:Filter('payment','7');" <{if $payment=="7"}>style='color:red'<{/if}>>货到付款</a> - <a href="javascript:Filter('payment','8');" <{if $payment=="8"}>style='color:red'<{/if}>>上门取货</a></td>
+    </tr>
+  </table>
+  <form name="pageForm" id="pageForm" action="<{spUrl c=order a=delallorderover page=$pager.current_page zt1=$zt1 zt2=$zt2 payment=$payment}>" method="post" onsubmit="return false;">
+<input type="hidden" id="pageNo" name="pageNo" value=""/>  
+    <table width="100%" border="0" cellpadding="2" cellspacing="1" bgcolor="#D1DDAA" align="center">
+      <tr align="center" bgcolor="#FAFAF1" height="25">
+        <th width="2%"><input type="checkbox" name="chkall" value="on" onclick="CheckAll(this.form)" title="全选" /></th>
+	    <th width="18%">订单编号</th>
+        <th width="15%">产品名称</th>
+		<th width="9%">产品单价</th>
+		<th width="8%">订购数量</th>
+		<th width="14%">下单时间</th>
+		<th width="10%">发货状态</th>
+		<th width="10%">付款状态</th>
+		<th width="14%">操作</th>
+      </tr>
+      <{if $results|@count gt 0}>
+      <{foreach from=$results item=one}>
+      <tr align='center' bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';" onMouseOut="javascript:this.bgColor='#FFFFFF';" height="28" id="t<{$one.id}>">
+        <td><input name="ids[]" type="checkbox" value="<{$one.id}>" /></td>
+	  	<td><{$one.ordernum}></td>
+        <td><{$one.pname}></td>
+		<td><{$one.price}></td>
+		<td><{$one.nums}></td>
+		<td><{$one.addtime}></td>
+		<td><{if $one.zt1=="1"}><font color="red">未处理</font><{elseif $one.zt1=="2"}><font color="blue">待发货</font><{elseif $one.zt1=="3"}><font color="green">已发货<{elseif $one.zt1=="4"}><font color="green">已签收<{else}><font color="red">已退回</font><{/if}></td>
+		<td><{if $one.zt2=="1"}><font color="red">未付款</font><{else}><font color="green">已付款</font><{/if}></td>
+		<td><div class="act"><a href="<{spUrl c=order a=showorder3 height=450 width=580 id=$one.id zt1=$zt1 zt2=$zt2 payment=$payment page=$pager.current_page}>" class="thickbox">详情</a><a href="#" onclick="ifjump=confirm('是否确定恢复此条记录?');if(!ifjump){return false;} else {helpit(<{$one.id}>);}">恢复</a><a href="#" onclick="ifjump=confirm('是否确定删除此条记录?');if(!ifjump){return false;} else {delit(<{$one.id}>);}">删除</a></div></td>
+      </tr>
+      <{/foreach}>
+      <tr align='center' bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';" onMouseOut="javascript:this.bgColor='#FFFFFF';" height="28" >
+        <td colspan="9" align="left">选中项：<input type="submit" name="button" id="button" value="彻底删除" onclick="delmessage()" /></td>
+      </tr>
+      <{else}>
+      <tr align='center' bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';" onMouseOut="javascript:this.bgColor='#FFFFFF';"height="28" >
+      	<td colspan="11" align="center"><span style="color:#666">暂无数据...</span></td>
+      </tr>
+      <{/if}>
+      <tr bgcolor="#FAFAF1">
+        <td height="28" colspan="15" align="middle">
+<!--传统分页开始-->
+<{if $pager}> 
+共有<{$pager.total_count}>条记录，当前<{$pager.current_page}>/<{$pager.total_page}>页：
+<{if $pager.current_page != $pager.first_page}> 
+<a href="<{spUrl c=order a=isdel page=$pager.first_page zt1=$zt1 zt2=$zt2 payment=$payment}>">首页</a> | 
+<a href="<{spUrl c=order a=isdel page=$pager.prev_page zt1=$zt1 zt2=$zt2 payment=$payment}>">上一页</a> | 
+<{/if}> 
+<{foreach from=$pager.all_pages item=thepage}> 
+<{if $thepage >= $pager.current_page-4 and $thepage <= $pager.current_page+4}> 
+<{if $thepage != $pager.current_page}> 
+<a href="<{spUrl c=order a=isdel page=$thepage}>"><{$thepage}></a> 
+<{else}> 
+<span style="width:20px;padding:0 1px;"><{$thepage}></span> 
+<{/if}> 
+<{elseif $thepage <= 10 and $thepage >= $pager.current_page-4}>
+<{if $thepage != $pager.current_page}> 
+<a href="<{spUrl c=order a=isdel page=$thepage}>"><{$thepage}></a> 
+<{else}> 
+<span style="width:20px;padding:0 1px;"><{$thepage}></span> 
+<{/if}> 
+<{elseif $thepage >= $pager.last_page-9 and $thepage <= $pager.current_page-4}>
+<{if $thepage != $pager.current_page}> 
+<a href="<{spUrl c=order a=isdel page=$thepage}>"><{$thepage}></a> 
+<{else}> 
+<span style="width:20px;padding:0 1px;"><{$thepage}></span> 
+<{/if}> 
+<{else}>
+<{/if}>
+<{/foreach}> 
+<{if $pager.current_page != $pager.last_page}> 
+| 
+<a href="<{spUrl c=order a=isdel page=$pager.next_page zt1=$zt1 zt2=$zt2 payment=$payment}>">下一页</a> | 
+<a href="<{spUrl c=order a=isdel page=$pager.last_page zt1=$zt1 zt2=$zt2 payment=$payment}>">尾页</a> 
+<{/if}> 
+<{/if}>  
+<!--传统分页结束-->        </td>
+      </tr>
+    </table>
+</form>    
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,184 @@
+<{include file="admin/session.html"}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="skin/admin/style/base.css" type="text/css" />
+<link rel="stylesheet" href="skin/admin/style/main.css" type="text/css" />
+<script type="text/javascript" src="skin/admin/js/jquery.js"></script>
+<script type="text/javascript" src="include/swfobject.js"></script>
+<script language=javascript>     
+function printsetup(){
+    //  打印页面设置
+    wb.execwb(8,1);   
+}
+function printpreview(){
+    //  打印页面预览
+    wb.execwb(7,1);
+}
+function printit(){
+  if (confirm('确定打印吗？')){
+    wb.ExecWB(6,1)
+    //wb.execwb(1,1)//打开
+    //wb.ExecWB(2,1);//关闭现在所有的IE窗口，并打开一个新窗口
+    //wb.ExecWB(4,1)//;保存网页
+    //wb.ExecWB(6,1)//打印
+    //wb.ExecWB(7,1)//打印预览
+    //wb.ExecWB(8,1)//打印页面设置
+    //wb.ExecWB(10,1)//查看页面属性
+    //wb.ExecWB(15,1)//好像是撤销，有待确认
+    //wb.ExecWB(17,1)//全选
+    //wb.ExecWB(22,1)//刷新
+    //wb.ExecWB(45,1)//关闭窗体无提示
+  }
+}
+</script> 
+<title>管理系统</title>
+<style type="text/css">
+<!--
+.STYLE1 {color: #009933}
+.STYLE2 {color: #FF0000}
+-->
+</style>
+</head>
+<body>
+<div class="rbox">
+  <div class="ur_here" id="hide2">
+    <div class="path fl">报表统计<span>-</span>月统计报表</div>
+</div>  
+<div class="rbox_list">
+  <table width="98%" border="0" align="center" cellpadding="0" cellspacing="0" id="hide1">
+<form method="post" action="<{spUrl c=reports a=table_month act=1}>" name="frm1">
+    <tr>
+      <td width="10%" height="30" align="right">全部统计：</td>
+      <td width="37%" align="left">
+<SELECT NAME="SelTjYear" id="SelTjYear"> 
+</SELECT>
+<script> 
+function vYearMonth(yearObjId) { 
+var selYear = document.getElementById(yearObjId); 
+var myDate = new Date(); //当前日期 
+var myYear = myDate.getFullYear(); //当前年 
+var yearMin = -20; //年份范围值，也当前年比较的差值 
+var yearMax = 1; //年份范围值，也当前年比较的差值 
+
+//Begin年******************************* 
+selYear.options.add(new Option("", "")); 
+for (var i = yearMin; i < yearMax; i++) { 
+var opt = new Option(myYear + i, myYear + i); 
+selYear.options.add(opt); 
+} 
+//这里1-yearMin表示选中当前年，用1是因为开头有插入"" 
+selYear.options.selectedIndex = 1 - yearMin; 
+} 
+vYearMonth('SelTjYear'); 
+</script>	  </td>
+      <td width="53%" align="left"><input type="submit" name="Submit" value="统计" onclick="javascript:document.frm1.action='<{spUrl c=reports a=table_month act=1}>';document.frm1.target='_self';" /> <input type="button" name="Submit3" value="打印详细报表" onclick="javascript:document.frm1.action='<{spUrl c=reports a=table2 act=1}>';document.frm1.target='_blank';document.frm1.submit();" /> <input name="Submit34" type="button" onclick="javascript:document.frm1.action='<{spUrl c=reports a=excel2 act=1}>';document.frm1.target='_blank';document.frm1.submit();" value="导出报表为Excel文档" /></td>
+    </tr>
+</form>
+<form method="post" action="<{spUrl c=reports a=table_month act=2}>" name="frm2">
+    <tr>
+      <td height="30" align="right">按产品组统计：</td>
+      <td align="left">
+<SELECT NAME="SelTjYear1" id="SelTjYear1"> 
+</SELECT>
+<script> 
+function vYearMonth(yearObjId) { 
+var selYear = document.getElementById(yearObjId); 
+var myDate = new Date(); //当前日期 
+var myYear = myDate.getFullYear(); //当前年 
+var yearMin = -20; //年份范围值，也当前年比较的差值 
+var yearMax = 1; //年份范围值，也当前年比较的差值 
+
+//Begin年******************************* 
+selYear.options.add(new Option("", "")); 
+for (var i = yearMin; i < yearMax; i++) { 
+var opt = new Option(myYear + i, myYear + i); 
+selYear.options.add(opt); 
+} 
+//这里1-yearMin表示选中当前年，用1是因为开头有插入"" 
+selYear.options.selectedIndex = 1 - yearMin; 
+
+} 
+vYearMonth('SelTjYear1'); 
+</script>
+<select name="gp" id="gp">
+		<option value="">-请选择产品组-</option>
+        <{foreach from=$group item=one}>
+		<option value="<{$one.id}>"><{$one.gname}></option>
+		<{/foreach}>
+        </select>	  </td>
+      <td align="left"><input type="submit" name="Submit2" value="统计" onclick="javascript:document.frm2.action='<{spUrl c=reports a=table_month act=2}>';document.frm2.target='_self';" /> <input type="button" name="Submit32" value="打印详细报表"  onclick="javascript:document.frm2.action='<{spUrl c=reports a=table2 act=2}>';document.frm2.target='_blank';document.frm2.submit();" /> <input type="button" name="Submit322" value="导出报表为Excel文档"  onclick="javascript:document.frm2.action='<{spUrl c=reports a=excel2 act=2}>';document.frm2.target='_blank';document.frm2.submit();" /></td>
+    </tr>
+</form>
+<form method="post" action="<{spUrl c=reports a=table_month act=3}>" name="frm3">
+    <tr>
+      <td height="30" align="right">按产品统计：</td>
+      <td align="left">
+<SELECT NAME="SelTjYear2" id="SelTjYear2"> 
+</SELECT>
+<script> 
+function vYearMonth(yearObjId) { 
+var selYear = document.getElementById(yearObjId); 
+var myDate = new Date(); //当前日期 
+var myYear = myDate.getFullYear(); //当前年 
+var yearMin = -20; //年份范围值，也当前年比较的差值 
+var yearMax = 1; //年份范围值，也当前年比较的差值 
+
+//Begin年******************************* 
+selYear.options.add(new Option("", "")); 
+for (var i = yearMin; i < yearMax; i++) { 
+var opt = new Option(myYear + i, myYear + i); 
+selYear.options.add(opt); 
+} 
+//这里1-yearMin表示选中当前年，用1是因为开头有插入"" 
+selYear.options.selectedIndex = 1 - yearMin; 
+
+} 
+vYearMonth('SelTjYear2'); 
+</script>
+<select name="bigname" id="bigname">
+		<option value="">-请选择产品组-</option>
+        <{foreach from=$group item=two}>
+		<option value="<{$two.id}>"><{$two.gname}></option>
+		<{/foreach}>
+        </select>
+          <span id="quote">
+          <select name="smallname" id="smallname">
+            <option value="99">-请选择产品-</option>
+          </select>
+          </span><input type=hidden id=hidsel name=hidsel runtat=server>	  
+<script language="javascript">
+$("#bigname").change(function(){ 
+ k=$("#bigname").val();	
+ $("#quote").load("<{spUrl c=order a=loadsort2}>",'k='+k);
+});
+</script>
+		  </td>
+      <td align="left"><input type="submit" name="Submit22" value="统计" onclick="javascript:document.frm3.action='<{spUrl c=reports a=table_month act=3}>';document.frm3.target='_self';" />
+        <input type="button" name="Submit33" value="打印详细报表" onclick="javascript:document.frm3.action='<{spUrl c=reports a=table2 act=3}>';document.frm3.target='_blank';document.frm3.submit();" /> <input type="button" name="Submit332" value="导出报表为Excel文档" onclick="javascript:document.frm3.action='<{spUrl c=reports a=excel2 act=3}>';document.frm3.target='_blank';document.frm3.submit();" /></td>
+    </tr>
+</form>
+  </table>
+  <br />
+<div style="height:20px;font-size:12px;text-align:right;">
+        <input value="打印柱状图" type="button" onclick="javascript:window.print()" />
+        <OBJECT classid="CLSID:8856F961-340A-11D0-A96B-00C04FD705A2" height="0" id="wb" name="wb" width="0">
+        </OBJECT>
+        <input type=button name=button_print style="display:none;" value="打印本报表" onclick="javascript:printit()">
+        <input type=button name=button_setup value="打印页面设置" onclick="javascript:printsetup();">
+        <input type=button name=button_show value="打印预览" onclick="javascript:printpreview();">
+</div>
+<br />
+<div style="height:20px;font-size:12px;text-align:right;">
+<span class="STYLE2">*打印功能仅支持IE浏览器</span>。方法：<span class="STYLE1">点击"打印预览",选择"仅打印选定框架"</span>,打印。</div>
+  <br />
+  <table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+      <td align="center"><{$z1}></td>
+    </tr>
+  </table>
+</div>
+</div>
+</body>
+</html>

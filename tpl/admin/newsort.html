@@ -1,0 +1,105 @@
+<{include file="admin/session.html"}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="skin/admin/style/base.css" type="text/css" />
+<link rel="stylesheet" href="skin/admin/style/main.css" type="text/css" />
+<link rel="alternate stylesheet" type="text/css" href="skin/admin/Upimg/1024.css" />
+<style type="text/css" media="all">
+@import "skin/admin/Upimg/thickbox.css";
+.nok {
+	border: 1px solid #f2f2f2;
+}
+</style>
+<script type="text/javascript" src="skin/admin/js/jquery.js"></script>
+<script type="text/javascript" src="skin/admin/js/Validform.js"></script>
+<script type="text/javascript">
+$(function(){
+	$(".registerform:last").Validform({
+		tiptype:2,
+		ajaxPost:true,
+		callback:function(data){
+			if(data.status=="y"){
+				setTimeout(function(){
+					$.Hidemsg(); //公用方法关闭信息提示框;
+				},2000);
+			}
+		}
+	});
+})
+function delit(obj) {
+$.get('<{spUrl c=others a=delsort}>','mid='+obj,function (msg) { 
+if ('1'==msg) { 
+$('#t'+obj).remove(); 
+} else { 
+alert("删除失败"); 
+} 
+}); 
+}
+$(document).ready(function(){ 
+    $("#sortname").blur(function(){
+	var sortname = encodeURI($("#sortname").val());
+   $.ajax({ url: "<{spUrl c=others a=dopinyin}>",
+              type:"get",           
+              dataType:"html",
+              data:"sortname="+sortname+"&r="+Math.random(),
+              success:function(msg){ 
+			  $("#sortfile").val(msg);
+              }});
+       });
+});
+</script>
+<script src="skin/admin/Upimg/thickbox-compressed.js" type="text/javascript"></script>
+<script src="skin/admin/Upimg/global.js" type="text/javascript"></script>
+<title>管理系统</title>
+</head>
+<body>
+<div class="rbox">
+  <div class="ur_here">
+    <div class="path fl" align="left">其他设置<span>-新闻分类管理</span></div>
+</div>  
+  <div class="add_box">
+  <form action="<{spUrl c=others a=savenewsort}>" method="post" class="registerform">
+    <table width="98%" border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse" bordercolor="#c6c6c6">
+      <tr>
+        <td height="25" colspan="3" align="center" bgcolor="#f2f2f2"><strong>添加新分类</strong></td>
+      </tr>
+      <tr>
+        <td width="30%" height="25" align="right">分类名称：</td>
+        <td width="27%" align="left"><input name="sortname" type="text" id="sortname" size="45" class="inputxt" datatype="*" ajaxurl="<{spUrl c=others a=newsortcheck}>" nullmsg="分类名称不能留空！" /></td>
+        <td width="43%" align="left"><div class="Validform_checktip">(请输入新闻分类名称)</div></td>
+      </tr>
+      <tr>
+        <td height="25" align="right">分类文件夹名称：</td>
+        <td align="left"><input name="sortfile" type="text" id="sortfile" size="45" class="inputxt" datatype="*" ajaxurl="<{spUrl c=others a=checkfile}>" nullmsg="分类文件夹名称不能留空！" /></td>
+        <td align="left"><div class="Validform_checktip">(请输入分类文件夹名称)</div></td>
+      </tr>
+      
+      <tr>
+        <td height="25" align="right">&nbsp;</td>
+        <td colspan="2" align="left"><input type="submit" name="Submit" value="添加新闻分类" /></td>
+      </tr>
+    </table>
+  </form>
+  <br />
+  <table width="100%" border="0" cellpadding="2" cellspacing="1" bgcolor="#D1DDAA" align="center">
+    <tr align="center" bgcolor="#FAFAF1" height="25">
+      <th width="7%">编号</th>
+      <th width="40%">分类名称</th>
+      <th width="25%">文件夹名称</th>
+      <th width="28%">操作</th>
+    </tr>
+    <{foreach from=$sorts item=one}>
+        <tr align='center' bgcolor="#FFFFFF" onmousemove="javascript:this.bgColor='#FCFDEE';" onmouseout="javascript:this.bgColor='#FFFFFF';" height="28" id="t<{$one.id}>">
+          <td><{$one.id}></td>
+          <td><{$one.sortname}></td>
+          <td><{$one.sortfile}></td>
+          <td><div class="act"><a href="<{spUrl c=others a=showeditnewsort height=120 width=320 modal=true id=$one.id}>" class="thickbox">编辑</a><a href="#" onclick="ifjump=confirm('分类删除后，该分类下的新闻、目录以及生成的静态页也将被删除，确定吗?');if(!ifjump){return false;} else {delit(<{$one.id}>);}">删除</a></div></td>
+        </tr>
+  <{/foreach}>
+</table>
+</div>
+</div>
+</body>
+</html>

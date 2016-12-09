@@ -1,0 +1,147 @@
+<{include file="admin/session.html"}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<META HTTP-EQUIV="pragma" CONTENT="no-cache"> 
+<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
+<META HTTP-EQUIV="expires" CONTENT="0"> 
+<link rel="stylesheet" href="skin/admin/style/base.css" type="text/css" />
+<link rel="stylesheet" href="skin/admin/style/main.css" type="text/css" />
+<link rel="alternate stylesheet" type="text/css" href="skin/admin/Upimg/1024.css" />
+<style type="text/css" media="all">
+@import "skin/admin/Upimg/thickbox.css";
+</style>
+<script type="text/javascript" src="skin/admin/js/jquery.js"></script>
+<script type="text/javascript" src="skin/admin/js/Validform.js"></script>
+<script type="text/javascript">
+$(function(){
+	$(".registerform:last").Validform({
+		tiptype:2,
+		ajaxPost:true,
+		callback:function(data){
+			if(data.status=="y"){
+				setTimeout(function(){
+					$.Hidemsg(); //公用方法关闭信息提示框;
+				},2000);
+			}
+		}
+	});
+})
+</script>
+<script src="skin/admin/Upimg/thickbox-compressed.js" type="text/javascript"></script>
+<script src="skin/admin/Upimg/global.js" type="text/javascript"></script>
+<script type="text/javascript" src="include/swfobject.js"></script>
+<title>管理系统</title>
+</head>
+<body onload="">
+<div class="rbox">
+  <div class="ur_here">
+    <div class="path fl" align="left">PIMS在线订单管理系统<span>-管理首页</span></div>
+</div>  
+  <div class="add_box"><br />
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="center"><table width="240" border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse" bordercolor="#c6c6c6">
+          <tr>
+            <td height="25" align="center" bgcolor="#f2f2f2"><strong>昨日统计</strong></td>
+          </tr>
+          <tr>
+            <td height="25" align="center"><table width="90%" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="42%" height="25" align="left">未处理订单</td>
+                <td width="58%" align="right"><font color="#FF0000"><strong><{$y1}></strong></font>笔</td>
+              </tr>
+              <tr>
+                <td height="25" align="left">待发货订单</td>
+                <td align="right"><font color="#FF0000"><strong><{$y2}></strong></font>笔</td>
+              </tr>
+              <tr>
+                <td height="25" align="left">订单总量</td>
+                <td align="right"><font color="#FF0000"><strong><{$y3}></strong></font>笔</td>
+              </tr>
+              <tr>
+                <td height="25" align="left">成交总额</td>
+                <td align="right"><font color="#FF0000"><strong><{if $zong3==""}>0<{else}><{$zong3}><{/if}></strong></font>元</td>
+              </tr>
+              <tr>
+                <td height="25" align="left">未处理总额</td>
+                <td align="right"><font color="#FF0000"><strong><{if $zong4==""}>0<{else}><{$zong4}><{/if}></strong></font>元</td>
+              </tr>
+            </table></td>
+          </tr>
+        </table></td>
+        <td width="20">&nbsp;</td>
+        <td align="center"><table width="240" border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse" bordercolor="#c6c6c6">
+          <tr>
+            <td height="25" align="center" bgcolor="#f2f2f2"><strong>今日统计</strong></td>
+          </tr>
+          <tr>
+            <td height="25" align="center"><table width="90%" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="42%" height="25" align="left">未处理订单</td>
+                <td width="58%" align="right"><font color="#FF0000"><strong><{$t1}></strong></font>笔</td>
+              </tr>
+              <tr>
+                <td height="25" align="left">待发货订单</td>
+                <td align="right"><font color="#FF0000"><strong><{$t2}></strong></font>笔</td>
+              </tr>
+              <tr>
+                <td height="25" align="left">订单总量</td>
+                <td align="right"><font color="#FF0000"><strong><{$t3}></strong></font>笔</td>
+              </tr>
+              <tr>
+                <td height="25" align="left">成交总额</td>
+                <td align="right"><font color="#FF0000"><strong><{if $zong1==""}>0<{else}><{$zong1}><{/if}></strong></font>元</td>
+              </tr>
+              <tr>
+                <td height="25" align="left">未处理总额</td>
+                <td align="right"><font color="#FF0000"><strong><{if $zong2==""}>0<{else}><{$zong2}><{/if}></strong></font>元</td>
+              </tr>
+            </table></td>
+          </tr>
+        </table></td>
+        <td width="20">&nbsp;</td>
+        <td align="center"><table width="240" border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse" bordercolor="#c6c6c6">
+          <tr>
+            <td height="25" align="center" bgcolor="#f2f2f2"><strong>授权信息</strong></td>
+          </tr>
+          <tr>
+            <td height="25" align="center"><table width="90%" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="42%" height="25" align="left">系统版本</td>
+                <td width="58%" align="right">V3.5正式版</td>
+              </tr>
+              <tr>
+                <td height="25" align="left">系统语言</td>
+                <td align="right">Php+Mysql</td>
+              </tr>
+              <tr>
+                <td height="25" align="left">授权对象</td>
+                <td align="right"><{$mydm}></td>
+              </tr>
+              <tr>
+                <td height="25" align="left">Bug反馈</td>
+                <td align="right"><a href="http://www.diantuo.net" target="_blank">点击反馈</a></td>
+              </tr>
+              <tr>
+                <td height="25" align="left">改进意见</td>
+                <td align="right"><a href="http://www.diantuo.net" target="_blank">我要提意见</a></td>
+              </tr>
+            </table></td>
+          </tr>
+        </table></td>
+        <td width="20" align="center">&nbsp;</td>
+        <td align="center" valign="top">&nbsp;</td>
+      </tr>
+    </table>
+    <br />
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="left" valign="middle"><{$showz}></td>
+      </tr>
+    </table>
+  </div>
+</div>
+</body>
+</html>

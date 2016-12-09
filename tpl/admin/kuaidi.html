@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style type="text/css">
+<!--
+body,td,th {
+	font-size: 12px;
+}
+#is-valicode{margin:5px;line-height:45px;display:none;}
+-->
+</style>
+	<script language="javascript" src="skin/admin/js/jquery.js"></script>
+	<script language="javascript">
+	$(document).ready(function()
+	{
+		$("#btnSnap").click(function()
+		{
+			$("#retData").html('loading...');
+ 
+			var expressid = $("#expressid").val();
+            var expressno = $("#expressno").val();
+			$.get("controller/get.php",{com:expressid,nu:expressno},
+				function(data)
+				{
+//					$("#retData").html(data);
+//
+//					var retData = eval(data);
+//					var retMsg = '';
+//					var j = 0;
+//
+//					for (var i=0;i<retData.length;i++)
+//					{
+//						if (i == retData.length -1)
+//						{
+//							retMsg += "<font color='#CC0000'>" + retData[i].item + "</font><br/>";
+//						}else{
+//							retMsg += retData[i].item + "<br/>";
+//						}
+//					}
+//					
+					$("#retData").html(data);
+				}
+			);
+ 
+			return false;
+		});
+	});
+	</script>
+
+</head>
+
+<body>
+<table width="100%" border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse" bordercolor="#f2f2f2">
+  <tr>
+    <td height="25" align="center" bgcolor="#f2f2f2"><strong>快递追踪</strong></td>
+  </tr>
+  <tr>
+    <td height="25" align="center">物流单号：<input name="expressno" type="text" id="expressno" value="<{$rs.wuliunum}>"/>
+    快递公司：
+     <input name="expressid" type="text" id="expressid" value="<{$daima}>"/>
+      <input type="submit" value="查询" id="btnSnap" class="btnSnap"/><br />
+	<div class="txtAboutSnap">
+		<div id="retData"></div>
+	</div>
+
+
+	  </td>
+    </tr>
+</table>
+
+</body>
+</html>

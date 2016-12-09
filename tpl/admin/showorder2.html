@@ -1,0 +1,300 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style type="text/css">
+<!--
+body,td,th {
+	font-size: 12px;
+}
+-->
+</style>
+<script language="javascript">
+$(document).ready(function(){ 
+	//未处理
+	$("#s10").click(function(){
+	$("#showhide").show();
+		var formdata = {
+			'cid': $('#cid').val()
+		};
+		$.post('<{spUrl c=order a=order_zt1}>', formdata, function(result){
+			  $("#showhide").hide();
+			  $("#tip").show();
+			  $("#tip").html(result);
+			  $("#zz1").html("未处理");
+			  setTimeout("tip.style.display='none'",1000); 
+		});
+	});
+	//待发货
+	$("#s20").click(function(){
+	$("#showhide").show();
+		var formdata = {
+			'cid': $('#cid').val()
+		};
+		$.post('<{spUrl c=order a=order_zt2}>', formdata, function(result){
+			  $("#showhide").hide();
+			  $("#tip").show();
+			  $("#tip").html(result);
+			  $("#zz1").html("待发货");
+			  setTimeout("tip.style.display='none'",1000); 
+		});
+	});
+	//已发货
+	$("#s30").click(function(){
+	$("#showhide").show();
+		var formdata = {
+			'cid': $('#cid').val()
+		};
+		$.post('<{spUrl c=order a=order_zt3}>', formdata, function(result){
+			  $("#showhide").hide();
+			  $("#tip").show();
+			  $("#tip").html(result);
+			  $("#zz1").html("已发货");
+			  setTimeout("tip.style.display='none'",1000); 
+		});
+	});
+	//未付款
+	$("#s40").click(function(){
+	$("#showhide").show();
+		var formdata = {
+			'cid': $('#cid').val()
+		};
+		$.post('<{spUrl c=order a=order_zt4}>', formdata, function(result){
+			  $("#showhide").hide();
+			  $("#tip").show();
+			  $("#tip").html(result);
+			  $("#zz2").html("未付款");
+			  setTimeout("tip.style.display='none'",1000); 
+		});
+	});
+	//已付款
+	$("#s5").click(function(){
+	$("#showhide").show();
+		var formdata = {
+			'cid': $('#cid').val()
+		};
+		$.post('<{spUrl c=order a=order_zt5}>', formdata, function(result){
+			  $("#showhide").hide();
+			  $("#tip").show();
+			  $("#tip").html(result);
+			  $("#zz2").html("已付款");
+			  setTimeout("tip.style.display='none'",1000); 
+		});
+	});
+	//保存物流信息/备注
+	$("#s6").click(function(){
+	$("#showhide").show();
+		var formdata = {
+			'cid': $('#cid').val(),
+			'wuliu': $('#wuliu').val(),
+			'wuliunum': $('#wuliunum').val(),
+			'beizhu2': $('#beizhu2').val()
+		};
+		$.post('<{spUrl c=order a=order_zt6}>', formdata, function(result){
+			  $("#showhide").hide();
+			  $("#tip").show();
+			  $("#tip").html(result);
+			  setTimeout("tip.style.display='none'",1000); 
+		});
+	});
+	//修改订单
+	$('#s7').click(function(){
+		var arr1=new Array();
+		$('input[name="useroption[]"]').each(function(i){
+			arr1[i]=$(this).val();
+		});	
+		var arr2=new Array();
+		$('input[name="users[]"]').each(function(i){
+			arr2[i]=$(this).val();
+		});	
+		var formdata = {
+			'cid': $('#cid').val(),
+			'price': $('#price').val(),
+			'nums': $('#nums').val(),
+			'realname': $('#realname').val(),
+			'mob': $('#mob').val(),
+			'address': $('#address').val(),
+			'payments': $('#payments').val(),
+			'arr1': arr1,
+			'arr2': arr2
+		};
+		$.post('<{spUrl c=ajax a=corder}>', formdata, function(result){
+			  $("#showhide").hide();
+			  $("#tip").show();
+			  $("#tip").html(result);
+			  setTimeout("tip.style.display='none'",1000); 
+		});
+	});
+	
+});
+</script>
+</head>
+
+<body>
+<form method="post" action="<{spUrl c=order a=searchorder page=$page sid=$sid types=$types keys=$keys gp=$gp bigname=$bigname smallname=$smallname s1=$s1 s2=$s2 s3=$s3 s4=$s4}>">
+<table width="100%" border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse" bordercolor="#f2f2f2">
+  <tr>
+    <td height="25" colspan="4" align="center" bgcolor="#f2f2f2"><strong>订单详情</strong></td>
+  </tr>
+  <tr>
+    <td width="20%" height="25" align="right">订单编号：<{$order.id}></td>
+    <td colspan="3" align="left">&nbsp;<{$order.ordernum}>
+    <input type="hidden" name="cid" id="cid" value="<{$order.id}>" /></td>
+  </tr>
+  <tr>
+    <td height="25" align="right">产品名称：</td>
+    <td colspan="3" align="left">&nbsp;<{$order.pname}></td>
+  </tr>
+  <tr>
+    <td height="25" align="right">产品单价：</td>
+    <td colspan="3" align="left"><input name="price" type="text" id="price" value="<{$order.price}>" /></td>
+  </tr>
+  <tr>
+    <td height="25" align="right">订购数量：</td>
+    <td colspan="3" align="left"><input name="nums" type="text" id="nums" value="<{$order.nums}>" /></td>
+  </tr>
+  <tr>
+    <td height="25" align="right">收货人姓名：</td>
+    <td colspan="3" align="left"><input name="realname" type="text" id="realname" value="<{$order.realname}>" /></td>
+  </tr>
+  <tr>
+    <td height="25" align="right">手机号码：</td>
+    <td colspan="3" align="left"><input name="mob" type="text" id="mob" value="<{$order.mob}>" /></td>
+  </tr>
+  <tr>
+    <td height="25" align="right">收货地址：</td>
+    <td colspan="3" align="left"><input name="address" type="text" id="address" size="50" value="<{$order.address}>" /></td>
+  </tr>
+  <tr>
+    <td height="25" align="right">订单备注：</td>
+    <td colspan="3" align="left">&nbsp;<{$order.beizhu}></td>
+  </tr>
+  <tr>
+    <td height="25" align="right">下单页面：</td>
+    <td colspan="3" align="left"><{$order.url1}></td>
+  </tr>
+  <tr>
+    <td height="25" align="right">下单页面：</td>
+    <td colspan="3" align="left"><{$order.url2}>（iframe专用）</td>
+  </tr>
+  <tr>
+    <td height="25" align="right">来源：</td>
+    <td colspan="3" align="left"><{$order.fromdomain}></td>
+  </tr>
+<{if $uo|@count gt 0}>
+<{foreach from=$uo item=one}>
+  <tr>
+    <td height="25" align="right"><input name="useroption[]" id="useroption[]" type="hidden" value="<{$one.0}>" /><{$one.0}>：</td>
+    <td colspan="3" align="left"><input name="users[]" type="text" id="users[]" value="<{$one.1}>" /></td>
+  </tr>
+<{/foreach}>
+<{else}>
+<{/if}>
+  <tr>
+    <td height="25" align="right">支付方式：</td>
+    <td width="32%" align="left">
+	<select name="payments" id="payments">
+	<option value="<{$order.payment}>"><{if $order.payment=="1"}>支付宝即时到帐<{elseif $order.payment=="2"}>支付宝担保交易<{elseif $order.payment=="3"}>银联在线<{elseif $order.payment=="4"}>财付通<{elseif $order.payment=="5"}>易宝<{elseif $order.payment=="6"}>银行汇款<{elseif $order.payment=="7"}>货到付款<{elseif $order.payment=="8"}>上门取货<{else}>Paypal<{/if}></option>
+    <option value="1">支付宝即时到帐</option>
+    <option value="2">支付宝担保交易</option>
+    <option value="3">网银在线</option>
+    <option value="4">财付通</option>
+    <option value="5">易宝</option>
+    <option value="9">Paypal</option>
+    <option value="6">银行汇款</option>
+    <option value="7">货到付款</option>
+    <option value="8">上门取货</option>
+	</select>	</td>
+    <td width="14%" height="25" align="right">物流公司：</td>
+    <td width="34%" align="left"><select name="wuliu" id="wuliu">
+      <option value="<{$order.wuliu}>"><{$order.wuliu}></option>
+      <{if $order.wuliu}>      <{else}>
+      <option value="0">请选择</option>
+      <{/if}>
+      <option value="申通">申通</option>
+      <option value="EMS">EMS</option>
+      <option value="顺丰">顺丰</option>
+      <option value="圆通">圆通</option>
+      <option value="中通">中通</option>
+      <option value="如风达">如风达</option>
+      <option value="韵达">韵达</option>
+      <option value="天天">天天</option>
+      <option value="汇通">汇通</option>
+      <option value="全峰">全峰</option>
+      <option value="德邦">德邦</option>
+      <option value="宅急送">宅急送</option>
+      <option value="安信达">安信达</option>
+      <option value="包裹平邮">包裹平邮</option>
+      <option value="CCES">CCES</option>
+      <option value="传喜物流">传喜物流</option>
+      <option value="DHL">DHL</option>
+      <option value="大田物流">大田物流</option>
+      <option value="E邮宝">E邮宝</option>
+      <option value="飞康达">飞康达</option>
+      <option value="FedEx(国际)">FedEx(国际)</option>
+      <option value="港中能达">港中能达</option>
+      <option value="挂号信">挂号信</option>
+      <option value="共速达">共速达</option>
+      <option value="华宇物流">华宇物流</option>
+      <option value="佳吉快运">佳吉快运</option>
+      <option value="佳怡物流">佳怡物流</option>
+      <option value="急先达">急先达</option>
+      <option value="快捷速递">快捷速递</option>
+      <option value="龙邦快递">龙邦快递</option>
+      <option value="联邦快递">联邦快递</option>
+      <option value="联昊通">联昊通</option>
+      <option value="全一快递">全一快递</option>
+      <option value="全日通">全日通</option>
+      <option value="速尔快递">速尔快递</option>
+      <option value="TNT快递">TNT快递</option>
+      <option value="天地华宇">天地华宇</option>
+      <option value="UPS快递">UPS快递</option>
+      <option value="USPS">USPS</option>
+      <option value="新邦物流">新邦物流</option>
+      <option value="优速快递">优速快递</option>
+      <option value="中铁快运">中铁快运</option>
+      <option value="中邮物流">中邮物流</option>
+    </select></td>
+  </tr>
+  <tr>
+    <td height="25" align="right">下单时间：</td>
+    <td align="left">&nbsp;<{$order.addtime}></td>
+    <td height="25" align="right">快递单号：</td>
+    <td align="left"><input name="wuliunum" type="text" id="wuliunum" value="<{$order.wuliunum}>" /></td>
+  </tr>
+  <tr>
+    <td height="25" align="right">订购IP：</td>
+    <td align="left">&nbsp;<{$order.ips}>&nbsp;<{$area}></td>
+    <td height="25" align="right">发货时间：</td>
+    <td align="left">&nbsp;<{$order.sendtime}></td>
+  </tr>
+  <tr>
+    <td height="25" align="right">发货状态：</td>
+    <td align="left">&nbsp;<span id="zz1"><{if $order.zt1=="1"}><font color="red">未处理</font><{elseif $order.zt1=="2"}><font color="blue">待发货</font><{else}><font color="green">已发货</font><{/if}></span></td>
+    <td height="25" align="right">客服备注：</td>
+    <td align="left"><input name="beizhu2" type="text" id="beizhu2" value="<{$order.beizhu2}>" /></td>
+  </tr>
+  <tr>
+    <td height="25" align="right">付款状态：</td>
+    <td align="left">&nbsp;<span id="zz2"><{if $order.zt2=="1"}><font color="red">未付款</font><{else}><font color="green">已付款</font><{/if}></span></td>
+    <td height="25" align="right">处理客服：</td>
+    <td align="left">&nbsp;<{if $order.kefu==""}>无<{else}><{$order.kefu}><{/if}></td>
+  </tr>
+  <tr>
+    <td height="25" colspan="4" align="center">更新订单状态为：
+      <input name="s10" type="button" id="s10" value="未处理" />
+       <input name="s20" type="button" id="s20" value="待发货" /> 
+      <input name="s30" type="button" id="s30" value="已发货" />
+    <input name="s40" type="button" id="s40" value="未付款" /> <input name="s5" type="button" id="s5" value="已付款" />
+    <input name="s6" type="button" id="s6" value="保存物流/备注" /> 
+    <input name="s7" type="button" id="s7" value="修改订单" />
+	<input type="submit" name="Submit2" value="关闭窗口" id=Login onclick="javascript:tb_remove();" /></td>
+  </tr>
+  <tr>
+    <td height="25" colspan="4" align="center"><div style="text-align:center;"><div id="tip" style="display:none;color:#FFF;background-color:#69F;height:20px;width:140px;padding:5px 10px;margin:0px auto;"></div><div id="showhide" style="display:none"><img src="skin/admin/images/onLoad.gif"></div></div></td>
+  </tr>
+</table>
+</form>
+</body>
+</html>

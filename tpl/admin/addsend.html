@@ -1,0 +1,57 @@
+<{include file="admin/session.html"}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="skin/admin/style/base.css" type="text/css" />
+<link rel="stylesheet" href="skin/admin/style/main.css" type="text/css" />
+<script type="text/javascript" src="skin/admin/js/jquery.js"></script>
+<SCRIPT language=JavaScript>  
+$("document").ready(function(){  
+    $("#tbody6 .del").click(function() {   
+        $(this).parents(".repeat").remove();   
+    });   
+    $("#add6").click(function(){   
+        $("#tbody6>.template")   
+            .clone(true)   
+            .removeClass("template")   
+           .find(".del")   
+                .text("删除")   
+                .end()        
+            .appendTo($("#tbody6"))   
+    });   
+}  
+)  
+</script>  
+
+<title>管理系统</title>
+</head>
+<body>
+<form method="post" action="<{spUrl c=books a=savesend}>">
+<table border="0" width="98%">
+<tr style="border-bottom:1px dotted #ccc" class="template repeat">
+  <td height="25" colspan="2" align="right"><input name="button" type="button" class="btn3_mouseout" id="add6" style="height:18px;" value="增加一条" /></td>
+  <td align="left">&nbsp;</td>
+</tr>
+<tr style="border-bottom:1px dotted #ccc" class="template repeat">
+  <td height="25" colspan="2" align="right">所属产品组：</td>
+  <td align="left"><select name="gp" id="gp">
+        <{foreach from=$group item=two}>
+		<option value="<{$two.id}>"><{$two.gname}></option>
+		<{/foreach}>
+        </select></td>
+</tr>
+<tbody id="tbody6">
+<tr style="border-bottom:1px dotted #ccc" class="template repeat">
+<td height="25" colspan="2" align="right">发货记录：</td>
+<td width="82%" align="left"><input name="sends[]" type="text" id="sends" size="50" /><a class="del" href="#"></a></td>
+</tr>
+</tbody>
+<tr style="border-bottom:1px dotted #ccc" class="template repeat">
+  <td height="25" colspan="2" align="right">&nbsp;</td>
+  <td align="left"><input type="submit" name="Submit" value="保存发货记录" /></td>
+</tr>
+</table>
+</form>
+</body>
+</html>

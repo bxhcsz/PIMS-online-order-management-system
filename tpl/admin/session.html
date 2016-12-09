@@ -1,0 +1,6 @@
+<{if $smarty.session.admin_username.username==""}>
+<script language='javascript'>
+alert("您尚未登录或登录过期，请重新登录");
+parent.window.location.href='index.php?c=admin&a=index';
+</script>
+<{/if}>
