@@ -1,4 +1,4 @@
-PIMS在线订单管理系统 V4.2
+PIMS在线订单管理系统 V4.2.5
 
 一、安装：
 
@@ -33,4 +33,4 @@ PIMS在线订单管理系统 V4.2
 
 7、其他管理功能请自行体验。
 
-BY diantuo.net
+BY 常亮的技术博客 http://www.diantuo.net
