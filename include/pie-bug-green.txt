@@ -1,0 +1,33 @@
+﻿{
+    "bg_colour": "#ffffff", 
+    "elements": [
+        {
+            "alpha": 0.5,
+			"animate":[{"type":"bounce","distance":15},{"type":"fade"}],
+            "border": 2, 
+            "colours": [
+                "#0247fe", 
+                "#3d01a4", 
+                "#8601af", 
+                "#a7194b", 
+                "#fe2712", 
+                "#fd5308", 
+                "#fb9902", 
+                "#fabc02", 
+                "#fefe33", 
+                "#d0ea2b", 
+                "#66b032", 
+                "#0392ce"
+            ], 
+            "label-colour": "#432baf", 
+            "start-angle": 0, 
+            "tip": "#val# of #total#<br>#percent# of 100%", 
+            "type": "pie", 
+"values":[]
+        }
+    ], 
+    "title": {
+        "style": "{color: #888888; font-size: 16; text-align: center}", 
+        "text": ""
+    }
+}
